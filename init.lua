@@ -17,7 +17,9 @@ vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 
-vim.opt.colorcolumn = '80'
+vim.opt.colorcolumn = '120'
+vim.opt.textwidth = 120
+vim.opt.linebreak = true
 
 -- Make line numbers default
 vim.opt.number = true
@@ -161,9 +163,24 @@ vim.opt.rtp:prepend(lazypath)
 --  To update plugins you can run
 --    :Lazy update
 -- NOTE: Here is where you install your plugins.
+
+
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically  
+  
+  --priority 500 so that it loads after the first colorscheme loading, but before everything else
+  --couldn't make it work by replacing what existed already
+  'rktjmp/lush.nvim',
+  {
+	"rockyzhang24/arctic.nvim",
+	branch = "v2",
+	dependencies = { "rktjmp/lush.nvim" },
+	priority = 500,
+	config = function()
+		vim.cmd.colorscheme 'arctic'
+    end,
+  },
   
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
