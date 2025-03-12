@@ -121,11 +121,11 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 --
 --  See `:help wincmd` for a list of all window commands
 
---trying harpoon instead of window splitting
---vim.keymap.set('n', '<C-u>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
---vim.keymap.set('n', '<C-i>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
---vim.keymap.set('n', '<C-o>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
---vim.keymap.set('n', '<C-p>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+--harpoon has the CTRL+hjkl, so the window move is set to ALT
+vim.keymap.set('n', '<M-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+vim.keymap.set('n', '<M-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+vim.keymap.set('n', '<M-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+vim.keymap.set('n', '<M-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -284,8 +284,11 @@ require('lazy').setup({
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
-		--lolo: added this line
+		--lolo: added these lines
 		{ '<leader>g', group = '[G]it menu' },
+		{ '<leader>p', group = '[P]roject' },
+		{ '<leader>pw', group = '[P]roject [w]ord' },
+		{ '<leader>pW', group = '[P]roject [W]ORD' },
       },
     },
   },
@@ -300,7 +303,7 @@ require('lazy').setup({
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
-    branch = '0.1.x',
+    branch = '0.1.8',
     dependencies = {
       'nvim-lua/plenary.nvim',
       { -- If encountering errors, see telescope-fzf-native README for installation instructions
@@ -319,7 +322,8 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      --{ 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons' },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -349,7 +353,9 @@ require('lazy').setup({
         --
         -- defaults = {
         --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
+        --     i = {
+		--	 ['<c-enter>'] = 'to_fuzzy_refine' ,
+		--	 },
         --   },
         -- },
         -- pickers = {}
@@ -376,6 +382,19 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader>sp', builtin.git_files, { desc = '[S]earch files with Gitignore [P]' })
+	
+	  --taken from ThePrimeagen
+		vim.keymap.set('n', '<leader>pws', function()
+			local word = vim.fn.expand("<cword>")
+			builtin.grep_string({ search = word })
+		end, { desc = 'Project [w]ord search' })
+		
+		vim.keymap.set('n', '<leader>pWs', function()
+			local word = vim.fn.expand("<cWORD>")
+			builtin.grep_string({ search = word })
+		end, { desc = 'Project [W]ORD search' })
+		
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -880,7 +899,7 @@ require('lazy').setup({
       --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
       --  - ci'  - [C]hange [I]nside [']quote
       require('mini.ai').setup { n_lines = 500 }
-
+	  
       -- Add/delete/replace surroundings (brackets, quotes, etc.)
       --
       -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
@@ -893,7 +912,10 @@ require('lazy').setup({
       --  and try some other statusline plugin
       local statusline = require 'mini.statusline'
       -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = vim.g.have_nerd_font }
+      --statusline.setup { use_icons = vim.g.have_nerd_font }
+      statusline.setup { use_icons = false }
+	  
+	  
 
       -- You can configure sections in the statusline by overriding their
       -- default behavior. For example, here we set the section for
