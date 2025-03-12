@@ -31,8 +31,8 @@ return {
 		--movement stays centered in quickfix
 		vim.keymap.set("n", "<M-n>", "<cmd>cnext<CR>zz"),
 		vim.keymap.set("n", "<M-p>", "<cmd>cprev<CR>zz"),
-		vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz"),
-		vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz"),
+		vim.keymap.set("n", "<leader>n", "<cmd>lnext<CR>zz", { desc = "Quickfix [N]ext" } ),
+		vim.keymap.set("n", "<leader>p", "<cmd>lprev<CR>zz", { desc = "Quickfix [P]revious" } ),
 		
 		
 		vim.keymap.set("n", "Q", "<C-^>"),
