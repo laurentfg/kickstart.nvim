@@ -13,8 +13,8 @@ return {
 			vim.keymap.set("n", "<C-j>", function() ui.nav_file(2) end )
 			vim.keymap.set("n", "<C-k>", function() ui.nav_file(3) end )
 			vim.keymap.set("n", "<C-l>", function() ui.nav_file(4) end )
-			vim.keymap.set("n", "<C-;>", function() ui.nav_file(5) end )
-			vim.keymap.set("n", "<C-è>", function() ui.nav_file(6) end )
+			--vim.keymap.set("n", "<C-;>", function() ui.nav_file(5) end )
+			--vim.keymap.set("n", "<C-è>", function() ui.nav_file(6) end )
 		end,
 	},
 }

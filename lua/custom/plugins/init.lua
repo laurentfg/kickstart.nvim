@@ -19,20 +19,28 @@ return {
 		vim.keymap.set("n", "<C-u>", "<C-u>zz"),
 		vim.keymap.set("n", "n", "nzzzv"),
 		vim.keymap.set("n", "N", "Nzzzv"),
-		--vim.keymap.set('n', '<leader>p', "\"_dP", { desc = 'Paste without replacing buffer' }),
-		vim.keymap.set("x", "<leader>p", [["_dP]], { desc = 'Paste without replacing buffer' }),
+		
+		--obsolete since capital P works now for that
+		--vim.keymap.set("x", "<leader>p", [["_dP]], { desc = 'Paste without replacing buffer' }),		
 		
 		--put the yank in the OS register
 		vim.keymap.set({"n", "v"}, "<leader>y", [["+y]], { desc = 'yank to OS Register' }),
 		vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = 'yank to OS Register' }),
 		
-		--movement stays centered in quickfix
-		--vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz"),
-		--vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz"),
-		--vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz"),
-		--vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz"),
 		
-		vim.keymap.set("n", "Q", "<nop>"),
+		--movement stays centered in quickfix
+		vim.keymap.set("n", "<M-n>", "<cmd>cnext<CR>zz"),
+		vim.keymap.set("n", "<M-p>", "<cmd>cprev<CR>zz"),
+		vim.keymap.set("n", "<leader>n", "<cmd>lnext<CR>zz", { desc = "Quickfix [N]ext" } ),
+		vim.keymap.set("n", "<leader>p", "<cmd>lprev<CR>zz", { desc = "Quickfix [P]revious" } ),
+		
+		
+		vim.keymap.set("n", "Q", "<C-^>"),
+		--imitate a basic shortcut (replaced by command above
+		--vim.keymap.set("x", "<leader>^", ":e #^M", {desc = 'return to previous file [^]'}),
+		
+		--pour Oil.nvim
+		vim.keymap.set("n", "<leader>o", "<CMD>Oil<CR>", { desc = "[O]pen parent directory" })
 		
 		--vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>"),
 	}
