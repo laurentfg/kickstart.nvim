@@ -83,7 +83,6 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
-
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -100,7 +99,6 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show Diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -164,24 +162,26 @@ vim.opt.rtp:prepend(lazypath)
 --    :Lazy update
 -- NOTE: Here is where you install your plugins.
 
-
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically  
-  
+  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+
   --priority 500 so that it loads after the first colorscheme loading, but before everything else
   --couldn't make it work by replacing what existed already
   'rktjmp/lush.nvim',
   {
-	"rockyzhang24/arctic.nvim",
-	branch = "v2",
-	dependencies = { "rktjmp/lush.nvim" },
-	priority = 500,
-	config = function()
-		vim.cmd.colorscheme 'arctic'
+    'rockyzhang24/arctic.nvim',
+    branch = 'v2',
+    dependencies = { 'rktjmp/lush.nvim' },
+    priority = 500,
+    config = function()
+      vim.cmd.colorscheme 'arctic'
     end,
   },
-  
+  --other colorschemes
+  { url = 'https://gitlab.com/sxwpb/halfspace.nvim', },
+  'rmehri01/onenord.nvim',
+
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
@@ -284,11 +284,11 @@ require('lazy').setup({
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
-		--lolo: added these lines
-		{ '<leader>g', group = '[G]it menu' },
-		{ '<leader>p', group = '[P]roject' },
-		{ '<leader>pw', group = '[P]roject [w]ord' },
-		{ '<leader>pW', group = '[P]roject [W]ORD' },
+        --lolo: added these lines
+        { '<leader>g', group = '[G]it menu' },
+        { '<leader>p', group = '[P]roject' },
+        { '<leader>pw', group = '[P]roject [w]ord' },
+        { '<leader>pW', group = '[P]roject [W]ORD' },
       },
     },
   },
@@ -354,8 +354,8 @@ require('lazy').setup({
         -- defaults = {
         --   mappings = {
         --     i = {
-		--	 ['<c-enter>'] = 'to_fuzzy_refine' ,
-		--	 },
+        --	 ['<c-enter>'] = 'to_fuzzy_refine' ,
+        --	 },
         --   },
         -- },
         -- pickers = {}
@@ -383,18 +383,17 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
       vim.keymap.set('n', '<leader>sp', builtin.git_files, { desc = '[S]earch files with Gitignore [P]' })
-	
-	  --taken from ThePrimeagen
-		vim.keymap.set('n', '<leader>pws', function()
-			local word = vim.fn.expand("<cword>")
-			builtin.grep_string({ search = word })
-		end, { desc = 'Project [w]ord search' })
-		
-		vim.keymap.set('n', '<leader>pWs', function()
-			local word = vim.fn.expand("<cWORD>")
-			builtin.grep_string({ search = word })
-		end, { desc = 'Project [W]ORD search' })
-		
+
+      --taken from ThePrimeagen
+      vim.keymap.set('n', '<leader>pws', function()
+        local word = vim.fn.expand '<cword>'
+        builtin.grep_string { search = word }
+      end, { desc = 'Project [w]ord search' })
+
+      vim.keymap.set('n', '<leader>pWs', function()
+        local word = vim.fn.expand '<cWORD>'
+        builtin.grep_string { search = word }
+      end, { desc = 'Project [W]ORD search' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -446,7 +445,7 @@ require('lazy').setup({
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- Useful status updates for LSP.
-	  -- Note: process messages bottom right corner
+      -- Note: process messages bottom right corner
       --{ 'j-hui/fidget.nvim', opts = {} },
 
       -- Allows extra capabilities provided by nvim-cmp
@@ -784,10 +783,10 @@ require('lazy').setup({
       luasnip.config.setup {}
 
       cmp.setup {
-		--defaults = {
-			--remove slash/backslash when autocompleting
-		--	label_trailing_slash = false,
-		--},
+        --defaults = {
+        --remove slash/backslash when autocompleting
+        --	label_trailing_slash = false,
+        --},
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body)
@@ -804,7 +803,7 @@ require('lazy').setup({
           ['<C-n>'] = cmp.mapping.select_next_item(),
           -- Select the [p]revious item
           ['<C-p>'] = cmp.mapping.select_prev_item(),
-		  --<C-y> to autocomplete
+          --<C-y> to autocomplete
 
           -- Scroll the documentation window [b]ack / [f]orward
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -875,7 +874,7 @@ require('lazy').setup({
       require('cyberdream').setup {
         styles = {
           --comments = { italic = false }, -- Disable italics in comments
-		  italic_comments = false,
+          italic_comments = false,
         },
       }
 
@@ -899,7 +898,7 @@ require('lazy').setup({
       --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
       --  - ci'  - [C]hange [I]nside [']quote
       require('mini.ai').setup { n_lines = 500 }
-	  
+
       -- Add/delete/replace surroundings (brackets, quotes, etc.)
       --
       -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
@@ -914,8 +913,6 @@ require('lazy').setup({
       -- set use_icons to true if you have a Nerd Font
       --statusline.setup { use_icons = vim.g.have_nerd_font }
       statusline.setup { use_icons = false }
-	  
-	  
 
       -- You can configure sections in the statusline by overriding their
       -- default behavior. For example, here we set the section for
@@ -1002,6 +999,6 @@ require('lazy').setup({
     },
   },
 })
- 
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
