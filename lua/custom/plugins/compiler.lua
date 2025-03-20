@@ -1,7 +1,9 @@
 return{
 	{
 		{ -- This plugin
-		  "Zeioth/compiler.nvim",
+		  "PowerUser64/compiler.nvim",
+		  branch = "msbuild",
+		  name = "compiler-msbuild",
 		  cmd = {"CompilerOpen", "CompilerToggleResults", "CompilerRedo"},
 		  dependencies = { "stevearc/overseer.nvim", "nvim-telescope/telescope.nvim" },
 		  opts = {},
@@ -19,16 +21,25 @@ return{
 			},
 		  },
 		},
-		-- Open compiler
-		vim.api.nvim_set_keymap('n', '<F6>', "<cmd>CompilerOpen<cr>", { noremap = true, silent = true }),
-
+		-- Run the program (simulate VS behavior)
+		vim.keymap.set("n", "<F5>", function()
+			local cwd = vim.fn.getcwd()
+			local project_folder = vim.fn.fnamemodify(cwd, ":t")
+			local exe_path = "..\\x64\\Debug\\" .. project_folder .. ".exe"
+			os.execute('start cmd /C "cd ' .. cwd .. '/' .. project_folder .. ' && ' .. exe_path .. ' && pause"')
+		end),
+		
 		-- Redo last selected option
-		vim.api.nvim_set_keymap('n', '<S-F6>',
+		vim.api.nvim_set_keymap('n', '<F6>',
 			 "<cmd>CompilerStop<cr>" -- (Optional, to dispose all tasks before redo)
 		  .. "<cmd>CompilerRedo<cr>",
 		 { noremap = true, silent = true }),
+		 
+		-- Open compiler
+		vim.api.nvim_set_keymap('n', '<F7>', "<cmd>CompilerOpen<cr>", { noremap = true, silent = true }),
 
 		-- Toggle compiler results
-		vim.api.nvim_set_keymap('n', '<S-F7>', "<cmd>CompilerToggleResults<cr>", { noremap = true, silent = true })
+		vim.api.nvim_set_keymap('n', '<F8>', "<cmd>CompilerToggleResults<cr>", { noremap = true, silent = true })
+		
 	}
 }
