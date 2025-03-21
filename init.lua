@@ -178,6 +178,7 @@ require('lazy').setup({
       vim.cmd.colorscheme 'arctic'
     end,
   },
+
   --other colorschemes
   { url = 'https://gitlab.com/sxwpb/halfspace.nvim', },
   'rmehri01/onenord.nvim',
@@ -283,6 +284,7 @@ require('lazy').setup({
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle/[T]est' },
+        { '<leader>r', group = '[R]est HTTP' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
         --lolo: added these lines
         { '<leader>g', group = '[G]it menu' },
