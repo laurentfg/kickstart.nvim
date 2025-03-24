@@ -660,14 +660,16 @@ require('lazy').setup({
         pylsp = {},
         cssls = {}, --css-lsp
         --ts_ls = {
-		--	filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
-		--},
+        --	filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+        --},
         jdtls = {},
         volar = {
-          filetypes = { 'vue'--[[, 'typescript', 'javascript', 'javascriptreact', 'typescriptreact'--]] },
-		  init_options = {
-			vue = { hybridMode = false },
-		  },
+          filetypes = {
+            'vue' --[[, 'typescript', 'javascript', 'javascriptreact', 'typescriptreact'--]],
+          },
+          init_options = {
+            vue = { hybridMode = false },
+          },
         },
 
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
