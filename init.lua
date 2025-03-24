@@ -180,8 +180,15 @@ require('lazy').setup({
   },
 
   --other colorschemes
-  { url = 'https://gitlab.com/sxwpb/halfspace.nvim', },
+  { url = 'https://gitlab.com/sxwpb/halfspace.nvim' },
   'rmehri01/onenord.nvim',
+  {
+    'L-Colombo/oldschool.nvim',
+    config = true,
+    -- to ovverride palette colors (example):
+    -- opts = { white = "#ff07ff"}
+  },
+  'mfussenegger/nvim-jdtls',
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -280,7 +287,7 @@ require('lazy').setup({
       spec = {
         { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
         { '<leader>d', group = '[D]ocument' },
-        { '<leader>r', group = '[R]ename' },
+        --{ '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle/[T]est' },
@@ -306,7 +313,8 @@ require('lazy').setup({
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
-    branch = '0.1.8',
+    tag = '0.1.8',
+    branch = '0.1.x',
     dependencies = {
       'nvim-lua/plenary.nvim',
       { -- If encountering errors, see telescope-fzf-native README for installation instructions
@@ -354,13 +362,16 @@ require('lazy').setup({
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
-        -- defaults = {
-        --   mappings = {
-        --     i = {
-        --	 ['<c-enter>'] = 'to_fuzzy_refine' ,
-        --	 },
-        --   },
-        -- },
+        defaults = {
+          file_ignore_patterns = {
+            'node_modules',
+          },
+          --   mappings = {
+          --     i = {
+          --	 ['<c-enter>'] = 'to_fuzzy_refine' ,
+          --	 },
+          --   },
+        },
         -- pickers = {}
         extensions = {
           ['ui-select'] = {
@@ -503,7 +514,17 @@ require('lazy').setup({
           map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
           -- Find references for the word under your cursor.
-          map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+          map('gr', require('telescope.builtin').lsp_references, '[G]oto [r]eferences')
+
+          --Send references to quicklist
+          vim.keymap.set('n', 'gR', function()
+            vim.lsp.buf.references(nil, {
+              on_list = function(opts)
+                vim.fn.setqflist({}, ' ', opts)
+                vim.cmd 'copen'
+              end,
+            })
+          end, { desc = '[G]oto [R]eferences → Quickfix' })
 
           -- Jump to the implementation of the word under your cursor.
           --  Useful when your language has ways of declaring types without an actual implementation.
@@ -524,7 +545,7 @@ require('lazy').setup({
 
           -- Rename the variable under your cursor.
           --  Most Language Servers support renaming across files, etc.
-          map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+          map('<leader>cr', vim.lsp.buf.rename, '[R]ename variable')
 
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
@@ -634,20 +655,30 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
-        -- gopls = {},
-        -- pyright = {},
-        -- rust_analyzer = {},
+        clangd = {},
+        cpplint = {},
+        pylsp = {},
+        cssls = {}, --css-lsp
+        --ts_ls = {
+		--	filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+		--},
+        jdtls = {},
+        volar = {
+          filetypes = { 'vue'--[[, 'typescript', 'javascript', 'javascriptreact', 'typescriptreact'--]] },
+		  init_options = {
+			vue = { hybridMode = false },
+		  },
+        },
+
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
         --
 
-        lua_ls = {
+        lua_ls = { --lua-language-server
           -- cmd = { ... },
           -- filetypes = { ... },
           -- capabilities = {},
@@ -935,7 +966,24 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'javascript', 'typescript', 'vue', 'cpp', 'python', 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = {
+        'javascript',
+        'typescript',
+        'vue',
+        'cpp',
+        'python',
+        'bash',
+        'c',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'vim',
+        'vimdoc',
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
