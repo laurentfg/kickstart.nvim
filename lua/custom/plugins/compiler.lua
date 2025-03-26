@@ -27,12 +27,20 @@ return {
       local project_folder = vim.fn.fnamemodify(cwd, ':t')
       local exe_path = '..\\x64\\Debug\\' .. project_folder .. '.exe'
       os.execute('start cmd /C "cd ' .. cwd .. '/' .. project_folder .. ' && ' .. exe_path .. ' && pause"')
+	  vim.cmd('CompilerToggleResults')
+    end),
+	vim.keymap.set('n', '<c-F9>', function()
+      local cwd = vim.fn.getcwd()
+      local project_folder = vim.fn.fnamemodify(cwd, ':t')
+      local exe_path = '..\\x64\\Debug\\' .. project_folder .. '.exe'
+      os.execute('start cmd /C "cd ' .. cwd .. '/' .. project_folder .. ' && ' .. exe_path .. ' && pause"')
     end),
     vim.keymap.set('n', '<leader><F9>', function()
       local cwd = vim.fn.getcwd()
       local project_folder = vim.fn.fnamemodify(cwd, ':t')
       local exe_path = '..\\x64\\Release\\' .. project_folder .. '.exe'
       os.execute('start cmd /C "cd ' .. cwd .. '/' .. project_folder .. ' && ' .. exe_path .. '"')
+	  vim.cmd('CompilerToggleResults')
     end, { desc = 'Execute .exe Release ver.' }),
 
     -- Redo last selected option
