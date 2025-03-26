@@ -8,11 +8,14 @@ return {
 			"antoinemadec/FixCursorHold.nvim",
 			"nvim-treesitter/nvim-treesitter",
 			--les plugins de tests ici
-			"marilari88/neotest-vitest"
+			"marilari88/neotest-vitest",
+			"nvim-neotest/neotest-python",
+			"mfussenegger/nvim-dap-python",
 		  },
 		  opts = {
 			adapters = {
 			  ["neotest-vitest"] = {},
+			  ["neotest-python"] = {},
 			},
 		  },
 		  config = function()
@@ -28,6 +31,7 @@ return {
 				  end,
 				  test_file_pattern = "src/.+__tests__/.+%.spec%.ts$",
 				},
+				require("neotest-python"){ runner = "unittest" },
 			  }
 			})
 		  end,
