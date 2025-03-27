@@ -729,6 +729,16 @@ require('lazy').setup({
           end,
         },
       }
+	  
+	  --using .clang-format instead
+	  -- c++ formatting
+		--require("lspconfig").clangd.setup({
+		  --cmd = { "clangd", "--fallback-style=none" }, -- Évite d'appliquer un style par défaut
+		--  cmd = { "clangd" }, -- Évite d'appliquer un style par défaut
+		--  on_attach = function(client, bufnr)
+		--	client.server_capabilities.documentFormattingProvider = true
+		--  end,
+		--})
     end,
   },
 
@@ -765,6 +775,9 @@ require('lazy').setup({
         }
       end,
       formatters_by_ft = {
+		cpp = { "clang-format" },  -- Force clang-format pour C++
+		c = { "clang-format" },
+		h = { "clang-format" },
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },

@@ -29,12 +29,7 @@ return {
 			vim.keymap.set("n",
 			"<leader>A", 
 			function()
-				local tabline = vim.opt.showtabline:get()
-				if tabline == 0 then
-					vim.opt.showtabline = 2
-				else
-					vim.opt.showtabline = 0
-				end
+				vim.opt.showtabline = ( vim.opt.showtabline:get() == 0) and 2 or 0
 			end,
 			{ desc = 'toggle t[A]bline' } )
 			
