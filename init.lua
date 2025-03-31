@@ -83,6 +83,7 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -188,7 +189,29 @@ require('lazy').setup({
     -- to ovverride palette colors (example):
     -- opts = { white = "#ff07ff"}
   },
+  {
+    'NLKNguyen/papercolor-theme',
+    --priority = 1000,
+    config = function()
+      -- Blank to address startup error
+    end,
+    init = function()
+      vim.opt.termguicolors = true
+      vim.cmd.colorscheme 'PaperColor'
+    end,
+  },
+  
+  
   'mfussenegger/nvim-jdtls',
+ 
+	--does not work on Windows
+--  {
+	--  "leosmaia21/gcompilecommands.nvim",
+	--  opts = {
+--		tmp_file_path = "c:\\tmp\\compilecommandsNEOVIM.json"
+--	  },
+--	  ft = { "c", "cpp" }, -- lazy load plugin only on C and C++ filetypes
+--  },
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -365,6 +388,8 @@ require('lazy').setup({
         defaults = {
           file_ignore_patterns = {
             'node_modules',
+			'x64\\Debug',
+			'x64\\Release'
           },
           --   mappings = {
           --     i = {
@@ -655,7 +680,20 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        clangd = {},
+        clangd = {
+		  --cmd = { 
+		--	"clangd",
+		--	"--background-index",  -- Construit un index global
+		--	"--clang-tidy",        -- Active clang-tidy pour des diagnostics avancés
+		--	"--completion-style=detailed",
+		--	"--cross-file-rename",
+		--	"--header-insertion=never",
+		--	"--pch-storage=memory" -- Stockage des précompilés en mémoire
+	    --  },
+		  --capabilities = {
+		--	documentFormattingProvider = false,
+		  --},
+		},
         cpplint = {},
         pylsp = {},
         cssls = {}, --css-lsp
@@ -695,6 +733,14 @@ require('lazy').setup({
           },
         },
       }
+	  
+	  --cpp and h files formatted correctly
+	--  vim.api.nvim_create_autocmd("BufWritePre", {
+	 --   pattern = { "*.cpp", "*.h" },
+	  --  callback = function()
+	--	  vim.cmd("silent! undojoin | silent! !clang-format -i %")
+	  --  end,
+	  --})
 
       -- Ensure the servers and tools above are installed
       --

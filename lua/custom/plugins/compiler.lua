@@ -57,6 +57,21 @@ return {
 
     -- Toggle compiler results
     vim.api.nvim_set_keymap('n', '<F12>', '<cmd>CompilerToggleResults<cr>', { noremap = true, silent = true }),
+	
+	--Make compile.commands.json
+    --vim.api.nvim_set_keymap('n', '<c-F11>', '<CMD>make -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -B build && cp build/compile_commands.json .<CR>', { noremap = true, silent = true }),
+	
+	--local function generate_compile_commands()
+	--  local cmd = 'powershell -Command "& {clang-build.ps1}"'
+	--  os.execute(cmd)
+	--  print("✅ compile_commands.json généré avec succès !")
+	--end
+
+	--vim.api.nvim_create_user_command("GenerateCompileCommands", generate_compile_commands, {}),
+
+	--requires 'leosmaia21/gcompilecommands.nvim'
+	--vim.keymap.set("n", "<C-F11>", '<CMD>Gcompilecommands<CR>',{ desc = "Générer compile_commands.json" })
+	
   },
 }
 

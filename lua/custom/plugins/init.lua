@@ -46,5 +46,5 @@ return {
 		vim.keymap.set('x', '<leader>n', ':norm ', {desc = "[n]ormal cmd on highlight" } ),
 		
 		--vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>"),
-	}
+	} 
   }
