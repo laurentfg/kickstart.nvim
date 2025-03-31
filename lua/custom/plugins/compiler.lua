@@ -22,20 +22,20 @@ return {
       },
     },
     -- Run the program (simulate VS behavior)
-    vim.keymap.set('n', '<F9>', function()
+    vim.keymap.set('n', '<F10>', function()
       local cwd = vim.fn.getcwd()
       local project_folder = vim.fn.fnamemodify(cwd, ':t')
       local exe_path = '..\\x64\\Debug\\' .. project_folder .. '.exe'
       os.execute('start cmd /C "cd ' .. cwd .. '/' .. project_folder .. ' && ' .. exe_path .. ' && pause"')
 	  vim.cmd('CompilerToggleResults')
     end),
-	vim.keymap.set('n', '<c-F9>', function()
+	vim.keymap.set('n', '<c-F10>', function()
       local cwd = vim.fn.getcwd()
       local project_folder = vim.fn.fnamemodify(cwd, ':t')
       local exe_path = '..\\x64\\Debug\\' .. project_folder .. '.exe'
       os.execute('start cmd /C "cd ' .. cwd .. '/' .. project_folder .. ' && ' .. exe_path .. ' && pause"')
     end),
-    vim.keymap.set('n', '<leader><F9>', function()
+    vim.keymap.set('n', '<leader><F10>', function()
       local cwd = vim.fn.getcwd()
       local project_folder = vim.fn.fnamemodify(cwd, ':t')
       local exe_path = '..\\x64\\Release\\' .. project_folder .. '.exe'
@@ -44,11 +44,27 @@ return {
     end, { desc = 'Execute .exe Release ver.' }),
 
     -- Redo last selected option
-    vim.api.nvim_set_keymap(
+    vim.keymap.set(
       'n',
-      '<F10>',
-      '<cmd>CompilerStop<cr>' -- (Optional, to dispose all tasks before redo)
-        .. '<cmd>CompilerRedo<cr>',
+      '<F9>',
+	  function()
+		  --local cwd = vim.fn.getcwd()
+		  --local project_folder = vim.fn.fnamemodify(cwd, ':t')
+		  --local exe_path = '..\\x64\\Debug\\' .. project_folder .. '.exe'
+		  --local cmd = 'start cmd /C "cd ' .. cwd .. '\\' .. project_folder .. ' && ' .. exe_path .. ' && pause"'
+		  vim.cmd("CompilerStop")		  
+		  vim.cmd("CompilerRedo")
+			--vim.defer_fn(function()
+				--if vim.g.compiler_last_build_success then
+				--	os.execute(cmd)
+				--	vim.cmd('CompilerToggleResults')
+				--else
+				--	vim.notify("Build failed, executable not run.", vim.log.levels.WARN)
+				--end
+			--end, 3000)
+	  end,
+      --'<cmd>CompilerStop<cr>' -- (Optional, to dispose all tasks before redo)
+      --  .. '<cmd>CompilerRedo<cr>',
       { noremap = true, silent = true }
     ),
 
