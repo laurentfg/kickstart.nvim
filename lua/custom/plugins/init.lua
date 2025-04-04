@@ -46,5 +46,18 @@ return {
 		vim.keymap.set('x', '<leader>n', ':norm ', {desc = "[n]ormal cmd on highlight" } ),
 		
 		--vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>"),
+		
+		vim.keymap.set("n", "<M-Left>",  "<cmd>vertical resize -5<CR>", { noremap = true, silent = true }),
+		vim.keymap.set("n", "<M-Right>", "<cmd>vertical resize +5<CR>", { noremap = true, silent = true }),
+		vim.keymap.set("n", "<M-Up>",    "<cmd>resize +5<CR>", { noremap = true, silent = true }),
+		vim.keymap.set("n", "<M-Down>",  "<cmd>resize -5<CR>", { noremap = true, silent = true }),
+		
+		--made by ChatGPT, imitates the behavior of IntelliJ
+		--where opening { right before a ) will create the { after instead of before the )
+
+		--code ne marche pas, donc enlevé
+		
+		vim.keymap.set("n", "<M-q>",  "<cmd>ClangdSwitchSourceHeader<CR>", { noremap = true, silent = true }),
+
 	} 
   }
