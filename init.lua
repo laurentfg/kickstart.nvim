@@ -1024,6 +1024,7 @@ require('lazy').setup({
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
+--	branch = 'v0.9.2',
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
@@ -1031,10 +1032,10 @@ require('lazy').setup({
         'javascript',
         'typescript',
         'vue',
-        'cpp',
+        --'cpp',
         'python',
         'bash',
-        'c',
+        --'c',
         'diff',
         'html',
         'lua',
