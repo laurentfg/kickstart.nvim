@@ -58,6 +58,8 @@ return {
 		--code ne marche pas, donc enlevé
 		
 		vim.keymap.set("n", "<M-q>",  "<cmd>ClangdSwitchSourceHeader<CR>", { noremap = true, silent = true }),
+		
+		
 
 	} 
   }

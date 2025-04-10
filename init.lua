@@ -163,6 +163,7 @@ vim.opt.rtp:prepend(lazypath)
 --    :Lazy update
 -- NOTE: Here is where you install your plugins.
 
+
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
@@ -709,6 +710,8 @@ require('lazy').setup({
             vue = { hybridMode = false },
           },
         },
+		
+		prettier = {},
 
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -829,10 +832,20 @@ require('lazy').setup({
         -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+         javascript = { "prettierd", "prettier", stop_after_first = true },
+         typescript = { "prettierd", "prettier", stop_after_first = true },
+      },
+	  formatters = {
+        prettier = {
+          prepend_args = {
+            "--tab-width", "4",
+            "--use-tabs", "false",
+          },
+        },
       },
     },
   },
+
 
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
