@@ -191,7 +191,7 @@ require('lazy').setup({
   },
   {
     'NLKNguyen/papercolor-theme',
-    --priority = 1000,
+    priority = 1000,
     config = function()
       -- Blank to address startup error
     end,
@@ -200,6 +200,21 @@ require('lazy').setup({
       vim.cmd.colorscheme 'PaperColor'
     end,
   },
+  
+  {
+    'projekt0n/github-nvim-theme',
+    name = 'github-theme',
+    --config = function()
+  	--vim.cmd('colorscheme github_dark_high_contrast')
+    --end,
+  },
+  'miikanissi/modus-themes.nvim', 
+  'wtfox/jellybeans.nvim',
+  { 'bluz71/vim-moonfly-colors', name = "moonfly" },
+  'rockerBOO/boo-colorscheme-nvim',
+
+
+  
   
   
   'mfussenegger/nvim-jdtls',
