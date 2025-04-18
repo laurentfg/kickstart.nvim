@@ -152,6 +152,9 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+--hate when that happens, so here is a good enough fix
+vim.api.nvim_create_user_command('W', 'w', {})
+
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
@@ -213,9 +216,14 @@ require('lazy').setup({
   'wtfox/jellybeans.nvim',
   { 'bluz71/vim-moonfly-colors', name = "moonfly" },
   'rockerBOO/boo-colorscheme-nvim',
+  'Mofiqul/vscode.nvim',
 
 
-  
+  {
+	'Aasim-A/scrollEOF.nvim',
+	event = { 'CursorMoved', 'WinScrolled' },
+	opts = {},
+  },
   
   
   'mfussenegger/nvim-jdtls',
@@ -727,6 +735,7 @@ require('lazy').setup({
         },
 		
 		prettier = {},
+		prettierd = {},
 
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -847,12 +856,13 @@ require('lazy').setup({
         -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
-         javascript = { "prettierd", "prettier", stop_after_first = true },
-         typescript = { "prettierd", "prettier", stop_after_first = true },
+         javascript = { "prettier", stop_after_first = true },
+         typescript = { "prettier", stop_after_first = true },
       },
 	  formatters = {
         prettier = {
           prepend_args = {
+		  --"--config", vim.fn.expand("~/.prettierrc")
             "--tab-width", "4",
             "--use-tabs", "false",
           },
