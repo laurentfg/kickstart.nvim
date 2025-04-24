@@ -451,12 +451,12 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>pws', function()
         local word = vim.fn.expand '<cword>'
         builtin.grep_string { search = word }
-      end, { desc = 'Project [w]ord search' })
+      end, { desc = 'Project word [s]earch' })
 
       vim.keymap.set('n', '<leader>pWs', function()
         local word = vim.fn.expand '<cWORD>'
         builtin.grep_string { search = word }
-      end, { desc = 'Project [W]ORD search' })
+      end, { desc = 'Project WORD [s]earch' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -735,7 +735,7 @@ require('lazy').setup({
         },
 		
 		prettier = {},
-		prettierd = {},
+		--prettierd = {},
 
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -803,14 +803,13 @@ require('lazy').setup({
         },
       }
 	  
-	  --using .clang-format instead
-	  -- c++ formatting
-		--require("lspconfig").clangd.setup({
-		  --cmd = { "clangd", "--fallback-style=none" }, -- Évite d'appliquer un style par défaut
-		--  cmd = { "clangd" }, -- Évite d'appliquer un style par défaut
+		--require("lspconfig").volar.setup({
 		--  on_attach = function(client, bufnr)
-		--	client.server_capabilities.documentFormattingProvider = true
-		--  end,
+		--    if client.name == "volar" then
+			  --client.server_capabilities.documentFormattingProvider = false
+			  --client.server_capabilities.documentRangeFormattingProvider = false
+		--	end
+		--  end
 		--})
     end,
   },
@@ -852,12 +851,13 @@ require('lazy').setup({
 		c = { "clang-format" },
 		h = { "clang-format" },
         lua = { 'stylua' },
+		--vue = { "prettier", stop_after_first = true },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
-         javascript = { "prettier", stop_after_first = true },
-         typescript = { "prettier", stop_after_first = true },
+        javascript = { "prettier", stop_after_first = true },
+        typescript = { "prettier", stop_after_first = true },
       },
 	  formatters = {
         prettier = {
@@ -1117,7 +1117,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
