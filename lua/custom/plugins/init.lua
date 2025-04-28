@@ -8,6 +8,8 @@ return {
 		vim.keymap.set('n', '<leader>x', "<cmd>!chmod +x %<CR>", { desc = 'make the file executable (Linux)' }),
 		vim.keymap.set('n', '<leader>z', ":Telescope colorscheme<CR>", { desc = 'Select Colorscheme' }),
 		
+		vim.keymap.set('n', '<leader>Z', ":luafile ~/appdata/local/nvim/init.lua<CR>", { desc = 'Select Colorscheme' }),
+		
 		--taken from Theprimeagen
 		--slide the selected through the text like a box
 		vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv"),

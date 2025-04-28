@@ -98,7 +98,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show Diagnostic [E]rror messages' })
+vim.keymap.set('n', '<c-e>', vim.diagnostic.open_float, { desc = 'Show Diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
@@ -834,7 +834,7 @@ require('lazy').setup({
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
+        local disable_filetypes = { c = true, cpp = true, h = true, vue = true }
         local lsp_format_opt
         if disable_filetypes[vim.bo[bufnr].filetype] then
           lsp_format_opt = 'never'
@@ -851,7 +851,7 @@ require('lazy').setup({
 		c = { "clang-format" },
 		h = { "clang-format" },
         lua = { 'stylua' },
-		--vue = { "prettier", stop_after_first = true },
+		vue = { "vue-language-server", stop_after_first = true },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --

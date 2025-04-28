@@ -9,7 +9,7 @@ return {
 
       vim.keymap.set('n', '<leader>a', mark.add_file, { desc = '[a]dd to Harpoon list' })
 
-      vim.keymap.set('n', '<C-e>', ui.toggle_quick_menu)
+      vim.keymap.set('n', '<leader>e', ui.toggle_quick_menu, { desc = '[e]dit Harpoon list' })
 
       vim.keymap.set('n', '<C-h>', function()
         ui.nav_file(1)
