@@ -22,6 +22,13 @@ return {
 		vim.keymap.set("n", "n", "nzzzv"),
 		vim.keymap.set("n", "N", "Nzzzv"),
 		
+		--cursor moves horizontally
+		vim.keymap.set("n", "<M-a>", "zH"),
+		vim.keymap.set("n", "<M-d>", "zL"),
+		--screen move without cursor
+		vim.keymap.set("n", "<M-w>", "zb"),
+		vim.keymap.set("n", "<M-s>", "zt"),
+		
 		--obsolete since capital P works now for that
 		--vim.keymap.set("x", "<leader>p", [["_dP]], { desc = 'Paste without replacing buffer' }),		
 		

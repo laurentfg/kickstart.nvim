@@ -733,6 +733,7 @@ require('lazy').setup({
             vue = { hybridMode = false },
           },
         },
+		csharpier = {},
 		
 		prettier = {},
 		--prettierd = {},
@@ -852,6 +853,7 @@ require('lazy').setup({
 		h = { "clang-format" },
         lua = { 'stylua' },
 		vue = { "vue-language-server", stop_after_first = true },
+		--cs = { 'csharpier' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
