@@ -225,6 +225,11 @@ require('lazy').setup({
 	opts = {},
   },
   
+  {
+    'fabridamicelli/cronex.nvim',
+    opts = {}, 
+  },
+  
   
   'mfussenegger/nvim-jdtls',
  
@@ -292,7 +297,7 @@ require('lazy').setup({
     opts = {
       -- delay between pressing a key and opening which-key (milliseconds)
       -- this setting is independent of vim.opt.timeoutlen
-      delay = 0,
+      delay = 615,
       icons = {
         -- set icon mappings to true if you have a Nerd Font
         mappings = vim.g.have_nerd_font,
@@ -478,8 +483,8 @@ require('lazy').setup({
 
       -- Shortcut for searching your Neovim configuration files
       vim.keymap.set('n', '<leader>sn', function()
-        builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
+        builtin.find_files { cwd = vim.fn.stdpath 'config' }
     end,
   },
 
