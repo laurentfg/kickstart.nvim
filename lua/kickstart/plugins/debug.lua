@@ -54,6 +54,13 @@ return {
       end,
       desc = 'Debug: Step Out',
     },
+	{
+      '<F4>',
+      function()
+        require('dap').step_back()
+      end,
+      desc = 'Debug: Step back',
+    },
     {
       '<leader>b',
       function()
@@ -94,9 +101,12 @@ return {
       -- online, please don't ask me how to install them :)
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
-        'delve',
+        --'delve',
+		"codelldb", 
+		--"cppdbg",
       },
     }
+	
 
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
@@ -107,15 +117,15 @@ return {
       icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
       controls = {
         icons = {
-          pause = '⏸',
-          play = '▶',
-          step_into = '⏎',
-          step_over = '⏭',
-          step_out = '⏮',
-          step_back = 'b',
-          run_last = '▶▶',
-          terminate = '⏹',
-          disconnect = '⏏',
+          --pause = '⏸',
+          --play = '▶',
+          --step_into = '⏎',
+          --step_over = '⏭',
+          --step_out = '⏮',
+          --step_back = 'b',
+          --run_last = '▶▶',
+          --terminate = '⏹',
+          --disconnect = '⏏',
         },
       },
     }
@@ -132,17 +142,67 @@ return {
     --   vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
     -- end
 
+	--kickstart defaults
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
+	
+	--TJ defaults:
+	--dap.listeners.before.attach.dapui_config = function()
+    --  ui.open()
+    --end
+    --dap.listeners.before.launch.dapui_config = function()
+    --  ui.open()
+    --end
+    --dap.listeners.before.event_terminated.dapui_config = function()
+    --  ui.close()
+    --end
+    --dap.listeners.before.event_exited.dapui_config = function()
+    --  ui.close()
+    --end
+	
+	vim.keymap.set("n", "<leader>?", function()
+      require("dapui").eval(nil, { enter = true })
+    end, {desc = "Expand values during debug [?]" })
+	
+	vim.keymap.set("n", "<space>gb", dap.run_to_cursor, { desc = 'run until cursor for [b]reakpoint' })
 
     -- Install golang specific config
-    require('dap-go').setup {
-      delve = {
-        -- On Windows delve must be run attached or it crashes.
-        -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
-        detached = vim.fn.has 'win32' == 0,
-      },
-    }
+    --require('dap-go').setup {
+    --  delve = {
+    --    -- On Windows delve must be run attached or it crashes.
+    --    -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
+    --    detached = vim.fn.has 'win32' == 0,
+    --  },
+    --}
+	
+	dap.adapters.codelldb = {
+		type = "executable",
+		command = "codelldb", -- or if not in $PATH: "/absolute/path/to/codelldb"
+		
+		-- On windows you may have to uncomment this:
+		detached = false,
+	}
+	
+	dap.configurations.cpp = {
+	{
+		name = "Launch file",
+		type = "codelldb",
+		request = "launch",
+		program = function()
+			local cwd = vim.fn.getcwd()
+			local basic_path = vim.fn.fnamemodify(cwd, ':h')
+			local project_folder = vim.fn.fnamemodify(cwd, ':t')
+			return basic_path .. '\\' .. project_folder .. '\\x64\\Debug\\' .. project_folder .. '.exe'
+		end,
+		cwd = function()
+			local cwd = vim.fn.getcwd()
+			local project_folder = vim.fn.fnamemodify(cwd, ':t')
+			return cwd .. '\\' .. project_folder
+		end,
+		--stopOnEntry = false,
+		--console = "externalTerminal",
+	},
+}
   end,
 }

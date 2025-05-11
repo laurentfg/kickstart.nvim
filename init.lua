@@ -217,6 +217,11 @@ require('lazy').setup({
   { 'bluz71/vim-moonfly-colors', name = "moonfly" },
   'rockerBOO/boo-colorscheme-nvim',
   'Mofiqul/vscode.nvim',
+--  {
+--	"wtfox/jellybeans.nvim",
+--	lazy = false,
+--	opts = {},
+--  },
 
 
   {
@@ -483,8 +488,8 @@ require('lazy').setup({
 
       -- Shortcut for searching your Neovim configuration files
       vim.keymap.set('n', '<leader>sn', function()
-      end, { desc = '[S]earch [N]eovim files' })
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
+      end, { desc = '[S]earch [N]eovim files' })
     end,
   },
 
@@ -963,7 +968,7 @@ require('lazy').setup({
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
           --  completions whenever it has completion options available.
-          ['<C-Space>'] = cmp.mapping.complete {},
+          ['<C-space>'] = cmp.mapping.complete {},
 
           -- Think of <c-l> as moving to the right of your snippet expansion.
           --  So if you have a snippet that's like:
