@@ -27,47 +27,57 @@ return {
       local project_folder = vim.fn.fnamemodify(cwd, ':t')
       local exe_path = '..\\x64\\Debug\\' .. project_folder .. '.exe'
       os.execute('start cmd /C "cd ' .. cwd .. '/' .. project_folder .. ' && ' .. exe_path .. ' && pause"')
-	  vim.cmd('CompilerToggleResults')
+	  --vim.cmd('CompilerToggleResults')
     end),
-	vim.keymap.set('n', '<c-F10>', function()
-      local cwd = vim.fn.getcwd()
-      local project_folder = vim.fn.fnamemodify(cwd, ':t')
-      local exe_path = '..\\x64\\Debug\\' .. project_folder .. '.exe'
-      os.execute('start cmd /C "cd ' .. cwd .. '/' .. project_folder .. ' && ' .. exe_path .. ' && pause"')
-    end),
+	--vim.keymap.set('n', '<c-F10>', function()
+    --  local cwd = vim.fn.getcwd()
+    --  local project_folder = vim.fn.fnamemodify(cwd, ':t')
+    --  local exe_path = '..\\x64\\Debug\\' .. project_folder .. '.exe'
+    --  os.execute('start cmd /C "cd ' .. cwd .. '/' .. project_folder .. ' && ' .. exe_path .. ' && pause"')
+    --end),
     vim.keymap.set('n', '<leader><F10>', function()
       local cwd = vim.fn.getcwd()
       local project_folder = vim.fn.fnamemodify(cwd, ':t')
       local exe_path = '..\\x64\\Release\\' .. project_folder .. '.exe'
       os.execute('start cmd /C "cd ' .. cwd .. '/' .. project_folder .. ' && ' .. exe_path .. '"')
-	  vim.cmd('CompilerToggleResults')
+	  --vim.cmd('CompilerToggleResults')
     end, { desc = 'Execute .exe Release ver.' }),
 
     -- Redo last selected option
-    vim.keymap.set(
-      'n',
-      '<F9>',
-	  function()
-		  --local cwd = vim.fn.getcwd()
-		  --local project_folder = vim.fn.fnamemodify(cwd, ':t')
-		  --local exe_path = '..\\x64\\Debug\\' .. project_folder .. '.exe'
-		  --local cmd = 'start cmd /C "cd ' .. cwd .. '\\' .. project_folder .. ' && ' .. exe_path .. ' && pause"'
-		  vim.cmd("CompilerStop")		  
-		  vim.cmd("CompilerRedo")
-			--vim.defer_fn(function()
-				--if vim.g.compiler_last_build_success then
-				--	os.execute(cmd)
-				--	vim.cmd('CompilerToggleResults')
-				--else
-				--	vim.notify("Build failed, executable not run.", vim.log.levels.WARN)
-				--end
-			--end, 3000)
-	  end,
-      --'<cmd>CompilerStop<cr>' -- (Optional, to dispose all tasks before redo)
-      --  .. '<cmd>CompilerRedo<cr>',
-      { noremap = true, silent = true }
-    ),
+    --vim.keymap.set(
+    --  'n',
+    --  '<F9>',
+	--  function()
+	--	  vim.cmd("CompilerStop")		  
+	--	  vim.cmd("CompilerRedo")
+	--  end,
+    --  { noremap = true, silent = true }
+    --),
+	
+	vim.keymap.set('n', '<F9>', function()
+	  local overseer = require("overseer")
+	  vim.cmd("CompilerStop")
+	  vim.cmd("CompilerRedo")
 
+	  vim.defer_fn(function()
+		local tasks = overseer.list_tasks({ recent_first = true })
+		local task = tasks[1]
+		if task then
+		  task:subscribe("on_complete", function(_, status)
+			if status == "SUCCESS" then
+			  local cwd = vim.fn.getcwd()
+			  local project_folder = vim.fn.fnamemodify(cwd, ':t')
+			  local exe_path = '..\\x64\\Debug\\' .. project_folder .. '.exe'
+			  os.execute('start cmd /C "cd ' .. cwd .. '\\' .. project_folder .. ' && ' .. exe_path .. ' && pause"')
+			  vim.cmd('CompilerToggleResults')
+			end
+		  end)
+		else
+		  vim.notify("❗ Aucune tâche trouvée pour CompilerRedo.", vim.log.levels.ERROR)
+		end
+	  end, 100)
+	end, { noremap = true, silent = true }),
+	
     -- Open compiler
     vim.api.nvim_set_keymap('n', '<F11>', '<cmd>CompilerOpen<cr>', { noremap = true, silent = true }),
 

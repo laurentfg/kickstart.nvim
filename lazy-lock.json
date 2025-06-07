@@ -12,6 +12,7 @@
   "cronex.nvim": { "branch": "main", "commit": "b6319db0f5e5997c03724cbe9c9ca1fa8e3e7b43" },
   "cyberdream.nvim": { "branch": "main", "commit": "339a7b1293568405847b3627247da82a6030a852" },
   "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
+  "friendly-snippets": { "branch": "main", "commit": "572f5660cf05f8cd8834e096d7b4c921ba18e175" },
   "github-theme": { "branch": "main", "commit": "c106c9472154d6b2c74b74565616b877ae8ed31d" },
   "gitsigns.nvim": { "branch": "main", "commit": "7010000889bfb6c26065e0b0f7f1e6aa9163edd9" },
   "halfspace.nvim": { "branch": "main", "commit": "54093a7cfa0b881ee7b619603f0ece052c1e9f15" },

@@ -34,7 +34,7 @@ return {
 		
 		--put the yank in the OS register
 		vim.keymap.set({"n", "v"}, "<leader>y", [["+y]], { desc = 'yank to OS Register' }),
-		vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = 'yank to OS Register' }),
+		vim.keymap.set("n", "<leader>Y", "ggVGy", { desc = '[Y]ank whole document' }),
 		
 		
 		--movement stays centered in quickfix
@@ -60,15 +60,61 @@ return {
 		vim.keymap.set("n", "<M-Right>", "<cmd>vertical resize +5<CR>", { noremap = true, silent = true }),
 		vim.keymap.set("n", "<M-Up>",    "<cmd>resize +5<CR>", { noremap = true, silent = true }),
 		vim.keymap.set("n", "<M-Down>",  "<cmd>resize -5<CR>", { noremap = true, silent = true }),
-		
-		--made by ChatGPT, imitates the behavior of IntelliJ
-		--where opening { right before a ) will create the { after instead of before the )
-
-		--code ne marche pas, donc enlevé
-		
+				
 		vim.keymap.set("n", "<M-q>",  "<cmd>ClangdSwitchSourceHeader<CR>", { noremap = true, silent = true }),
 		
 		
+		--all 3 made by ChatGPT
+		--equivalent to CTRL+w to the right
+		vim.keymap.set("i", "<C-Del>", function()
+		  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+		  local line = vim.api.nvim_get_current_line()
 
+		  local _, finish = line:find("%s*%w*", col + 1)
+		  if finish == nil then return end
+
+		  local new_line = line:sub(1, col) .. line:sub(finish + 1)
+		  vim.api.nvim_set_current_line(new_line)
+		end, { desc = "Delete word to the right", noremap = true }),
+		
+		vim.keymap.set("i", "<M-w>", function()
+		  local col = vim.fn.col(".")
+		  if col <= 1 then return end
+
+		  local line = vim.fn.getline(".")
+		  local start = col - 1
+		  while start > 0 and not line:sub(start, start):match("[A-Z]") do
+			start = start - 1
+		  end
+
+		  local n = (start == 0) and col - 1 or col - start
+		  local bs = vim.api.nvim_replace_termcodes("<BS>", true, false, true)
+		  vim.api.nvim_feedkeys(bs:rep(n), "n", true)
+		end, { desc = "Delete to previous uppercase letter", noremap = true }),
+		
+		vim.keymap.set("i", "<M-Del>", function()
+		  local col = vim.fn.col(".")
+		  local line = vim.fn.getline(".")
+		  local len = #line
+		  if col > len then return end
+
+		  local stop = col
+		  while stop <= len and not line:sub(stop, stop):match("[A-Z]") do
+			stop = stop + 1
+		  end
+
+		  local n = (stop > len) and (len - col + 1) or (stop - col)
+		  local del = vim.api.nvim_replace_termcodes("<Del>", true, false, true)
+		  vim.api.nvim_feedkeys(del:rep(n), "n", true)
+		end, { desc = "Delete to next uppercase letter", noremap = true }),
+
+
+		vim.keymap.set("n", "<C-/>", "mzI//<Esc>`z", { noremap = false, silent = true}),
+		vim.keymap.set("n", "<C-_>", "mzI//<Esc>`z", { noremap = false, silent = true}),
+		
+		vim.keymap.set("i", "<M-;>", "<esc>A;"),
+		vim.keymap.set("i", "<M-[>", function()
+		vim.api.nvim_input("<esc>A{<Enter>}<C-o>O")
+		end, { noremap = true}),
 	} 
   }

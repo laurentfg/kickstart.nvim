@@ -7,6 +7,14 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
 
+-- remove start message
+vim.cmd("set shortmess+=I") 
+
+-- configure folds
+--vim.cmd("set foldcolumn=1")
+vim.cmd("set foldmethod=indent")
+vim.opt.foldlevelstart = 99
+
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
@@ -154,6 +162,16 @@ vim.opt.rtp:prepend(lazypath)
 
 --hate when that happens, so here is a good enough fix
 vim.api.nvim_create_user_command('W', 'w', {})
+vim.api.nvim_create_user_command('Q', 'q', {})
+
+vim.filetype.add({
+  extension = {
+    frag = "glsl",
+    vert = "glsl",
+    geom = "glsl",
+    comp = "glsl",
+  },
+})
 
 -- [[ Configure and install plugins ]]
 --
@@ -302,7 +320,7 @@ require('lazy').setup({
     opts = {
       -- delay between pressing a key and opening which-key (milliseconds)
       -- this setting is independent of vim.opt.timeoutlen
-      delay = 615,
+      delay = 600,
       icons = {
         -- set icon mappings to true if you have a Nerd Font
         mappings = vim.g.have_nerd_font,
@@ -744,6 +762,9 @@ require('lazy').setup({
           },
         },
 		csharpier = {},
+		glsl_analyzer = {
+		  filetypes = { 'glsl' },
+		},
 		
 		prettier = {},
 		--prettierd = {},
@@ -861,6 +882,7 @@ require('lazy').setup({
 		cpp = { "clang-format" },  -- Force clang-format pour C++
 		c = { "clang-format" },
 		h = { "clang-format" },
+		glsl = { "clang-format" },
         lua = { 'stylua' },
 		vue = { "vue-language-server", stop_after_first = true },
 		--cs = { 'csharpier' },
@@ -904,12 +926,12 @@ require('lazy').setup({
           -- `friendly-snippets` contains a variety of premade snippets.
           --    See the README about individual language/framework/plugin snippets:
           --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
+          {
+            'rafamadriz/friendly-snippets',
+            config = function()
+              require('luasnip.loaders.from_vscode').lazy_load()
+            end,
+          },
         },
       },
       'saadparwaiz1/cmp_luasnip',
