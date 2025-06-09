@@ -5,6 +5,20 @@
 
 return {
 	{
+		vim.filetype.add({
+			extension = {
+			frag = "glsl",
+			vert = "glsl",
+			geom = "glsl",
+			comp = "glsl",
+			},
+		}),
+		
+		--hate when that happens, so here is a good enough fix
+		vim.api.nvim_create_user_command('W', 'w', {}),
+		vim.api.nvim_create_user_command('Q', 'q', {}),
+
+
 		vim.keymap.set('n', '<leader>x', "<cmd>!chmod +x %<CR>", { desc = 'make the file executable (Linux)' }),
 		vim.keymap.set('n', '<leader>z', ":Telescope colorscheme<CR>", { desc = 'Select Colorscheme' }),
 		
@@ -28,6 +42,13 @@ return {
 		--screen move without cursor
 		vim.keymap.set("n", "<M-w>", "zb"),
 		vim.keymap.set("n", "<M-s>", "zt"),
+		
+		
+		--harpoon has the CTRL+hjkl, so the window move is set to ALT
+		vim.keymap.set('n', '<M-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' }),
+		vim.keymap.set('n', '<M-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' }),
+		vim.keymap.set('n', '<M-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' }),
+		vim.keymap.set('n', '<M-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' }),
 		
 		--obsolete since capital P works now for that
 		--vim.keymap.set("x", "<leader>p", [["_dP]], { desc = 'Paste without replacing buffer' }),		
@@ -61,7 +82,7 @@ return {
 		vim.keymap.set("n", "<M-Up>",    "<cmd>resize +5<CR>", { noremap = true, silent = true }),
 		vim.keymap.set("n", "<M-Down>",  "<cmd>resize -5<CR>", { noremap = true, silent = true }),
 				
-		vim.keymap.set("n", "<M-q>",  "<cmd>ClangdSwitchSourceHeader<CR>", { noremap = true, silent = true }),
+		vim.keymap.set("n", "<M-q>",  "<cmd>LspClangdSwitchSourceHeader<CR>", { noremap = true, silent = true }),
 		
 		
 		--all 3 made by ChatGPT
@@ -116,5 +137,19 @@ return {
 		vim.keymap.set("i", "<M-[>", function()
 		vim.api.nvim_input("<esc>A{<Enter>}<C-o>O")
 		end, { noremap = true}),
+		
+		vim.keymap.set("n", "<leader>pr", function()
+		local line = vim.api.nvim_get_current_line()
+		-- Match du contenu entre guillemets après une parenthèse ouvrante
+		local new_line = line:gsub('"(.-)"', function(path)
+			if path:sub(1, 2) == "./" then
+				path = path:sub(3)
+			end
+			path = path:gsub("/", "\\\\")
+			return '"' .. path .. '"'
+		end, 1)
+		
+		vim.api.nvim_set_current_line(new_line)
+		end, { desc = "[r]ename path to Windows version" }),
 	} 
   }

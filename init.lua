@@ -5,10 +5,10 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+--vim.g.have_nerd_font = false
 
 -- remove start message
-vim.cmd("set shortmess+=I") 
+--vim.cmd("set shortmess+=I") 
 
 -- configure folds
 --vim.cmd("set foldcolumn=1")
@@ -17,8 +17,6 @@ vim.opt.foldlevelstart = 99
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
--- NOTE: You can change these options as you wish!
---  For more options, you can see `:help option-list`
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
@@ -29,16 +27,12 @@ vim.opt.colorcolumn = '120'
 vim.opt.textwidth = 120
 vim.opt.linebreak = true
 
--- Make line numbers default
 vim.opt.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
 vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
 
--- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
 
 -- Sync clipboard between OS and Neovim.
@@ -49,10 +43,8 @@ vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
 end)
 
--- Enable break indent
 vim.opt.breakindent = true
 
--- Save undo history
 vim.opt.undofile = true
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
@@ -128,11 +120,6 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 --
 --  See `:help wincmd` for a list of all window commands
 
---harpoon has the CTRL+hjkl, so the window move is set to ALT
-vim.keymap.set('n', '<M-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<M-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<M-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<M-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -160,18 +147,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
---hate when that happens, so here is a good enough fix
-vim.api.nvim_create_user_command('W', 'w', {})
-vim.api.nvim_create_user_command('Q', 'q', {})
 
-vim.filetype.add({
-  extension = {
-    frag = "glsl",
-    vert = "glsl",
-    geom = "glsl",
-    comp = "glsl",
-  },
-})
 
 -- [[ Configure and install plugins ]]
 --
@@ -191,56 +167,6 @@ require('lazy').setup({
 
   --priority 500 so that it loads after the first colorscheme loading, but before everything else
   --couldn't make it work by replacing what existed already
-  'rktjmp/lush.nvim',
-  {
-    'rockyzhang24/arctic.nvim',
-    branch = 'v2',
-    dependencies = { 'rktjmp/lush.nvim' },
-    priority = 500,
-    config = function()
-      vim.cmd.colorscheme 'arctic'
-    end,
-  },
-
-  --other colorschemes
-  { url = 'https://gitlab.com/sxwpb/halfspace.nvim' },
-  'rmehri01/onenord.nvim',
-  {
-    'L-Colombo/oldschool.nvim',
-    config = true,
-    -- to ovverride palette colors (example):
-    -- opts = { white = "#ff07ff"}
-  },
-  {
-    'NLKNguyen/papercolor-theme',
-    priority = 1000,
-    config = function()
-      -- Blank to address startup error
-    end,
-    init = function()
-      vim.opt.termguicolors = true
-      vim.cmd.colorscheme 'PaperColor'
-    end,
-  },
-  
-  {
-    'projekt0n/github-nvim-theme',
-    name = 'github-theme',
-    --config = function()
-  	--vim.cmd('colorscheme github_dark_high_contrast')
-    --end,
-  },
-  'miikanissi/modus-themes.nvim', 
-  'wtfox/jellybeans.nvim',
-  { 'bluz71/vim-moonfly-colors', name = "moonfly" },
-  'rockerBOO/boo-colorscheme-nvim',
-  'Mofiqul/vscode.nvim',
---  {
---	"wtfox/jellybeans.nvim",
---	lazy = false,
---	opts = {},
---  },
-
 
   {
 	'Aasim-A/scrollEOF.nvim',
@@ -255,6 +181,9 @@ require('lazy').setup({
   
   
   'mfussenegger/nvim-jdtls',
+  
+  { "nvzone/volt", lazy = true },
+
  
 	--does not work on Windows
 --  {
@@ -753,14 +682,14 @@ require('lazy').setup({
         --	filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
         --},
         jdtls = {},
-        volar = {
-          filetypes = {
-            'vue' --[[, 'typescript', 'javascript', 'javascriptreact', 'typescriptreact'--]],
-          },
-          init_options = {
-            vue = { hybridMode = false },
-          },
-        },
+        --volar = {
+        --  filetypes = {
+        --    'vue' --[[, 'typescript', 'javascript', 'javascriptreact', 'typescriptreact'--]],
+        --  },
+        --  init_options = {
+        --    vue = { hybridMode = false },
+        --  },
+        --},
 		csharpier = {},
 		glsl_analyzer = {
 		  filetypes = { 'glsl' },
@@ -838,8 +767,8 @@ require('lazy').setup({
 		--require("lspconfig").volar.setup({
 		--  on_attach = function(client, bufnr)
 		--    if client.name == "volar" then
-			  --client.server_capabilities.documentFormattingProvider = false
-			  --client.server_capabilities.documentRangeFormattingProvider = false
+		--	  client.server_capabilities.documentFormattingProvider = false
+		--	  client.server_capabilities.documentRangeFormattingProvider = false
 		--	end
 		--  end
 		--})
@@ -991,6 +920,7 @@ require('lazy').setup({
           --  Generally you don't need this, because nvim-cmp will display
           --  completions whenever it has completion options available.
           ['<C-space>'] = cmp.mapping.complete {},
+		  ['<M-Space>'] = cmp.mapping.complete{},
 
           -- Think of <c-l> as moving to the right of your snippet expansion.
           --  So if you have a snippet that's like:
@@ -1016,39 +946,40 @@ require('lazy').setup({
         },
         sources = {
           {
+          
+			name = 'path',
+			option = {
+			  trailing_slash = true,
+			  path_separator = vim.fn.has('win32') == 1 and '\\' or '/',
+			},
+		  },
+		  {
             name = 'lazydev',
             -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
             group_index = 0,
           },
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
-          { name = 'path' },
           { name = 'nvim_lsp_signature_help' },
         },
       }
     end,
   },
 
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'scottmckendry/cyberdream.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
+  { 
+    'zootedb0t/citruszest.nvim',
+    priority = 1000,
+	lazy = false,
     config = function()
       ---@diagnostic disable-next-line: missing-fields
-      require('cyberdream').setup {
-        styles = {
-          --comments = { italic = false }, -- Disable italics in comments
-          italic_comments = false,
-        },
-      }
+      --require('cyberdream').setup {
+      --  styles = {
+      --    --comments = { italic = false }, -- Disable italics in comments
+      --    italic_comments = false,
+      --  },
+      --}
 
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'cyberdream'
+      vim.cmd.colorscheme 'citruszest'
     end,
   },
 
