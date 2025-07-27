@@ -148,6 +148,19 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 
+--https://old.reddit.com/r/neovim/comments/1m9n9er/weathernvim_realtime_weather_and_earthquake/n58jqjk/
+
+--local uv = vim.uv.new_timer()
+--local temp = ""
+--uv:start(0, 1000 * 60 * 5, function()
+--    local pipe = io.popen("here I call my custom script which returns temperature and wind as text")
+--    if pipe == nil then
+--        temp = ""
+--        return
+--    end
+--    temp = pipe:read("*a")
+--end)
+
 
 -- [[ Configure and install plugins ]]
 --
@@ -183,6 +196,22 @@ require('lazy').setup({
   'mfussenegger/nvim-jdtls',
   
   { "nvzone/volt", lazy = true },
+  
+  
+--	{
+--		"nvim-lualine/lualine.nvim",
+--		init = function()
+--			require("lualine").setup({
+--				sections = {
+--					lualine_b = {
+--						function()
+--							return temp
+--						end,
+--					},
+--				},
+--			})
+--		end,
+--	},
 
  
 	--does not work on Windows
@@ -473,8 +502,8 @@ require('lazy').setup({
     },
     config = function()
       -- Brief aside: **What is LSP?**
-      --
       -- LSP is an initialism you've probably heard, but might not understand what it is.
+      --
       --
       -- LSP stands for Language Server Protocol. It's a protocol that helps editors
       -- and language tooling communicate in a standardized fashion.
@@ -691,9 +720,6 @@ require('lazy').setup({
         --  },
         --},
 		csharpier = {},
-		glsl_analyzer = {
-		  filetypes = { 'glsl' },
-		},
 		
 		prettier = {},
 		--prettierd = {},
@@ -720,6 +746,17 @@ require('lazy').setup({
             },
           },
         },
+		
+		--glslx = {
+		--	cmd = {"glslx", "--stdio" },
+		--	filetypes = { "glsl", "vert", "frag" },
+		--	root_dir = function(fname)
+		--		return vim.fn.getcwd()
+		--	end,
+		--},
+		glsl_analyzer = {
+		  filetypes = { 'glsl' },
+		},
       }
 	  
 	  --cpp and h files formatted correctly

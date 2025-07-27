@@ -60,9 +60,9 @@ return {
     },
 	
     {
-      'zootedb0t/citruszest.nvim',
-      lazy = false,
-      priority = 250,
+      'zootedb0t/citruszest.nvim'--,
+      --lazy = false,
+      --priority = 250,
     },
 	
     'rktjmp/lush.nvim',
@@ -71,6 +71,23 @@ return {
       branch = 'v2',
       dependencies = { 'rktjmp/lush.nvim' },
     },
+	
+	{
+	  "adibhanna/forest-night.nvim",
+	  --priority = 1000,
+	  --config = function()
+		--vim.cmd([[colorscheme forest-night]])
+	  --end,
+	},
+	
+	{'jacoborus/tender.vim'},
+	
+	{
+		dir = "/prog/WinterWood",
+		config = function()
+			vim.cmd('colorscheme WinterWood')
+		end,
+	},
   },
 }
 

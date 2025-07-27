@@ -1,0 +1,8 @@
+{
+  "languageserver": {
+    "glslang": {
+      "command": "C:\prog\glslx\build\Debug\glslx.exe",
+      "filetypes": ["glslx", "glsl", "vert", "frag"]
+    }
+  }
+}
