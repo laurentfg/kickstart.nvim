@@ -662,6 +662,10 @@ require('lazy').setup({
           source = 'if_many',
           spacing = 2,
           format = function(diagnostic)
+		  --for omnisharp error
+		  --if diagnostic.code == "CS8019" then
+			--return ""
+		  --end
             local diagnostic_message = {
               [vim.diagnostic.severity.ERROR] = diagnostic.message,
               [vim.diagnostic.severity.WARN] = diagnostic.message,
@@ -757,6 +761,20 @@ require('lazy').setup({
 		glsl_analyzer = {
 		  filetypes = { 'glsl' },
 		},
+				
+		omnisharp = {
+		  cmd = { vim.fn.stdpath("data") .. "/mason/packages/omnisharp/libexec/OmniSharp.exe",
+		  --cmd = {"omnisharp",
+					"--languageserver" ,
+					"--hostPID",
+					tostring(vim.fn.getpid()) },
+		  enable_editorconfig_support = true,
+		  enable_roslyn_analyzers = true,
+		  organize_imports_on_format = true,
+		  enable_import_completion = true,
+		  sdk_include_prereleases = true,
+		},
+		--omnisharp-mono = {},
       }
 	  
 	  --cpp and h files formatted correctly
@@ -847,6 +865,7 @@ require('lazy').setup({
       formatters_by_ft = {
 		cpp = { "clang-format" },  -- Force clang-format pour C++
 		c = { "clang-format" },
+		cs = { "csharpier" },
 		h = { "clang-format" },
 		glsl = { "clang-format" },
         lua = { 'stylua' },
@@ -858,6 +877,7 @@ require('lazy').setup({
         -- You can use 'stop_after_first' to run the first available formatter from the list
         javascript = { "prettier", stop_after_first = true },
         typescript = { "prettier", stop_after_first = true },
+		typescriptreact = { "prettier", stop_after_first = true },
       },
 	  formatters = {
         prettier = {
@@ -867,6 +887,10 @@ require('lazy').setup({
             "--use-tabs", "false",
           },
         },
+		--see if it should be removed or not
+		--csharpier = {
+		--  prepend_args = { "--config-path", "path/to/.csharpierrc.json" },
+		--},
       },
     },
   },
@@ -1003,22 +1027,22 @@ require('lazy').setup({
     end,
   },
 
-  { 
-    'zootedb0t/citruszest.nvim',
-    priority = 1000,
-	lazy = false,
-    config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      --require('cyberdream').setup {
-      --  styles = {
-      --    --comments = { italic = false }, -- Disable italics in comments
-      --    italic_comments = false,
-      --  },
-      --}
-
-      vim.cmd.colorscheme 'citruszest'
-    end,
-  },
+--  { 
+--    'zootedb0t/citruszest.nvim',
+--    priority = 1000,
+--	lazy = false,
+--    config = function()
+--      ---@diagnostic disable-next-line: missing-fields
+--      --require('cyberdream').setup {
+--      --  styles = {
+--      --    --comments = { italic = false }, -- Disable italics in comments
+--      --    italic_comments = false,
+--      --  },
+--      --}
+--
+--      vim.cmd.colorscheme 'citruszest'
+--    end,
+--  },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },

@@ -84,10 +84,67 @@ return {
 	
 	{
 		dir = "/prog/WinterWood",
+	},
+	
+	{ 
+		"catppuccin/nvim",
+		name = "catppuccin",
+		priority = 1000,
 		config = function()
-			vim.cmd('colorscheme WinterWood')
+			require("catppuccin").setup {
+				color_overrides = {
+					all = {
+					},
+					--example
+					latte = {
+					},
+					frappe = {},
+					macchiato = {},
+					mocha = {
+						rosewater = "#f5e0dc",
+						flamingo  = "#f2cdcd",--use "#f92672" instead?
+						pink      = "#D193CC",--"#f5c2e7",
+						mauve     = "#9564F1",--"#cba6f7",
+						red       = "#D16969",--"#f38ba8",
+						maroon    = "#FEA54C",--"#eba0ac",
+						peach     = "#fab387",
+						yellow    = "#FCFCAA",--"#f9e2af",
+						green     = "#6A9955",--"#a6e3a1",
+						teal      = "#EFEFF5",--"#94e2d5",
+						sky       = "#89dceb",
+						sapphire  = "#74c7ec",
+						blue      = "#0CA5F2",--"#89b4fa",
+						lavender  = "#CCA3FE",--"#b4befe",
+						
+						text      = "#cccccc",--"#cdd6f4",
+						subtext1  = "#bac2de",
+						subtext0  = "#a6adc8",
+						overlay2  = "#9399b2",
+						overlay1  = "#7f849c",
+						overlay0  = "#6c7086",
+						surface2  = "#585b70",
+						surface1  = "#808080",--"#45475a",
+						surface0  = "#313244",
+						
+						base      = "#0E0A0E",--"#1e1e2e",
+						mantle    = "#181825",
+						crust     = "#11111b",
+					},
+				},
+				custom_highlights = function(colors)
+				  return {
+					--Normal = { fg = colors.text, bg = colors.base },
+					Comment = { fg = colors.green},
+					String = { fg = colors.maroon }, -- override perso
+					--CursorLine = { bg = colors.mantle },
+				  }
+				end
+			}
+			vim.cmd('colorscheme catppuccin-mocha')
+			--vim.cmd.colorscheme "catppuccin-mocha"
 		end,
 	},
-  },
+
+  }
 }
 
