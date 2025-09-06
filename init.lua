@@ -710,6 +710,7 @@ require('lazy').setup({
 		},
         cpplint = {},
         pylsp = {},
+        pyright = {},
         cssls = {}, --css-lsp
         --ts_ls = {
         --	filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
@@ -723,7 +724,9 @@ require('lazy').setup({
         --    vue = { hybridMode = false },
         --  },
         --},
-		csharpier = {},
+		
+		--Using the dotnet version instead
+		--csharpier = {},
 		
 		prettier = {},
 		--prettierd = {},
@@ -850,7 +853,7 @@ require('lazy').setup({
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true, h = true, vue = true }
+        local disable_filetypes = { c = true, cpp = true, h = true, vue = true , cs = true, csharp = true}
         local lsp_format_opt
         if disable_filetypes[vim.bo[bufnr].filetype] then
           lsp_format_opt = 'never'
@@ -865,12 +868,12 @@ require('lazy').setup({
       formatters_by_ft = {
 		cpp = { "clang-format" },  -- Force clang-format pour C++
 		c = { "clang-format" },
+		--use the one installed in $PATH installed by dotnet tool
 		cs = { "csharpier" },
 		h = { "clang-format" },
 		glsl = { "clang-format" },
         lua = { 'stylua' },
 		vue = { "vue-language-server", stop_after_first = true },
-		--cs = { 'csharpier' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -887,10 +890,12 @@ require('lazy').setup({
             "--use-tabs", "false",
           },
         },
-		--see if it should be removed or not
-		--csharpier = {
-		--  prepend_args = { "--config-path", "path/to/.csharpierrc.json" },
-		--},
+		csharpier = {
+          --command = vim.fn.stdpath("data") .. "/mason/bin/csharpier.cmd",
+          command = "csharpier", -- Use dotnet-csharpier
+          args = { "format", "--write-stdout" },
+          stdin = true,
+        },
       },
     },
   },
