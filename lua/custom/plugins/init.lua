@@ -61,8 +61,8 @@ return {
 		--movement stays centered in quickfix
 		vim.keymap.set("n", "<M-n>", "<cmd>cnext<CR>zz"),
 		vim.keymap.set("n", "<M-p>", "<cmd>cprev<CR>zz"),
-		vim.keymap.set("n", "<leader>n", "<cmd>lnext<CR>zz", { desc = "Quickfix [N]ext" } ),
-		vim.keymap.set("n", "<leader>p", "<cmd>lprev<CR>zz", { desc = "Quickfix [P]revious" } ),
+		vim.keymap.set("n", "<leader>n", "<cmd>lnext<CR>zz", { desc = "Quickfix [n]ext" } ),
+		vim.keymap.set("n", "<leader>p", "<cmd>lprev<CR>zz", { desc = "Quickfix [p]revious" } ),
 		
 		
 		vim.keymap.set("n", "Q", "<C-^>"),
@@ -135,7 +135,7 @@ return {
 		
 		vim.keymap.set("i", "<M-;>", "<esc>A;"),
 		vim.keymap.set("i", "<M-[>", function()
-		vim.api.nvim_input("<esc>A{<Enter>}<C-o>O")
+			vim.api.nvim_input("<esc>A{<Enter><C-o>O")
 		end, { noremap = true}),
 		
 		vim.keymap.set("n", "<leader>pr", function()
@@ -151,5 +151,7 @@ return {
 		
 		vim.api.nvim_set_current_line(new_line)
 		end, { desc = "[r]ename path to Windows version" }),
+		
+		vim.keymap.set("n", "<Leader>N", ":let @+ = expand('%:t')<cr>", {desc = "copy [N]ame file to clipboard"} ),
 	} 
   }
