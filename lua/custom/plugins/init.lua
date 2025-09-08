@@ -153,5 +153,14 @@ return {
 		end, { desc = "[r]ename path to Windows version" }),
 		
 		vim.keymap.set("n", "<Leader>N", ":let @+ = expand('%:t')<cr>", {desc = "copy [N]ame file to clipboard"} ),
+		
+		-- Prevents the non-breaking space
+		vim.api.nvim_create_autocmd("InsertCharPre", {
+		  callback = function()
+			if vim.v.char == "\u{00A0}" then
+			  vim.v.char = ""
+			end
+		  end,
+		})
 	} 
   }
