@@ -151,5 +151,14 @@ return {
 		
 		vim.api.nvim_set_current_line(new_line)
 		end, { desc = "[r]ename path to Windows version" }),
+		
+		-- Prevents the non-breaking space
+		vim.api.nvim_create_autocmd("InsertCharPre", {
+		  callback = function()
+			if vim.v.char == "\u{00A0}" then
+			  vim.v.char = ""
+			end
+		  end,
+		})
 	} 
   }

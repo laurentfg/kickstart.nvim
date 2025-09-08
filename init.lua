@@ -874,8 +874,9 @@ require('lazy').setup({
 		glsl = { "clang-format" },
         lua = { 'stylua' },
 		vue = { "vue-language-server", stop_after_first = true },
+		
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         javascript = { "prettier", stop_after_first = true },
