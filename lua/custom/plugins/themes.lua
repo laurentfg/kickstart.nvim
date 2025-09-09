@@ -99,8 +99,7 @@ return {
 					latte = {
 					},
 					frappe = {},
-					macchiato = {},
-					mocha = {
+					macchiato = {
 						rosewater = "#f5e0dc",
 						flamingo  = "#f2cdcd",--use "#f92672" instead?
 						pink      = "#D193CC",--"#f5c2e7",
@@ -123,24 +122,30 @@ return {
 						overlay1  = "#7f849c",
 						overlay0  = "#6c7086",
 						surface2  = "#585b70",
-						surface1  = "#808080",--"#45475a",
+						surface1  = "#45475a",--"#45475a",
 						surface0  = "#313244",
 						
-						base      = "#0E0A0E",--"#1e1e2e",
-						mantle    = "#181825",
-						crust     = "#11111b",
+						base      = "#0f0b0f",--"#1e1e2e",
+						mantle    = "#101015",--"#181825",
+						crust     = "#05050b",--"#11111b",
 					},
+					mocha = {},
 				},
-				custom_highlights = function(colors)
-				  return {
-					--Normal = { fg = colors.text, bg = colors.base },
-					Comment = { fg = colors.green},
-					String = { fg = colors.maroon }, -- override perso
-					--CursorLine = { bg = colors.mantle },
-				  }
-				end
+				highlight_overrides = {
+					macchiato = function(macchiato)
+						return {
+							Comment = { fg = macchiato.green },
+							String = { fg = macchiato.maroon },
+							Methods = { fg = macchiato.yellow },
+							Functions = { fg = macchiato.yellow },
+							["@variable.parameter"] = { fg = macchiato.overlay1},
+							["@variable"] = { fg = macchiato.teal },
+							["@type"] = { fg = macchiato.teal},
+						}
+					end,
+				}
 			}
-			vim.cmd('colorscheme catppuccin-mocha')
+			vim.cmd('colorscheme catppuccin-macchiato')
 			--vim.cmd.colorscheme "catppuccin-mocha"
 		end,
 	},
