@@ -31,7 +31,7 @@ return{
 		config = true,
 		vim.keymap.set({"n"}, "<leader>cd", "<cmd>TSCppDefineClassFunc<CR>", {desc = "C++ [d]efine functions"}),
 		vim.keymap.set({"v"}, "<leader>cd",  ":<C-U>'<,'>TSCppDefineClassFunc<CR>", {desc = "C++ [d]efine highlighted functions"}),
-		vim.keymap.set("n", "<leader>cm", "<cmd>TSCppMakeConcreteClass<CR>", {desc = "C++ [m]ake concrete class"}),	
-		vim.keymap.set("n", "<leader>ct", "<cmd>TSCppRuleOf3<CR>", {desc = "C++ rule of [t]hree"}),		vim.keymap.set("n", "<leader>cf", "<cmd>TSCppRuleOf5<CR>", {desc = "C++ rule of [f]ive"}),		
+		--vim.keymap.set("n", "<leader>cm", "<cmd>TSCppMakeConcreteClass<CR>", {desc = "C++ [m]ake concrete class"}),	
+		--vim.keymap.set("n", "<leader>ct", "<cmd>TSCppRuleOf3<CR>", {desc = "C++ rule of [t]hree"}),		--vim.keymap.set("n", "<leader>cf", "<cmd>TSCppRuleOf5<CR>", {desc = "C++ rule of [f]ive"}),		
 	}
 }

@@ -856,7 +856,8 @@ require('lazy').setup({
         local disable_filetypes = { c = true, cpp = true, h = true, vue = true , cs = true, csharp = true}
         local lsp_format_opt
         if disable_filetypes[vim.bo[bufnr].filetype] then
-          lsp_format_opt = 'never'
+          --lsp_format_opt = 'never'
+		  return nil
         else
           lsp_format_opt = 'fallback'
         end
@@ -866,22 +867,22 @@ require('lazy').setup({
         }
       end,
       formatters_by_ft = {
-		cpp = { "clang-format" },  -- Force clang-format pour C++
+		cpp = { "clang-format" },
 		c = { "clang-format" },
-		--use the one installed in $PATH installed by dotnet tool
-		cs = { "csharpier" },
+		-- if Mason version doesn't work, use the one installed in $PATH installed by dotnet tool
+		cs = { "csharpier", stop_after_first = true  },
 		h = { "clang-format" },
 		glsl = { "clang-format" },
         lua = { 'stylua' },
 		vue = { "vue-language-server", stop_after_first = true },
+        javascript = { "prettier", stop_after_first = true },
+        typescript = { "prettier", stop_after_first = true },
+		typescriptreact = { "prettier", stop_after_first = true },
 		
         -- Conform can also run multiple formatters sequentially
         python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
-        javascript = { "prettier", stop_after_first = true },
-        typescript = { "prettier", stop_after_first = true },
-		typescriptreact = { "prettier", stop_after_first = true },
       },
 	  formatters = {
         prettier = {
@@ -892,8 +893,7 @@ require('lazy').setup({
           },
         },
 		csharpier = {
-          --command = vim.fn.stdpath("data") .. "/mason/bin/csharpier.cmd",
-          command = "csharpier", -- Use dotnet-csharpier
+          command = "csharpier",
           args = { "format", "--write-stdout" },
           stdin = true,
         },
