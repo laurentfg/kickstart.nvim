@@ -109,8 +109,8 @@ return {
 						peach     = "#fab387",
 						yellow    = "#FCFCAA",--"#f9e2af",
 						green     = "#6A9955",--"#a6e3a1",
-						teal      = "#EFEFF5",--"#94e2d5",
-						sky       = "#89dceb",
+						teal      = "#00E5C6",--"#94e2d5",
+						sky       = "#89dceb",--?"#EFEFF5"?
 						sapphire  = "#74c7ec",
 						blue      = "#0CA5F2",--"#89b4fa",
 						lavender  = "#CCA3FE",--"#b4befe",
@@ -137,10 +137,21 @@ return {
 							Comment = { fg = macchiato.green },
 							String = { fg = macchiato.maroon },
 							Methods = { fg = macchiato.yellow },
-							Functions = { fg = macchiato.yellow },
+							Function = { fg = macchiato.yellow },
 							["@variable.parameter"] = { fg = macchiato.overlay1},
-							["@variable"] = { fg = macchiato.teal },
+							["@variable"] = { fg = macchiato.sky },
 							["@type"] = { fg = macchiato.teal},
+							["type.builtin"] = { fg = macchiato.blue },
+							
+							--["@keyword.import"] = { fg = macchiato.pink },     
+							--["@keyword.import.cpp"] = { fg = macchiato.pink }, 
+							--["@keyword.import.rust"] = { fg = macchiato.pink },
+							--["@keyword.import.java"] = { fg = macchiato.pink },
+							--Include = { fg = macchiato.pink },
+							--PreProc = { fg = macchiato.pink },
+							
+							Type = { fg = macchiato.blue },
+							["@type.builtin"] = { fg = macchiato.blue },
 						}
 					end,
 				}
