@@ -709,7 +709,7 @@ require('lazy').setup({
 		  --},
 		},
         cpplint = {},
-        pylsp = {},
+        --pylsp = {},
         pyright = {},
         cssls = {}, --css-lsp
         --ts_ls = {

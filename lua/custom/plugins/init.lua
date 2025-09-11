@@ -161,6 +161,6 @@ return {
 			  vim.v.char = ""
 			end
 		  end,
-		})
+		}),
 	} 
   }
