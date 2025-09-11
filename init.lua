@@ -709,8 +709,6 @@ require('lazy').setup({
 		  --},
 		},
         cpplint = {},
-        --pylsp = {},
-        pyright = {},
         cssls = {}, --css-lsp
         --ts_ls = {
         --	filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
@@ -778,6 +776,12 @@ require('lazy').setup({
 		  sdk_include_prereleases = true,
 		},
 		--omnisharp-mono = {},
+		
+		--python
+        pyright = {},
+        --pylsp = {},
+		black = {},
+		isort = {},
       }
 	  
 	  --cpp and h files formatted correctly
