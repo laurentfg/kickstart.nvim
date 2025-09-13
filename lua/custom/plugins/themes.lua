@@ -93,14 +93,40 @@ return {
 		config = function()
 			require("catppuccin").setup {
 				color_overrides = {
-					all = {
+					all = {},
+					latte = {},
+					frappe = {
+						--rosewater = "#f5e0dc",
+						--flamingo  = "#f2cdcd",--use "#f92672" instead?
+						--pink      = "#f5c2e7",
+						--mauve     = "#cba6f7",
+						--red       = "#f38ba8",
+						--maroon    = "#eba0ac",
+						--peach     = "#fab387",
+						--yellow    = "#f9e2af",
+						--green     = "#a6e3a1",
+						--teal      = "#94e2d5",
+						--sky       = "#EFEFF5",
+						--sapphire  = "#74c7ec",
+						--blue      = "#89b4fa",
+						--lavender  = "#D193CC",--"#b4befe",
+						--
+						--text      = "#cdd6f4",
+						--subtext1  = "#bac2de",
+						--subtext0  = "#a6adc8",
+						--overlay2  = "#9399b2",
+						--overlay1  = "#7f849c",
+						--overlay0  = "#6c7086",
+						--surface2  = "#585b70",
+						--surface1  = "#45475a",
+						--surface0  = "#313244",
+						--
+						--base      = "#0f0b0f",--"#1e1e2e",
+						--mantle    = "#101015",--"#181825",
+						--crust     = "#05050b",--"#11111b",
 					},
-					--example
-					latte = {
-					},
-					frappe = {},
 					macchiato = {
-						rosewater = "#f5e0dc",
+						rosewater = "#ADE490",--light green, "#f5e0dc",
 						flamingo  = "#f2cdcd",--use "#f92672" instead?
 						pink      = "#D193CC",--"#f5c2e7",
 						mauve     = "#9564F1",--"#cba6f7",
@@ -115,17 +141,17 @@ return {
 						blue      = "#0CA5F2",--"#89b4fa",
 						lavender  = "#CCA3FE",--"#b4befe",
 						
-						text      = "#cccccc",--"#cdd6f4",
+						text      = "#ebebeb",--"#cdd6f4",
 						subtext1  = "#bac2de",
 						subtext0  = "#a6adc8",
 						overlay2  = "#9399b2",
 						overlay1  = "#7f849c",
 						overlay0  = "#6c7086",
 						surface2  = "#585b70",
-						surface1  = "#45475a",--"#45475a",
+						surface1  = "#45475a",
 						surface0  = "#313244",
 						
-						base      = "#0f0b0f",--"#1e1e2e",
+						base      = "#090709",--"#1e1e2e",
 						mantle    = "#101015",--"#181825",
 						crust     = "#05050b",--"#11111b",
 					},
@@ -134,14 +160,62 @@ return {
 				highlight_overrides = {
 					macchiato = function(macchiato)
 						return {
+							["@punctuation.delimiter"] = { fg = macchiato.text },
+						    ["@punctuation.bracket"] = { fg = macchiato.text },
+							
 							Comment = { fg = macchiato.green },
+							
 							String = { fg = macchiato.maroon },
+							
+							Number = { fg = macchiato.rosewater },
+							
+							LineNrAbove = { fg = macchiato.overlay0 },
+							--LineNr = { fg = macchiato.rosewater },
+							LineNrBelow = { fg = macchiato.overlay0 },
+							
 							Methods = { fg = macchiato.yellow },
 							Function = { fg = macchiato.yellow },
-							["@variable.parameter"] = { fg = macchiato.overlay1},
+							
+							["@variable.parameter"] = { fg = macchiato.overlay2},
+							
 							["@variable"] = { fg = macchiato.sky },
-							["@type"] = { fg = macchiato.teal},
+							
+							--["@keyword.import"] = { fg = macchiato.pink },     
+							--["@keyword.import.cpp"] = { fg = macchiato.pink }, 
+							--["@keyword.import.rust"] = { fg = macchiato.pink },
+							--["@keyword.import.java"] = { fg = macchiato.pink },
+							--Include = { fg = macchiato.pink },
+							
+							Type = { fg = macchiato.blue },
 							["type.builtin"] = { fg = macchiato.blue },
+							["@type.builtin"] = { fg = macchiato.blue },
+							["@keyword.type"] = { fg = macchiato.blue },
+							["@lsp.type.enum"] = { fg = macchiato.blue },
+							["@lsp.typemod.class.defaultLibrary"] = { fg = macchiato.blue },
+							Boolean = { fg = macchiato.blue },
+							
+							["@module"] = {fg = macchiato.teal },
+							["@type"] = { fg = macchiato.teal},
+							
+							Repeat = { fg = macchiato.pink },
+							Conditional = { fg = macchiato.pink },
+							["@keyword.return"] = { fg = macchiato.pink },
+							PreProc = { fg = macchiato.pink },
+							
+							["@lsp.typemod.variable.readonly"] = {fg = macchiato.mauve },
+							["@lsp.type.enumMember"] = {fg = macchiato.mauve},
+						}
+					end,
+					frappe = function(frappe)
+						return {
+							Comment = { fg = frappe.green },
+							--String = { fg = macchiato.maroon },
+							--Methods = { fg = macchiato.yellow },
+							--Function = { fg = macchiato.yellow },
+							--["@variable.parameter"] = { fg = macchiato.overlay1},
+							--["@variable"] = { fg = macchiato.sky },
+							--["@type"] = { fg = macchiato.teal},
+							--["type.builtin"] = { fg = macchiato.blue },
 							
 							--["@keyword.import"] = { fg = macchiato.pink },     
 							--["@keyword.import.cpp"] = { fg = macchiato.pink }, 
@@ -150,8 +224,9 @@ return {
 							--Include = { fg = macchiato.pink },
 							--PreProc = { fg = macchiato.pink },
 							
-							Type = { fg = macchiato.blue },
-							["@type.builtin"] = { fg = macchiato.blue },
+							--Type = { fg = macchiato.blue },
+							--["@type.builtin"] = { fg = macchiato.blue },
+							--Repeat = { fg = macchiato.pink },
 						}
 					end,
 				}

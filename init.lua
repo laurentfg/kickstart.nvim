@@ -8,7 +8,7 @@ vim.g.maplocalleader = ' '
 --vim.g.have_nerd_font = false
 
 -- remove start message
---vim.cmd("set shortmess+=I") 
+vim.cmd("set shortmess+=I") 
 
 -- configure folds
 --vim.cmd("set foldcolumn=1")
