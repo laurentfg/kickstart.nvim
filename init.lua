@@ -399,7 +399,8 @@ require('lazy').setup({
           file_ignore_patterns = {
             'node_modules',
 			'x64\\Debug',
-			'x64\\Release'
+			'x64\\Release',
+			'Library'
           },
           --   mappings = {
           --     i = {
