@@ -1,0 +1,1 @@
+alias expo-android-usb="npx expo start --android --localhost"

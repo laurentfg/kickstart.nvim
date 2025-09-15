@@ -1,0 +1,8 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\Directory\background\shell\Neovim]
+@="Explore with Neovim (&X)"
+"Icon"="C:\\Program Files\\neovim\\share\\nvim\\runtime\\neovim.ico"
+
+[HKEY_CLASSES_ROOT\Directory\background\shell\Neovim\command]
+@="\"C:\\Program Files\\Neovim\\bin\\nvim.exe\" \"%V\""

@@ -1,0 +1,8 @@
+CompileFlags:
+  Add: [
+    -std=c++14,
+    -IF:/LibrairiesProgrammation/SFML-2.6.2/32/include,
+    -IF:/LibrairiesProgrammation/SFML-2.6.2/64/include,
+    -IC:/Program Files (x86)/Visual Leak Detector/include,
+    -DSFML_STATIC
+  ]

@@ -1,0 +1,13 @@
+menu->help->edit custom properties
+	idea.is.internal=true
+	ide.override.Tree.rowHeight=15
+	ide.override.Tree.rowHeight.compact=15
+
+
+CTRL+SHIFT+A
+	LaF defaults
+Tree.rowHeight = 15
+
+
+Editor -> font
+size 13, line spacing 1.08

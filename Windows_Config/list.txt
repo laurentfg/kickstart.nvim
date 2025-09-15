@@ -1,0 +1,151 @@
+linux (small notes for me):
+npm install -g neovim
+//luarocks
+https://github.com/luarocks/luarocks/blob/main/docs/installation_instructions_for_unix.md
+sudo apt install build-essential libreadline-dev unzip
+https://www.lua.org/ftp/		//tar -xvzf lua-5.1.5.tar.gz
+https://luarocks.github.io/luarocks/releases/
+//python
+sudo apt-get install python3-venv
+pacman -S python-debugpy
+//for Rest.nvim
+sudo apt install npm
+
+	Windows:
+I use https://git-scm.com/downloads/win as my CLI for Git and a 2nd window for server running
+
+pin softwares in taskbar to have easy shortcuts, mine is:
+1. web browser
+2. git bash (two windows: first is Git, second is for a server, like npm start)
+3. neovim
+4. windows file explorer
+windows key + number will select that one
+
+general Windows settings:
+Paramètres de clavier avancés, Touches de raccourci de langue d'entrée
+(Advanced settings, keyboard shortcut, disable to not conflict with Neovim commands)
+
+powershell 7 (for Mason.nvim), copy/paste/execute the block
+$progressPreference = 'silentlyContinue'
+Write-Host "Installing WinGet PowerShell module from PSGallery..."
+Install-PackageProvider -Name NuGet -Force | Out-Null
+Install-Module -Name Microsoft.WinGet.Client -Force -Repository PSGallery | Out-Null
+Write-Host "Using Repair-WinGetPackageManager cmdlet to bootstrap WinGet..."
+Repair-WinGetPackageManager
+Write-Host "Done."
+
+winget install --id Microsoft.PowerShell --source winget
+
+node.js (+ install chocolatey)
+https://nodejs.org/en/download
+
+with chocolatey:
+choco install -y unzip gzip make fd ripgrep nerd-fonts-hack
+
+Install python
+https://www.python.org/downloads/
+python -m pip install --upgrade pip
+python -m pip install --user --upgrade pynvim
+add file pyrightconfig.json in %USERPROFILE%
+
+
+//nvim-web-devicons, terminal doit avoir ce font (police de caractère)
+nerd-fonts-hack (in Neovim and cmd properties)
+https://www.nerdfonts.com/font-downloads
+(using Hack Nerd Font Mono)
+
+install on Windows:
+https://github.com/neovim/neovim/releases
+
+exclude from Windows Defender:
+- program files/neovim
+- nvim (config)
+- nvim-data (config)
+
+configuration for Java: using java.exe from IntelliJ (adjust path for version installed)
+	PATH:
+C:\Program Files\JetBrains\IntelliJ IDEA 2024.3.1.1\jbr\bin
+
+configuration for C++ with SFML
+-https://cmake.org/download/
+	install binary version
+-change clangd/config.yaml (in folder config_files) with the config C++ and SFML
+-put the folder clangd in %LOCALAPPDATA%
+-install LLVM
+https://releases.llvm.org/
+-add in PATH:
+	[utilisateur Windows]
+	clangd version in Mason (adjust version and user)
+C:\Users\[USER]\AppData\Local\nvim-data\mason\packages\clangd\clangd_19.1.2\bin\
+	dossier de base de SFML
+C:\prog\SFML-2.6.2\64\bin
+//using the same build as Visual Studio 2022, making the project easily compatible
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin
+C:\prog\codelldb-win32-x64\extension\adapter
+copy .clang-format to the root of all C++ projects to format text correctly
+add clang-build.ps1 in c:\prog
+//Visual Leak Detector
+https://kinddragon.github.io/vld/
+//Install ninja for glsl, install in c:\prog\ninja
+https://github.com/ninja-build/ninja/releases
+add Ninja to PATH=c:\prog\ninja
+
+//if using independant glsl, SFML doesn't need that
+for glsl: https://github.com/ComingToy/glslx
+in c:\prog\glslx
+in PATH=C:\prog\glslx\build\Debug
+
+
+C#
+https://dotnet.microsoft.com/en-us/download
+dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
+https://csharpier.com/docs/About
+
+
+for rest.nvim
+https://github.com/mpeterv/hererocks
+https://github.com/rjpcomputing/luaforwindows/releases
+https://luarocks.github.io/luarocks/releases/
+
+copy those files in %userprofile%
+.vimrc
+.ideavimrc
+.flake8
+
+//section about autohotkey2 LSP, I don't use it
+(github.com/thqby/vscode-autohotkey2-lsp)
+(https://hungyi.net/Tech/AutoHotkey-Support-in-Neovim)
+	autohotkey V2 LSP
+folder = c:\prog\vscode-autohotkey2-lsp
+with Git Bash in the right folder:
+curl.exe -L -o install.js https://raw.githubusercontent.com/thqby/vscode-autohotkey2-lsp/main/tools/install.js
+node install.js
+
+for React Native
+Android SDK tools: https://developer.android.com/studio#command-tools
+(Command line tools only)
+and https://developer.android.com/tools/releases/platform-tools
+in c:\Android\cmdline-tools
+global variables for Android and Java
+ANDROID_HOME=C:\Android
+PATH=
+%ANDROID_HOME%\platform-tools
+%ANDROID_HOME%\cmdline-tools\bin
+JAVA_HOME=C:\Program Files\Android\Android Studio\jbr
+PATH=
+%JAVA_HOME%\bin
+copy in %userprofile%
+.bash_profile
+.bashrc
+	bashrc adds a shortcut expo-android-usb for secured networks
+
+add to PATH
+%LOCALAPPDATA%\nvim-data\mason\bin\
+
+custom theme (can be ignored, it is properly checked in my config, obsolete theme but I use it for reference)
+WinterWood folder in C:\prog
+
+
+
+choses à améliorer dans le futur si le besoin est là (contexte Windows)
+Windows Terminal, Wezterm and Hyper
