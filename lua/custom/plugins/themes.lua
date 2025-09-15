@@ -83,8 +83,17 @@ return {
 	{'jacoborus/tender.vim'},
 	
 	{
-		dir = "/prog/WinterWood",
+		--dir = "/prog/WinterWood",
+vim.fn.isdirectory("/prog/WinterWood") == 1 and { dir = "/prog/WinterWood" } or nil,
 	},
+		--config = function()
+		--	if vim.fn.isdirectory("/prog/WinterWood") == 0 then
+		--	table.insert(plugins, {
+		--		dir = "/prog/WinterWood",
+		--	})
+		--	end
+		--end,
+		
 	
 	{ 
 		"catppuccin/nvim",
