@@ -133,9 +133,9 @@ return {
 		vim.keymap.set("n", "<C-/>", "mzI//<Esc>`z", { noremap = false, silent = true}),
 		vim.keymap.set("n", "<C-_>", "mzI//<Esc>`z", { noremap = false, silent = true}),
 		
-		vim.keymap.set("i", "<M-;>", "<esc>A;"),
+		vim.keymap.set("i", "<M-;>", "<esc>A;<esc>"),
 		vim.keymap.set("i", "<M-[>", function()
-			vim.api.nvim_input("<esc>A{<Enter><C-o>O")
+			vim.api.nvim_input("<esc>A{<Enter>")
 		end, { noremap = true}),
 		
 		vim.keymap.set("n", "<leader>pr", function()

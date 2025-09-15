@@ -102,14 +102,11 @@ vim.fn.isdirectory("/prog/WinterWood") == 1 and { dir = "/prog/WinterWood" } or 
 		config = function()
 			require("catppuccin").setup {
 				color_overrides = {
-					all = {
-					},
-					--example
-					latte = {
-					},
+					all = {},
+					latte = {},
 					frappe = {},
 					macchiato = {
-						rosewater = "#f5e0dc",
+						rosewater = "#ADE490",--light green, "#f5e0dc",
 						flamingo  = "#f2cdcd",--use "#f92672" instead?
 						pink      = "#D193CC",--"#f5c2e7",
 						mauve     = "#9564F1",--"#cba6f7",
@@ -124,17 +121,17 @@ vim.fn.isdirectory("/prog/WinterWood") == 1 and { dir = "/prog/WinterWood" } or 
 						blue      = "#0CA5F2",--"#89b4fa",
 						lavender  = "#CCA3FE",--"#b4befe",
 						
-						text      = "#cccccc",--"#cdd6f4",
+						text      = "#ebebeb",--"#cdd6f4",
 						subtext1  = "#bac2de",
 						subtext0  = "#a6adc8",
 						overlay2  = "#9399b2",
 						overlay1  = "#7f849c",
 						overlay0  = "#6c7086",
 						surface2  = "#585b70",
-						surface1  = "#45475a",--"#45475a",
+						surface1  = "#45475a",
 						surface0  = "#313244",
 						
-						base      = "#0f0b0f",--"#1e1e2e",
+						base      = "#090709",--"#1e1e2e",
 						mantle    = "#101015",--"#181825",
 						crust     = "#05050b",--"#11111b",
 					},
@@ -143,24 +140,60 @@ vim.fn.isdirectory("/prog/WinterWood") == 1 and { dir = "/prog/WinterWood" } or 
 				highlight_overrides = {
 					macchiato = function(macchiato)
 						return {
+							["@punctuation.delimiter"] = { fg = macchiato.text },
+						    ["@punctuation.bracket"] = { fg = macchiato.text },
+							["@variable"] = { fg = macchiato.text },
+							
+							LspReferenceText = { bg = macchiato.surface0 },
+							LspReferenceRead = { bg = macchiato.surface0 },
+							LspReferenceWrite = { bg = macchiato.surface0 },
+							IlluminatedWordText = { bg = macchiato.surface0 },
+							IlluminatedWordRead = { bg = macchiato.surface0 },
+							IlluminatedWordWrite = { bg = macchiato.surface0 },
+							
 							Comment = { fg = macchiato.green },
+							
 							String = { fg = macchiato.maroon },
+							
+							Number = { fg = macchiato.rosewater },
+							
+							LineNrAbove = { fg = macchiato.overlay0 },
+							--LineNr = { fg = macchiato.rosewater },
+							LineNrBelow = { fg = macchiato.overlay0 },
+							
 							Methods = { fg = macchiato.yellow },
 							Function = { fg = macchiato.yellow },
-							["@variable.parameter"] = { fg = macchiato.overlay1},
-							["@variable"] = { fg = macchiato.sky },
-							["@type"] = { fg = macchiato.teal},
-							["type.builtin"] = { fg = macchiato.blue },
+							
+							["@variable.parameter"] = { fg = macchiato.overlay2},
+							
+							DiagnosticHint = { fg = macchiato.subtext0 },
 							
 							--["@keyword.import"] = { fg = macchiato.pink },     
-							--["@keyword.import.cpp"] = { fg = macchiato.pink }, 
+							--["@keyword.import"] = { fg = macchiato.pink }, 
 							--["@keyword.import.rust"] = { fg = macchiato.pink },
 							--["@keyword.import.java"] = { fg = macchiato.pink },
 							--Include = { fg = macchiato.pink },
-							--PreProc = { fg = macchiato.pink },
 							
 							Type = { fg = macchiato.blue },
+							Keyword = { fg = macchiato.blue },
+							["type.builtin"] = { fg = macchiato.blue },
 							["@type.builtin"] = { fg = macchiato.blue },
+							["@keyword.type"] = { fg = macchiato.blue },
+							["@lsp.type.enum"] = { fg = macchiato.blue },
+							["@lsp.typemod.class.defaultLibrary"] = { fg = macchiato.blue },
+							Boolean = { fg = macchiato.blue },
+							
+							["@module"] = {fg = macchiato.teal },
+							["@type"] = { fg = macchiato.teal},
+							["@attribute"] = { fg = macchiato.teal},
+							
+							Repeat = { fg = macchiato.pink },
+							Conditional = { fg = macchiato.pink },
+							["@keyword.return"] = { fg = macchiato.pink },
+							PreProc = { fg = macchiato.pink },
+							
+							["@lsp.typemod.variable.readonly"] = {fg = macchiato.mauve },
+							["@lsp.type.enumMember"] = {fg = macchiato.mauve},
 						}
 					end,
 				}
