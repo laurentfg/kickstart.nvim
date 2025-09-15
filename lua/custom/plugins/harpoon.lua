@@ -46,10 +46,10 @@ return {
       --hides tabline by default
       vim.opt.showtabline = 0
 
+      --Toggle the tabs showing at the top of nvim
       vim.keymap.set('n', '<leader>A', function()
         vim.opt.showtabline = (vim.opt.showtabline:get() == 0) and 2 or 0
       end, { desc = 'toggle t[A]bline' })
     end,
   },
 }
-

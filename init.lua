@@ -5,14 +5,15 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
+--disabled because of Windows' terminal having priority
 --vim.g.have_nerd_font = false
 
 -- remove start message
-vim.cmd("set shortmess+=I") 
+vim.cmd 'set shortmess+=I'
 
 -- configure folds
 --vim.cmd("set foldcolumn=1")
-vim.cmd("set foldmethod=indent")
+vim.cmd 'set foldmethod=indent'
 vim.opt.foldlevelstart = 99
 
 -- [[ Setting options ]]
@@ -83,7 +84,6 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
-
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -120,7 +120,6 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 --
 --  See `:help wincmd` for a list of all window commands
 
-
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -147,21 +146,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
-
---https://old.reddit.com/r/neovim/comments/1m9n9er/weathernvim_realtime_weather_and_earthquake/n58jqjk/
-
---local uv = vim.uv.new_timer()
---local temp = ""
---uv:start(0, 1000 * 60 * 5, function()
---    local pipe = io.popen("here I call my custom script which returns temperature and wind as text")
---    if pipe == nil then
---        temp = ""
---        return
---    end
---    temp = pipe:read("*a")
---end)
-
-
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
@@ -173,7 +157,6 @@ vim.opt.rtp:prepend(lazypath)
 --    :Lazy update
 -- NOTE: Here is where you install your plugins.
 
-
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
@@ -182,46 +165,43 @@ require('lazy').setup({
   --couldn't make it work by replacing what existed already
 
   {
-	'Aasim-A/scrollEOF.nvim',
-	event = { 'CursorMoved', 'WinScrolled' },
-	opts = {},
+    'Aasim-A/scrollEOF.nvim',
+    event = { 'CursorMoved', 'WinScrolled' },
+    opts = {},
   },
-  
+
   {
     'fabridamicelli/cronex.nvim',
-    opts = {}, 
+    opts = {},
   },
-  
-  
-  'mfussenegger/nvim-jdtls',
-  
-  { "nvzone/volt", lazy = true },
-  
-  
---	{
---		"nvim-lualine/lualine.nvim",
---		init = function()
---			require("lualine").setup({
---				sections = {
---					lualine_b = {
---						function()
---							return temp
---						end,
---					},
---				},
---			})
---		end,
---	},
 
- 
-	--does not work on Windows
---  {
-	--  "leosmaia21/gcompilecommands.nvim",
-	--  opts = {
---		tmp_file_path = "c:\\tmp\\compilecommandsNEOVIM.json"
---	  },
---	  ft = { "c", "cpp" }, -- lazy load plugin only on C and C++ filetypes
---  },
+  'mfussenegger/nvim-jdtls',
+
+  { 'nvzone/volt', lazy = true },
+
+  --	{
+  --		"nvim-lualine/lualine.nvim",
+  --		init = function()
+  --			require("lualine").setup({
+  --				sections = {
+  --					lualine_b = {
+  --						function()
+  --							return temp
+  --						end,
+  --					},
+  --				},
+  --			})
+  --		end,
+  --	},
+
+  --does not work on Windows
+  --  {
+  --  "leosmaia21/gcompilecommands.nvim",
+  --  opts = {
+  --		tmp_file_path = "c:\\tmp\\compilecommandsNEOVIM.json"
+  --	  },
+  --	  ft = { "c", "cpp" }, -- lazy load plugin only on C and C++ filetypes
+  --  },
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -398,9 +378,9 @@ require('lazy').setup({
         defaults = {
           file_ignore_patterns = {
             'node_modules',
-			'x64\\Debug',
-			'x64\\Release',
-			'Library'
+            'x64\\Debug',
+            'x64\\Release',
+            'Library',
           },
           --   mappings = {
           --     i = {
@@ -663,10 +643,10 @@ require('lazy').setup({
           source = 'if_many',
           spacing = 2,
           format = function(diagnostic)
-		  --for omnisharp error
-		  --if diagnostic.code == "CS8019" then
-			--return ""
-		  --end
+            --for omnisharp error
+            --if diagnostic.code == "CS8019" then
+            --return ""
+            --end
             local diagnostic_message = {
               [vim.diagnostic.severity.ERROR] = diagnostic.message,
               [vim.diagnostic.severity.WARN] = diagnostic.message,
@@ -696,19 +676,19 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         clangd = {
-		  --cmd = { 
-		--	"clangd",
-		--	"--background-index",  -- Construit un index global
-		--	"--clang-tidy",        -- Active clang-tidy pour des diagnostics avancés
-		--	"--completion-style=detailed",
-		--	"--cross-file-rename",
-		--	"--header-insertion=never",
-		--	"--pch-storage=memory" -- Stockage des précompilés en mémoire
-	    --  },
-		  --capabilities = {
-		--	documentFormattingProvider = false,
-		  --},
-		},
+          --cmd = {
+          --	"clangd",
+          --	"--background-index",  -- Construit un index global
+          --	"--clang-tidy",        -- Active clang-tidy pour des diagnostics avancés
+          --	"--completion-style=detailed",
+          --	"--cross-file-rename",
+          --	"--header-insertion=never",
+          --	"--pch-storage=memory" -- Stockage des précompilés en mémoire
+          --  },
+          --capabilities = {
+          --	documentFormattingProvider = false,
+          --},
+        },
         cpplint = {},
         cssls = {}, --css-lsp
         --ts_ls = {
@@ -723,12 +703,12 @@ require('lazy').setup({
         --    vue = { hybridMode = false },
         --  },
         --},
-		
-		--Using the dotnet version instead
-		--csharpier = {},
-		
-		prettier = {},
-		--prettierd = {},
+
+        --Using the dotnet version instead
+        --csharpier = {},
+
+        prettier = {},
+        --prettierd = {},
 
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -752,46 +732,48 @@ require('lazy').setup({
             },
           },
         },
-		
-		--glslx = {
-		--	cmd = {"glslx", "--stdio" },
-		--	filetypes = { "glsl", "vert", "frag" },
-		--	root_dir = function(fname)
-		--		return vim.fn.getcwd()
-		--	end,
-		--},
-		glsl_analyzer = {
-		  filetypes = { 'glsl' },
-		},
-				
-		omnisharp = {
-		  cmd = { vim.fn.stdpath("data") .. "/mason/packages/omnisharp/libexec/OmniSharp.exe",
-		  --cmd = {"omnisharp",
-					"--languageserver" ,
-					"--hostPID",
-					tostring(vim.fn.getpid()) },
-		  enable_editorconfig_support = true,
-		  enable_roslyn_analyzers = true,
-		  organize_imports_on_format = true,
-		  enable_import_completion = true,
-		  sdk_include_prereleases = true,
-		},
-		--omnisharp-mono = {},
-		
-		--python
+
+        --glslx = {
+        --	cmd = {"glslx", "--stdio" },
+        --	filetypes = { "glsl", "vert", "frag" },
+        --	root_dir = function(fname)
+        --		return vim.fn.getcwd()
+        --	end,
+        --},
+        glsl_analyzer = {
+          filetypes = { 'glsl' },
+        },
+
+        omnisharp = {
+          cmd = {
+            vim.fn.stdpath 'data' .. '/mason/packages/omnisharp/libexec/OmniSharp.exe',
+            --cmd = {"omnisharp",
+            '--languageserver',
+            '--hostPID',
+            tostring(vim.fn.getpid()),
+          },
+          enable_editorconfig_support = true,
+          enable_roslyn_analyzers = true,
+          organize_imports_on_format = true,
+          enable_import_completion = true,
+          sdk_include_prereleases = true,
+        },
+        --omnisharp-mono = {},
+
+        --python
         pyright = {},
         --pylsp = {},
-		black = {},
-		isort = {},
+        black = {},
+        isort = {},
       }
-	  
-	  --cpp and h files formatted correctly
-	--  vim.api.nvim_create_autocmd("BufWritePre", {
-	 --   pattern = { "*.cpp", "*.h" },
-	  --  callback = function()
-	--	  vim.cmd("silent! undojoin | silent! !clang-format -i %")
-	  --  end,
-	  --})
+
+      --cpp and h files formatted correctly
+      --  vim.api.nvim_create_autocmd("BufWritePre", {
+      --   pattern = { "*.cpp", "*.h" },
+      --  callback = function()
+      --	  vim.cmd("silent! undojoin | silent! !clang-format -i %")
+      --  end,
+      --})
 
       -- Ensure the servers and tools above are installed
       --
@@ -826,15 +808,15 @@ require('lazy').setup({
           end,
         },
       }
-	  
-		--require("lspconfig").volar.setup({
-		--  on_attach = function(client, bufnr)
-		--    if client.name == "volar" then
-		--	  client.server_capabilities.documentFormattingProvider = false
-		--	  client.server_capabilities.documentRangeFormattingProvider = false
-		--	end
-		--  end
-		--})
+
+      --require("lspconfig").volar.setup({
+      --  on_attach = function(client, bufnr)
+      --    if client.name == "volar" then
+      --	  client.server_capabilities.documentFormattingProvider = false
+      --	  client.server_capabilities.documentRangeFormattingProvider = false
+      --	end
+      --  end
+      --})
     end,
   },
 
@@ -858,11 +840,11 @@ require('lazy').setup({
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true, h = true, vue = true , cs = true, csharp = true}
+        local disable_filetypes = { c = true, cpp = true, h = true, vue = true, cs = true, csharp = true }
         local lsp_format_opt
         if disable_filetypes[vim.bo[bufnr].filetype] then
           --lsp_format_opt = 'never'
-		  return nil
+          return nil
         else
           lsp_format_opt = 'fallback'
         end
@@ -872,40 +854,41 @@ require('lazy').setup({
         }
       end,
       formatters_by_ft = {
-		cpp = { "clang-format" },
-		c = { "clang-format" },
-		-- if Mason version doesn't work, use the one installed in $PATH installed by dotnet tool
-		cs = { "csharpier", stop_after_first = true  },
-		h = { "clang-format" },
-		glsl = { "clang-format" },
+        cpp = { 'clang-format' },
+        c = { 'clang-format' },
+        -- if Mason version doesn't work, use the one installed in $PATH installed by dotnet tool
+        cs = { 'csharpier', stop_after_first = true },
+        h = { 'clang-format' },
+        glsl = { 'clang-format' },
         lua = { 'stylua' },
-		vue = { "vue-language-server", stop_after_first = true },
-        javascript = { "prettier", stop_after_first = true },
-        typescript = { "prettier", stop_after_first = true },
-		typescriptreact = { "prettier", stop_after_first = true },
-		
+        vue = { 'vue-language-server', stop_after_first = true },
+        javascript = { 'prettier', stop_after_first = true },
+        typescript = { 'prettier', stop_after_first = true },
+        typescriptreact = { 'prettier', stop_after_first = true },
+
         -- Conform can also run multiple formatters sequentially
-        python = { "isort", "black" },
+        python = { 'isort', 'black' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
       },
-	  formatters = {
+      formatters = {
         prettier = {
           prepend_args = {
-		  --"--config", vim.fn.expand("~/.prettierrc")
-            "--tab-width", "4",
-            "--use-tabs", "false",
+            --"--config", vim.fn.expand("~/.prettierrc")
+            '--tab-width',
+            '4',
+            '--use-tabs',
+            'false',
           },
         },
-		csharpier = {
-          command = "csharpier",
-          args = { "format", "--write-stdout" },
+        csharpier = {
+          command = 'csharpier',
+          args = { 'format', '--write-stdout' },
           stdin = true,
         },
       },
     },
   },
-
 
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -992,7 +975,7 @@ require('lazy').setup({
           --  Generally you don't need this, because nvim-cmp will display
           --  completions whenever it has completion options available.
           ['<C-space>'] = cmp.mapping.complete {},
-		  ['<M-Space>'] = cmp.mapping.complete{},
+          ['<M-Space>'] = cmp.mapping.complete {},
 
           -- Think of <c-l> as moving to the right of your snippet expansion.
           --  So if you have a snippet that's like:
@@ -1018,14 +1001,14 @@ require('lazy').setup({
         },
         sources = {
           {
-          
-			name = 'path',
-			option = {
-			  trailing_slash = true,
-			  path_separator = vim.fn.has('win32') == 1 and '\\' or '/',
-			},
-		  },
-		  {
+
+            name = 'path',
+            option = {
+              trailing_slash = true,
+              path_separator = vim.fn.has 'win32' == 1 and '\\' or '/',
+            },
+          },
+          {
             name = 'lazydev',
             -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
             group_index = 0,
@@ -1038,22 +1021,22 @@ require('lazy').setup({
     end,
   },
 
---  { 
---    'zootedb0t/citruszest.nvim',
---    priority = 1000,
---	lazy = false,
---    config = function()
---      ---@diagnostic disable-next-line: missing-fields
---      --require('cyberdream').setup {
---      --  styles = {
---      --    --comments = { italic = false }, -- Disable italics in comments
---      --    italic_comments = false,
---      --  },
---      --}
---
---      vim.cmd.colorscheme 'citruszest'
---    end,
---  },
+  --  {
+  --    'zootedb0t/citruszest.nvim',
+  --    priority = 1000,
+  --	lazy = false,
+  --    config = function()
+  --      ---@diagnostic disable-next-line: missing-fields
+  --      --require('cyberdream').setup {
+  --      --  styles = {
+  --      --    --comments = { italic = false }, -- Disable italics in comments
+  --      --    italic_comments = false,
+  --      --  },
+  --      --}
+  --
+  --      vim.cmd.colorscheme 'citruszest'
+  --    end,
+  --  },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
@@ -1099,7 +1082,7 @@ require('lazy').setup({
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
---	branch = 'v0.9.2',
+    --	branch = 'v0.9.2',
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
@@ -1190,3 +1173,4 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
