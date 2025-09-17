@@ -134,6 +134,16 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+
+-- Prevents the non-breaking space when writing right ALT + space (can be very bad when unnoticed)
+vim.api.nvim_create_autocmd('InsertCharPre', {
+  callback = function()
+    if vim.v.char == '\u{00A0}' then
+      vim.v.char = ''
+    end
+  end,
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'

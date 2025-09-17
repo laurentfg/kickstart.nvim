@@ -20,10 +20,8 @@ return {
     vim.api.nvim_create_user_command('Wqa', 'wqa', {}),
     vim.api.nvim_create_user_command('Q', 'q', {}),
 
-    vim.keymap.set('n', '<leader>x', '<cmd>!chmod +x %<CR>', { desc = 'make the file executable (Linux)' }),
     vim.keymap.set('n', '<leader>z', ':Telescope colorscheme<CR>', { desc = 'Select Colorscheme' }),
-
-    --vim.keymap.set('n', '<leader>Z', ':luafile ~/appdata/local/nvim/init.lua<CR>', { desc = 'Select Colorscheme' }),
+    vim.keymap.set('n', '<leader>Z', '<cmd>!chmod +x %<CR>', { desc = 'make the file executable (Linux)' }),
 
     --taken from Theprimeagen
     --slide the selected through the text like a box
@@ -161,14 +159,40 @@ return {
     end, { desc = '[r]ename path to Windows version' }),
 
     vim.keymap.set('n', '<Leader>N', ":let @+ = expand('%:t')<cr>", { desc = 'copy [N]ame file to clipboard' }),
-
-    -- Prevents the non-breaking space when writing right ALT + space (can be very bad when unnoticed)
-    vim.api.nvim_create_autocmd('InsertCharPre', {
-      callback = function()
-        if vim.v.char == '\u{00A0}' then
-          vim.v.char = ''
-        end
-      end,
-    }),
+	
+		
+	-- <leader>X : envoie avec le même nom de fichier
+	vim.keymap.set('n', '<leader>x', function()
+		local file = vim.fn.expand("%:p")
+		local filename = vim.fn.expand("%:t")
+		local project_root = vim.fn.getcwd()
+		local cmd_file = project_root .. "/commande.txt"
+		
+		if vim.fn.filereadable(cmd_file) == 0 then
+			print("Fichier commande.txt introuvable")
+			return
+		end
+		
+		local lines = vim.fn.readfile(cmd_file)
+		if #lines < 2 then
+			print("commande.txt doit avoir au moins 2 lignes (clé et destination)")
+			return
+		end
+		
+		local key = vim.fn.trim(lines[1])       -- première ligne = clé + options
+		local dest = vim.fn.trim(lines[2])      -- deuxième ligne = destination
+		
+		-- Construire la commande scp
+		local final_cmd = string.format("%s %s %s%s", key, file, dest, filename)
+		
+		-- Exécuter
+		local output = vim.fn.system(final_cmd)
+		
+		if vim.v.shell_error ~= 0 then
+			vim.notify("Erreur SCP : " .. output, vim.log.levels.ERROR)
+		else
+			vim.notify("Envoyé : " .. file .. " → " .. dest .. filename, vim.log.levels.INFO)
+		end
+	end, { desc = "SCP fichier courant via commande.txt" }),
   },
 }
