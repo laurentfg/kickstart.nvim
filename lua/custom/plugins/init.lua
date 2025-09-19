@@ -194,5 +194,10 @@ return {
 			vim.notify("Envoyé : " .. file .. " → " .. dest .. filename, vim.log.levels.INFO)
 		end
 	end, { desc = "SCP fichier courant via commande.txt" }),
+	
+	vim.api.nvim_create_user_command("CsReload", function()
+		vim.lsp.buf.execute_command({ command = "omnisharp/reloadProject" })
+	end, {}),
+
   },
 }
