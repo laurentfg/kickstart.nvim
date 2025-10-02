@@ -136,6 +136,7 @@ return {
                 ['@punctuation.bracket'] = { fg = macchiato.text },
                 ['@variable'] = { fg = macchiato.text },
                 ['@lsp.mod.local.typescriptreact'] = { fg = macchiato.text },
+				Operator = ({ fg = macchiato.text }),
 
                 LspReferenceText = { bg = macchiato.surface0 },
                 LspReferenceRead = { bg = macchiato.surface0 },
@@ -165,6 +166,8 @@ return {
                 ["@keyword.import"] = { fg = macchiato.pink },
                 ["@keyword.import.rust"] = { fg = macchiato.pink },
                 ["@keyword.import.java"] = { fg = macchiato.pink },
+                ["@keyword.import.c"] = { fg = macchiato.pink },
+                ["@keyword.import.cpp"] = { fg = macchiato.pink },
                 Include = { fg = macchiato.pink },
                 ['@keyword.export'] = { fg = macchiato.pink }, --for React Native
 
@@ -172,6 +175,7 @@ return {
                 Keyword = { fg = macchiato.blue },
                 ['type.builtin'] = { fg = macchiato.blue },
                 ['@type.builtin'] = { fg = macchiato.blue },
+                --['@variable.builtin'] = { fg = macchiato.blue },
                 ['@keyword.type'] = { fg = macchiato.blue },
                 ['@keyword.function'] = { fg = macchiato.blue }, --for React Native
                 ['@lsp.type.enum'] = { fg = macchiato.blue },
@@ -188,6 +192,7 @@ return {
                 PreProc = { fg = macchiato.pink },
 
                 ['@lsp.typemod.variable.readonly'] = { fg = macchiato.mauve },
+                ['@lsp.typemod.property.readonly'] = { fg = macchiato.mauve },
                 ['@lsp.type.enumMember'] = { fg = macchiato.mauve },
               }
             end,
