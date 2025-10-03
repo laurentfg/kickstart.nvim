@@ -767,6 +767,7 @@ require('lazy').setup({
           organize_imports_on_format = true,
           enable_import_completion = true,
           sdk_include_prereleases = true,
+		  capabilities = capabilities,
         },
         --omnisharp-mono = {},
 
@@ -850,7 +851,7 @@ require('lazy').setup({
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true, h = true, vue = true, cs = true, csharp = true }
+        local disable_filetypes = { c = true, cpp = true, h = true, vue = true, cs = true, csharp = true, typescriptreact = true, typescript = true, javascript = true }
         local lsp_format_opt
         if disable_filetypes[vim.bo[bufnr].filetype] then
           --lsp_format_opt = 'never'
@@ -1030,23 +1031,6 @@ require('lazy').setup({
       }
     end,
   },
-
-  --  {
-  --    'zootedb0t/citruszest.nvim',
-  --    priority = 1000,
-  --	lazy = false,
-  --    config = function()
-  --      ---@diagnostic disable-next-line: missing-fields
-  --      --require('cyberdream').setup {
-  --      --  styles = {
-  --      --    --comments = { italic = false }, -- Disable italics in comments
-  --      --    italic_comments = false,
-  --      --  },
-  --      --}
-  --
-  --      vim.cmd.colorscheme 'citruszest'
-  --    end,
-  --  },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },

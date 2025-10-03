@@ -45,10 +45,10 @@ return {
     vim.keymap.set('n', '<M-s>', 'zt'),
 
     --harpoon has the CTRL+hjkl, so the window move is set to ALT
-    vim.keymap.set('n', '<M-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' }),
-    vim.keymap.set('n', '<M-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' }),
-    vim.keymap.set('n', '<M-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' }),
-    vim.keymap.set('n', '<M-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' }),
+    --vim.keymap.set('n', '<M-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' }),
+    --vim.keymap.set('n', '<M-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' }),
+    --vim.keymap.set('n', '<M-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' }),
+    --vim.keymap.set('n', '<M-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' }),
 
     --obsolete since capital P works now for that
     --vim.keymap.set("x", "<leader>p", [["_dP]], { desc = 'Paste without replacing buffer' }),
