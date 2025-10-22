@@ -181,6 +181,7 @@ return {
                 ['@lsp.type.enum'] = { fg = macchiato.blue },
                 ['@lsp.typemod.class.defaultLibrary'] = { fg = macchiato.blue },
                 Boolean = { fg = macchiato.blue },
+                Constant = { fg = macchiato.blue },
 
                 ['@module'] = { fg = macchiato.teal },
                 ['@type'] = { fg = macchiato.teal },

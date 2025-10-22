@@ -146,6 +146,14 @@ custom theme (can be ignored, it is properly checked in my config, obsolete them
 WinterWood folder in C:\prog
 
 
+	PlatformIO
+https://docs.platformio.org/en/latest/core/installation/index.html
+section "Installer Script", place file locally and execute python script
+PATH add:
+%USERPROFILE%\.platformio\penv\Scripts\
+
+
+
 
 choses à améliorer dans le futur si le besoin est là (contexte Windows)
 Windows Terminal, Wezterm and Hyper
