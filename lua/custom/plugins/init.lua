@@ -122,7 +122,7 @@ return {
         return
       end
 
-      local stop = col
+      local stop = col + 1
       while stop <= len and not line:sub(stop, stop):match '[A-Z]' do
         stop = stop + 1
       end
