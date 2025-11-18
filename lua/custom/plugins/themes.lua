@@ -107,7 +107,7 @@ return {
               peach = '#fab387',
               yellow = '#FCFCAA', --"#f9e2af",
               green = '#6A9955', --"#a6e3a1",
-              teal = '#00E5C6', --"#94e2d5",
+              teal = '#00E4C5', --"#94e2d5",
               sky = '#89dceb', --?"#EFEFF5"?
               sapphire = '#74c7ec',
               blue = '#0CA5F2', --"#89b4fa",
@@ -181,6 +181,7 @@ return {
                 ['@lsp.type.enum'] = { fg = macchiato.blue },
                 ['@lsp.typemod.class.defaultLibrary'] = { fg = macchiato.blue },
                 Boolean = { fg = macchiato.blue },
+                Constant = { fg = macchiato.blue },
 
                 ['@module'] = { fg = macchiato.teal },
                 ['@type'] = { fg = macchiato.teal },
