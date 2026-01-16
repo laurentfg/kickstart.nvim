@@ -123,7 +123,7 @@ return {
               surface1 = '#45475a',
               surface0 = '#313244',
 
-              base = '#090709', --"#1e1e2e",
+              base = '#070507', --"#1e1e2e",
               mantle = '#101015', --"#181825",
               crust = '#05050b', --"#11111b",
             },
@@ -181,7 +181,8 @@ return {
                 ['@lsp.type.enum'] = { fg = macchiato.blue },
                 ['@lsp.typemod.class.defaultLibrary'] = { fg = macchiato.blue },
                 Boolean = { fg = macchiato.blue },
-                Constant = { fg = macchiato.blue },
+                --Constant = { fg = macchiato.blue },
+				
 
                 ['@module'] = { fg = macchiato.teal },
                 ['@type'] = { fg = macchiato.teal },
@@ -191,12 +192,14 @@ return {
                 Conditional = { fg = macchiato.pink },
                 ['@keyword.return'] = { fg = macchiato.pink },
                 PreProc = { fg = macchiato.pink },
+				['@keyword.operator'] = { fg = macchiato.pink },
 				
 				['@property.yaml'] = { fg = macchiato.sky },
 
                 ['@lsp.typemod.variable.readonly'] = { fg = macchiato.mauve },
                 ['@lsp.typemod.property.readonly'] = { fg = macchiato.mauve },
                 ['@lsp.type.enumMember'] = { fg = macchiato.mauve },
+                Constant = { fg = macchiato.mauve },
               }
             end,
           },

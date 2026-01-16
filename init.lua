@@ -134,7 +134,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
-
 -- Prevents the non-breaking space when writing right ALT + space (can be very bad when unnoticed)
 vim.api.nvim_create_autocmd('InsertCharPre', {
   callback = function()
@@ -188,6 +187,38 @@ require('lazy').setup({
   'mfussenegger/nvim-jdtls',
 
   { 'nvzone/volt', lazy = true },
+  
+  {
+	"junegunn/vim-easy-align",
+	vim.keymap.set('x', 'ga', '<Plug>(EasyAlign)', { desc = 'EasyAlign text' }),
+	vim.keymap.set('n', 'ga', '<Plug>(EasyAlign)', { desc = 'EasyAlign text' }),
+  },
+  
+  --ne marche pas, probablement à cause de Windows
+  --peut-être qu'il faut Godot dans le PATH?
+  --{
+  --  'Mathijs-Bakker/godotdev.nvim',
+  --  dependencies = { 'nvim-lspconfig', 'nvim-dap', 'nvim-dap-ui', 'nvim-treesitter' },
+  --},
+  
+  {
+    "QuickGD/quickgd.nvim",
+    ft = {"gdshader", "gdshaderinc"},
+    cmd = {"GodotRun","GodotRunLast","GodotStart"},
+    -- Use opts if passing in settings else use config
+    init = function()
+      vim.filetype.add {
+        extension = {
+          gdshaderinc = "gdshaderinc",
+        },
+      }
+    end,
+    config = true,
+    opts = {}
+  },
+  
+  
+
 
   --	{
   --		"nvim-lualine/lualine.nvim",
@@ -391,6 +422,8 @@ require('lazy').setup({
             'x64\\Debug',
             'x64\\Release',
             'Library',
+			--".uid$",
+			--"server.pipe",
           },
           --   mappings = {
           --     i = {
@@ -686,59 +719,18 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         clangd = {
-          --cmd = {
-          --	"clangd",
-          --	"--background-index",  -- Construit un index global
-          --	"--clang-tidy",        -- Active clang-tidy pour des diagnostics avancés
-          --	"--completion-style=detailed",
-          --	"--cross-file-rename",
-          --	"--header-insertion=never",
-          --	"--pch-storage=memory" -- Stockage des précompilés en mémoire
-          --  },
-          --capabilities = {
-          --	documentFormattingProvider = false,
-          --},
         },
         cpplint = {},
-        cssls = {}, --css-lsp
-        --ts_ls = {
-        --	filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
-        --},
+        cssls = {},
         jdtls = {},
-        --volar = {
-        --  filetypes = {
-        --    'vue' --[[, 'typescript', 'javascript', 'javascriptreact', 'typescriptreact'--]],
-        --  },
-        --  init_options = {
-        --    vue = { hybridMode = false },
-        --  },
-        --},
-
-        --Using the dotnet version instead
-        --csharpier = {},
-
         prettier = {},
-        --prettierd = {},
 
-        -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-        --
-        -- Some languages (like typescript) have entire language plugins that can be useful:
-        --    https://github.com/pmizio/typescript-tools.nvim
-        --
-        -- But for many setups, the LSP (`ts_ls`) will work just fine
-        --
-
-        lua_ls = { --lua-language-server
-          -- cmd = { ... },
-          -- filetypes = { ... },
-          -- capabilities = {},
+        lua_ls = {
           settings = {
             Lua = {
               completion = {
                 callSnippet = 'Replace',
               },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
             },
           },
         },
@@ -767,7 +759,7 @@ require('lazy').setup({
           organize_imports_on_format = true,
           enable_import_completion = true,
           sdk_include_prereleases = true,
-		  capabilities = capabilities,
+          capabilities = capabilities,
         },
         --omnisharp-mono = {},
 
@@ -776,6 +768,9 @@ require('lazy').setup({
         --pylsp = {},
         black = {},
         isort = {},
+		
+		--Godot
+		gdtoolkit = {},
       }
 
       --cpp and h files formatted correctly
@@ -805,6 +800,21 @@ require('lazy').setup({
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
+	  --for Godot
+	  local lspconfig = require('lspconfig')
+	  lspconfig.gdscript.setup{
+	    cmd = vim.lsp.rpc.connect('127.0.0.1', 6005),
+	    filetypes = { 'gd', 'gdscript', 'gdscript3' },
+	    root_dir = lspconfig.util.root_pattern('project.godot', '.git'),
+	    capabilities = capabilities,
+	  }
+	  --lspconfig.glsl_analyzer.setup{
+	  --  cmd = vim.lsp.rpc.connect('127.0.0.1', 6005),
+	  --  filetypes = { 'gdshader' },
+	  --  root_dir = lspconfig.util.root_pattern('project.godot', '.git'),
+	  --  capabilities = capabilities,
+	  --}
+	  
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
         automatic_installation = false,
@@ -851,7 +861,8 @@ require('lazy').setup({
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true, h = true, vue = true, cs = true, csharp = true, typescriptreact = true, typescript = true, javascript = true }
+        local disable_filetypes =
+          { c = true, cpp = true, h = true, vue = true, cs = true, csharp = true, typescriptreact = true, typescript = true, javascript = true, gdscript = true, gdshader = true, }
         local lsp_format_opt
         if disable_filetypes[vim.bo[bufnr].filetype] then
           --lsp_format_opt = 'never'
@@ -876,11 +887,14 @@ require('lazy').setup({
         javascript = { 'prettier', stop_after_first = true },
         typescript = { 'prettier', stop_after_first = true },
         typescriptreact = { 'prettier', stop_after_first = true },
+		gdscript = { 'gdformat' },
+		gdshader = { 'clang-format' },
 
         -- Conform can also run multiple formatters sequentially
         python = { 'isort', 'black' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
+		
       },
       formatters = {
         prettier = {
@@ -897,6 +911,13 @@ require('lazy').setup({
           args = { 'format', '--write-stdout' },
           stdin = true,
         },
+		
+		--Godot
+		  gdformat = {
+			command = 'gdformat',
+			args = { '-' },
+			stdin = true,
+		},
       },
     },
   },
@@ -1097,6 +1118,9 @@ require('lazy').setup({
         'query',
         'vim',
         'vimdoc',
+		'gdscript',
+		'godot_resource',
+		'gdshader',
       },
       -- Autoinstall languages that are not installed
       auto_install = true,
@@ -1167,4 +1191,3 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-

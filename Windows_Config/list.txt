@@ -152,6 +152,13 @@ section "Installer Script", place file locally and execute python script
 PATH add:
 %USERPROFILE%\.platformio\penv\Scripts\
 
+Godot
+add to C:\prog\gdshader-lsp the LSP from https://github.com/GodOfAvacyn/gdshader-lsp
+(compile into .exe)
+PATH: add C:\prog\gdshader-lsp
+add .clang-format at root of Godot projects folders (for gdshader)
+rename the version of Godot downloaded to Godot.exe
+PATH: add the folder of Godot exe
 
 
 
