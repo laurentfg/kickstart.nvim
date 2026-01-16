@@ -181,7 +181,8 @@ return {
                 ['@lsp.type.enum'] = { fg = macchiato.blue },
                 ['@lsp.typemod.class.defaultLibrary'] = { fg = macchiato.blue },
                 Boolean = { fg = macchiato.blue },
-                Constant = { fg = macchiato.blue },
+                --Constant = { fg = macchiato.blue },
+				
 
                 ['@module'] = { fg = macchiato.teal },
                 ['@type'] = { fg = macchiato.teal },
@@ -191,10 +192,12 @@ return {
                 Conditional = { fg = macchiato.pink },
                 ['@keyword.return'] = { fg = macchiato.pink },
                 PreProc = { fg = macchiato.pink },
+				['@keyword.operator'] = { fg = macchiato.pink },
 
                 ['@lsp.typemod.variable.readonly'] = { fg = macchiato.mauve },
                 ['@lsp.typemod.property.readonly'] = { fg = macchiato.mauve },
                 ['@lsp.type.enumMember'] = { fg = macchiato.mauve },
+                Constant = { fg = macchiato.mauve },
               }
             end,
           },

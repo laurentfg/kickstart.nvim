@@ -139,6 +139,7 @@ return {
 
     --lazy shortcut, intended when no more lines will be edited
     vim.keymap.set('i', '<M-;>', '<esc>A;<esc>'),
+    vim.keymap.set('i', '<M-è>', '<esc>A:<enter>'),
 
     --Imitate IDEs like Intellij
     vim.keymap.set('i', '<M-[>', function()
