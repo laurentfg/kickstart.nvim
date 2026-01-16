@@ -191,6 +191,8 @@ return {
                 Conditional = { fg = macchiato.pink },
                 ['@keyword.return'] = { fg = macchiato.pink },
                 PreProc = { fg = macchiato.pink },
+				
+				['@property.yaml'] = { fg = macchiato.sky },
 
                 ['@lsp.typemod.variable.readonly'] = { fg = macchiato.mauve },
                 ['@lsp.typemod.property.readonly'] = { fg = macchiato.mauve },
