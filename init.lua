@@ -194,6 +194,10 @@ require('lazy').setup({
 	vim.keymap.set('n', 'ga', '<Plug>(EasyAlign)', { desc = 'EasyAlign text' }),
   },
   
+  {
+    "teatek/gdscript-extended-lsp.nvim", opts = {view_type = "floating", picker = "telescope"}
+  },
+  
   --ne marche pas, probablement à cause de Windows
   --peut-être qu'il faut Godot dans le PATH?
   --{
@@ -1087,6 +1091,11 @@ require('lazy').setup({
       -- cursor location to LINE:COLUMN
       ---@diagnostic disable-next-line: duplicate-set-field
       statusline.section_location = function()
+	  
+	  require("mini.refactoring").refactor('Extract Variable')
+	  
+	  
+	 
         return '%2l:%-2v'
       end
 

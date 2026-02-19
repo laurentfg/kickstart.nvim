@@ -200,6 +200,16 @@ return {
                 ['@lsp.typemod.property.readonly'] = { fg = macchiato.mauve },
                 ['@lsp.type.enumMember'] = { fg = macchiato.mauve },
                 Constant = { fg = macchiato.mauve },
+				
+				Folded = {
+					fg = macchiato.lavender,
+					bg = macchiato.base,
+				},
+				--FoldColumn = {
+				--	fg = macchiato.overlay0,
+				--	bg = macchiato.base,
+				--},
+				
               }
             end,
           },
