@@ -1091,10 +1091,7 @@ require('lazy').setup({
       -- cursor location to LINE:COLUMN
       ---@diagnostic disable-next-line: duplicate-set-field
       statusline.section_location = function()
-	  
-	  require("mini.refactoring").refactor('Extract Variable')
-	  
-	  
+	    
 	 
         return '%2l:%-2v'
       end
