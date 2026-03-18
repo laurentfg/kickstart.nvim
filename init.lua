@@ -84,6 +84,8 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
+vim.opt.conceallevel = 0
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -866,7 +868,7 @@ require('lazy').setup({
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
         local disable_filetypes =
-          { c = true, cpp = true, h = true, vue = true, cs = true, csharp = true, typescriptreact = true, typescript = true, javascript = true, gdscript = true, gdshader = true, }
+          { c = true, cpp = true, h = true, vue = true, cs = true, csharp = true, typescriptreact = true, typescript = true, javascript = true, gdscript = true, gdshader = true, markdown = true }
         local lsp_format_opt
         if disable_filetypes[vim.bo[bufnr].filetype] then
           --lsp_format_opt = 'never'
@@ -896,6 +898,7 @@ require('lazy').setup({
 
         -- Conform can also run multiple formatters sequentially
         python = { 'isort', 'black' },
+		markdown = { 'prettier'},
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
 		
