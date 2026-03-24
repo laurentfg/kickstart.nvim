@@ -777,6 +777,9 @@ require('lazy').setup({
 		
 		--Godot
 		gdtoolkit = {},
+		
+		--Laravel
+		intelephense = {},
       }
 
       --cpp and h files formatted correctly
@@ -868,7 +871,7 @@ require('lazy').setup({
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
         local disable_filetypes =
-          { c = true, cpp = true, h = true, vue = true, cs = true, csharp = true, typescriptreact = true, typescript = true, javascript = true, gdscript = true, gdshader = true, markdown = true }
+          { c = true, cpp = true, h = true, vue = true, cs = true, csharp = true, typescriptreact = true, typescript = true, javascript = true, gdscript = true, gdshader = true, markdown = true, php = true }
         local lsp_format_opt
         if disable_filetypes[vim.bo[bufnr].filetype] then
           --lsp_format_opt = 'never'
@@ -895,6 +898,8 @@ require('lazy').setup({
         typescriptreact = { 'prettier', stop_after_first = true },
 		gdscript = { 'gdformat' },
 		gdshader = { 'clang-format' },
+		php = { 'pint' },
+		--php = { 'pint', 'php_cs_fixer', stop_after_first = true },
 
         -- Conform can also run multiple formatters sequentially
         python = { 'isort', 'black' },
@@ -1055,6 +1060,10 @@ require('lazy').setup({
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'nvim_lsp_signature_help' },
+		  
+		  --Laravel
+		  { name = 'laravel' },
+		  { name = "buffer" },
         },
       }
     end,

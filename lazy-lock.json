@@ -21,6 +21,7 @@
   "halfspace.nvim": { "branch": "main", "commit": "23b367771f694479771735150311d41830133f95" },
   "harpoon": { "branch": "master", "commit": "1bc17e3e42ea3c46b33c0bbad6a880792692a1b3" },
   "jellybeans.nvim": { "branch": "main", "commit": "0699f98da88cc54144893bea5764bfef74ea671a" },
+  "laravel.nvim": { "branch": "main", "commit": "623a22de1a54bd6e96839cef1845ffaaf3a1eed1" },
   "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },
   "lazydev.nvim": { "branch": "main", "commit": "2367a6c0a01eb9edb0464731cc0fb61ed9ab9d2c" },
   "lush.nvim": { "branch": "main", "commit": "45a79ec4acb5af783a6a29673a999ce37f00497e" },
