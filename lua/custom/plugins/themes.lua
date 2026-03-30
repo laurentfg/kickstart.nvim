@@ -157,6 +157,8 @@ return {
 
                 Methods = { fg = macchiato.yellow },
                 Function = { fg = macchiato.yellow },
+				
+				['@string.special.url.html'] = {fg = macchiato.peach },
 
                 ['@variable.parameter'] = { fg = macchiato.overlay2 },
 
