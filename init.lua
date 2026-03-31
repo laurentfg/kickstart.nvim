@@ -28,6 +28,13 @@ vim.opt.colorcolumn = '120'
 vim.opt.textwidth = 120
 vim.opt.linebreak = true
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.opt_local.textwidth = 0
+  end,
+})
+
 vim.opt.number = true
 vim.opt.relativenumber = true
 
