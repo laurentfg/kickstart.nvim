@@ -754,6 +754,12 @@ require('lazy').setup({
             },
           },
         },
+		
+		-- Vue (Laravel)
+		-- npm install -g @vue/language-server
+		-- npm install -g @vue/typescript-plugin
+		vue_ls = {},
+		ts_ls = {},
 
         --glslx = {
         --	cmd = {"glslx", "--stdio" },
