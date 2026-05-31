@@ -160,6 +160,8 @@ return {
 
                 Methods = { fg = macchiato.yellow },
                 Function = { fg = macchiato.yellow },
+				
+				['@string.special.url.html'] = {fg = macchiato.peach },
 
                 ['@variable.parameter'] = { fg = macchiato.overlay2 },
 
@@ -204,6 +206,16 @@ return {
                 ['@lsp.typemod.property.readonly'] = { fg = macchiato.mauve },
                 ['@lsp.type.enumMember'] = { fg = macchiato.mauve },
                 Constant = { fg = macchiato.mauve },
+				
+				Folded = {
+					fg = macchiato.lavender,
+					bg = macchiato.base,
+				},
+				--FoldColumn = {
+				--	fg = macchiato.overlay0,
+				--	bg = macchiato.base,
+				--},
+				
               }
             end,
           },

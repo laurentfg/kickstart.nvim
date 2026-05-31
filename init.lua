@@ -77,6 +77,13 @@ vim.opt.colorcolumn = '120'
 vim.opt.textwidth = 120
 vim.opt.linebreak = true
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.opt_local.textwidth = 0
+  end,
+})
+
 vim.opt.number = true
 vim.opt.relativenumber = true
 
@@ -132,6 +139,8 @@ vim.opt.scrolloff = 10
 -- search highlight adapts to the current search
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
+
+vim.opt.conceallevel = 0
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -192,6 +201,14 @@ vim.api.nvim_create_autocmd('InsertCharPre', {
   end,
 })
 
+--Pour Laravel
+vim.filetype.add({
+    pattern = {
+        [".*%.blade%.php"] = "blade",
+    },
+})
+vim.treesitter.language.register("html", "blade")
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -241,6 +258,10 @@ require('lazy').setup({
 	"junegunn/vim-easy-align",
 	vim.keymap.set('x', 'ga', '<Plug>(EasyAlign)', { desc = 'EasyAlign text' }),
 	vim.keymap.set('n', 'ga', '<Plug>(EasyAlign)', { desc = 'EasyAlign text' }),
+  },
+  
+  {
+    "teatek/gdscript-extended-lsp.nvim", opts = {view_type = "floating", picker = "telescope"}
   },
   
   --ne marche pas, probablement à cause de Windows
@@ -772,8 +793,7 @@ require('lazy').setup({
         cpplint = {},
         cssls = {},
         jdtls = {},
-        prettier = {},
-
+		
         lua_ls = {
           settings = {
             Lua = {
@@ -783,6 +803,12 @@ require('lazy').setup({
             },
           },
         },
+		
+		-- Vue (Laravel)
+		-- npm install -g @vue/language-server
+		-- npm install -g @vue/typescript-plugin
+		vue_ls = {},
+		ts_ls = {},
 
         --glslx = {
         --	cmd = {"glslx", "--stdio" },
@@ -815,11 +841,42 @@ require('lazy').setup({
         --python
         pyright = {},
         --pylsp = {},
-        black = {},
-        isort = {},
 		
 		--Godot
 		gdtoolkit = {},
+		
+		--Laravel
+		intelephense = {
+			filetypes = { "php", "blade" },
+		},
+		html = {
+			filetypes = { "html", "blade" },
+			init_options = {
+			configurationSection = { "html", "css", "javascript" },
+			embeddedLanguages = {
+				css = true,
+				javascript = true,
+			},
+			provideFormatter = true,
+			},
+		},
+		
+		tailwindcss = {
+			filetypes = { "html", "blade" },
+			init_options = {
+				userLanguages = {
+					blade = "html",
+				},
+			},
+			settings = {
+				tailwindCSS = {
+					includeLanguages = {
+					blade = "html",
+					},
+				},
+			},
+		},
+		
       }
 
       --cpp and h files formatted correctly
@@ -845,11 +902,14 @@ require('lazy').setup({
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format Lua code
+        'stylua',
+		'prettier',
+		'black',
+		'isort',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
-	  --for Godot
+	  --for Godot, voluntarily uses the old Mason way to connect
 	  local lspconfig = require('lspconfig')
 	  lspconfig.gdscript.setup{
 	    cmd = vim.lsp.rpc.connect('127.0.0.1', 6005),
@@ -857,28 +917,22 @@ require('lazy').setup({
 	    root_dir = lspconfig.util.root_pattern('project.godot', '.git'),
 	    capabilities = capabilities,
 	  }
+  
 	  --lspconfig.glsl_analyzer.setup{
 	  --  cmd = vim.lsp.rpc.connect('127.0.0.1', 6005),
 	  --  filetypes = { 'gdshader' },
 	  --  root_dir = lspconfig.util.root_pattern('project.godot', '.git'),
 	  --  capabilities = capabilities,
 	  --}
-	  
-      require('mason-lspconfig').setup {
-        ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
-        automatic_installation = false,
-        handlers = {
-          function(server_name)
-            local server = servers[server_name] or {}
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting for ts_ls)
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
-          end,
-        },
-      }
+	
+	  --Mason récent?
+	  for server_name, server_config in pairs(servers) do
+        server_config.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server_config.capabilities or {})
 
+        vim.lsp.config(server_name, server_config)
+        vim.lsp.enable(server_name)
+      end
+	  
       --require("lspconfig").volar.setup({
       --  on_attach = function(client, bufnr)
       --    if client.name == "volar" then
@@ -911,7 +965,7 @@ require('lazy').setup({
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
         local disable_filetypes =
-          { c = true, cpp = true, h = true, vue = true, cs = true, csharp = true, typescriptreact = true, typescript = true, javascript = true, gdscript = true, gdshader = true, }
+          { c = true, cpp = true, h = true, vue = true, cs = true, csharp = true, typescriptreact = true, typescript = true, javascript = true, gdscript = true, gdshader = true, markdown = true, php = true, blade = true }
         local lsp_format_opt
         if disable_filetypes[vim.bo[bufnr].filetype] then
           --lsp_format_opt = 'never'
@@ -938,9 +992,13 @@ require('lazy').setup({
         typescriptreact = { 'prettier', stop_after_first = true },
 		gdscript = { 'gdformat' },
 		gdshader = { 'clang-format' },
+		php = { 'pint' },
+		--php = { 'pint', 'php_cs_fixer', stop_after_first = true },
 
         -- Conform can also run multiple formatters sequentially
         python = { 'isort', 'black' },
+		markdown = { 'prettier'},
+		blade = { 'blade-formatter' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
 		
@@ -1031,41 +1089,19 @@ require('lazy').setup({
         --
         -- No, but seriously. Please read `:help ins-completion`, it is really good!
         mapping = cmp.mapping.preset.insert {
-          -- Select the [n]ext item
           ['<C-n>'] = cmp.mapping.select_next_item(),
-          -- Select the [p]revious item
           ['<C-p>'] = cmp.mapping.select_prev_item(),
           --<C-y> to autocomplete
 
-          -- Scroll the documentation window [b]ack / [f]orward
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
 
-          -- Accept ([y]es) the completion.
-          --  This will auto-import if your LSP supports it.
-          --  This will expand snippets if the LSP sent a snippet.
           ['<C-o>'] = cmp.mapping.confirm { select = true },
 
-          -- If you prefer more traditional completion keymaps,
-          -- you can uncomment the following lines
-          --['<CR>'] = cmp.mapping.confirm { select = true },
-          --['<Tab>'] = cmp.mapping.select_next_item(),
-          --['<S-Tab>'] = cmp.mapping.select_prev_item(),
-
-          -- Manually trigger a completion from nvim-cmp.
-          --  Generally you don't need this, because nvim-cmp will display
-          --  completions whenever it has completion options available.
           ['<C-space>'] = cmp.mapping.complete {},
           ['<M-Space>'] = cmp.mapping.complete {},
 
-          -- Think of <c-l> as moving to the right of your snippet expansion.
-          --  So if you have a snippet that's like:
-          --  function $name($args)
-          --    $body
-          --  end
-          --
-          -- <c-l> will move you to the right of each of the expansion locations.
-          -- <c-h> is similar, except moving you backwards.
+
           ['<C-l>'] = cmp.mapping(function()
             if luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()
@@ -1089,16 +1125,24 @@ require('lazy').setup({
               path_separator = vim.fn.has 'win32' == 1 and '\\' or '/',
             },
           },
-          {
-            name = 'lazydev',
-            -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
-            group_index = 0,
-          },
+          { name = 'lazydev', group_index = 0 },
+		  { name = 'laravel' },
+		  
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'nvim_lsp_signature_help' },
+		  { name = "buffer" },
         },
       }
+		cmp.setup.filetype({ "php", "blade" }, {
+			sources = cmp.config.sources({
+				{ name = 'laravel' },
+				{ name = 'nvim_lsp' },
+				{ name = 'luasnip' },
+				{ name = 'buffer' },
+				{ name = 'path' },
+			}),
+		})
     end,
   },
 
@@ -1136,6 +1180,8 @@ require('lazy').setup({
       -- cursor location to LINE:COLUMN
       ---@diagnostic disable-next-line: duplicate-set-field
       statusline.section_location = function()
+	    
+	 
         return '%2l:%-2v'
       end
 
@@ -1160,6 +1206,8 @@ require('lazy').setup({
         --'c',
         'diff',
         'html',
+		'php',
+		'blade',
         'lua',
         'luadoc',
         'markdown',
