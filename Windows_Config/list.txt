@@ -160,7 +160,10 @@ add .clang-format at root of Godot projects folders (for gdshader)
 rename the version of Godot downloaded to Godot.exe
 PATH: add the folder of Godot exe
 
+Force UTF-8 (for clang-format)
+Region (language parameters) -> Language for Non-Unicode languages -> check to use UTF-8
 
-
-choses à améliorer dans le futur si le besoin est là (contexte Windows)
-Windows Terminal, Wezterm and Hyper
+Neovide
+%localappdata%/neovide/neovide-settings.json
+	put the file in read-only after setting the desired window dimension 
+(all configs are in init.lua with the condition `if vim.g.neovide then`)

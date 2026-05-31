@@ -104,14 +104,15 @@ return {
               mauve = '#9564F1', --"#cba6f7",
               red = '#D16969', --"#f38ba8",
               maroon = '#FEA54C', --"#eba0ac",
-              peach = '#fab387',
+              peach = '#fdc89d', --'#fab387',
               yellow = '#FCFCAA', --"#f9e2af",
               green = '#6A9955', --"#a6e3a1",
               teal = '#00E4C5', --"#94e2d5",
               sky = '#89dceb', --?"#EFEFF5"?
               sapphire = '#74c7ec',
               blue = '#0CA5F2', --"#89b4fa",
-              lavender = '#CCA3FE', --"#b4befe",
+              lavender = "#b4befe",
+			  --'#CCA3FE', --"#b4befe",
 
               text = '#ebebeb', --"#cdd6f4",
               subtext1 = '#bac2de',
@@ -150,6 +151,8 @@ return {
                 String = { fg = macchiato.maroon },
 
                 Number = { fg = macchiato.rosewater },
+				['@string.special.url.gdscript'] = { fg = macchiato.rosewater },
+				["@string.special.path.gdscript"] = { fg = macchiato.rosewater },
 
                 LineNrAbove = { fg = macchiato.overlay0 },
                 --LineNr = { fg = macchiato.rosewater },
@@ -182,6 +185,7 @@ return {
                 ['@lsp.typemod.class.defaultLibrary'] = { fg = macchiato.blue },
                 Boolean = { fg = macchiato.blue },
                 --Constant = { fg = macchiato.blue },
+				
 				
 
                 ['@module'] = { fg = macchiato.teal },
