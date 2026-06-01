@@ -164,6 +164,19 @@ Force UTF-8 (for clang-format)
 Region (language parameters) -> Language for Non-Unicode languages -> check to use UTF-8
 
 Neovide
+https://neovide.dev/index.html
 %localappdata%/neovide/neovide-settings.json
 	put the file in read-only after setting the desired window dimension 
 (all configs are in init.lua with the condition `if vim.g.neovide then`)
+
+make wsl accessible for neovide
+	sudo ln -s [wsl nvim path] /usr/local/bin/nvim
+
+shortcut the neovide.exe with parameter
+	".../.exe" --wsl
+	
+	
+Obsidian
+vaults location:
+	%userprofile%/vaults/personal
+	%userprofile%/vaults/work
