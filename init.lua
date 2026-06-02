@@ -6,11 +6,11 @@ do
 	--  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 	vim.g.mapleader = ' '
 	vim.g.maplocalleader = ' '
-	
+
 	-- Set to true if you have a Nerd Font installed and selected in the terminal
 	--disabled because of Windows' terminal having priority
 	--vim.g.have_nerd_font = false
-	
+
 	--Neovide
 	if vim.g.neovide then
 		vim.api.nvim_create_autocmd("VimEnter", {
@@ -20,7 +20,7 @@ do
 			end,
 		})
 		vim.g.neovide_remember_window_size = true
-		
+
 		-- animations off (source: FAQ)
 		vim.g.neovide_position_animation_length = 0
 		vim.g.neovide_cursor_animation_length = 0.00
@@ -235,6 +235,95 @@ do
   })
 end
 
+---Because most plugins are hosted on GitHub, you can use the helper
+---function to have less repetition in the following sections.
+---@param repo string
+---@return string
+local function gh(repo) return 'https://github.com/' .. repo end
+
+
+-- SECTION 3: UI / CORE UX PLUGINS
+
+do
+	--example:
+	vim.pack.add { gh 'NMAC427/guess-indent.nvim' }
+	require('guess-indent').setup {}
+	
+	if vim.g.have_nerd_font then vim.pack.add { gh 'nvim-tree/nvim-web-devicons' } end
+	
+	vim.pack.add { gh 'lewis6991/gitsigns.nvim' }
+	require('gitsigns').setup {
+    signs = {
+      add = { text = '+' }, ---@diagnostic disable-line: missing-fields
+      change = { text = '~' }, ---@diagnostic disable-line: missing-fields
+      delete = { text = '_' }, ---@diagnostic disable-line: missing-fields
+      topdelete = { text = '‾' }, ---@diagnostic disable-line: missing-fields
+      changedelete = { text = '~' }, ---@diagnostic disable-line: missing-fields
+    },
+  }
+  
+    vim.pack.add {gh 'folke/which-key.nvim'}
+	require('which-key').setup{
+		event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+		opts = {
+			-- delay between pressing a key and opening which-key (milliseconds)
+			-- this setting is independent of vim.opt.timeoutlen
+			delay = 600,
+			icons = { mappings = vim.g.have_nerd_font },
+		
+			-- Document existing key chains
+			spec = {
+				{ '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
+				{ '<leader>d', group = '[D]ocument' },
+				--{ '<leader>r', group = '[R]ename' },
+				{ '<leader>s', group = '[S]earch' },
+				{ '<leader>w', group = '[W]orkspace' },
+				{ '<leader>t', group = '[T]oggle/[T]est' },
+				{ '<leader>r', group = '[R]est HTTP' },
+				{ '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+				--lolo: added these lines
+				{ '<leader>g', group = '[G]it menu' },
+				{ '<leader>p', group = '[P]roject' },
+				--{ '<leader>pw', group = '[P]roject [w]ord' },
+				--{ '<leader>pW', group = '[P]roject [W]ORD' },
+				{ '<leader>tw', group = '[T]est [w]atch' },
+			},
+		},
+	}
+	
+	--COLORSCHEMES TODO:
+	
+	
+	
+	-- Highlight todo, notes, etc in comments
+	vim.pack.add { gh 'folke/todo-comments.nvim' }
+	require('todo-comments').setup { signs = false }
+	
+	-- MINI https://github.com/nvim-mini/mini.nvim
+	vim.pack.add { gh 'nvim-mini/mini.nvim' }
+
+	require('mini.ai').setup {
+		-- NOTE: Avoid conflicts with the built-in incremental selection mappings on Neovim>=0.12 (see `:help treesitter-incremental-selection`)
+		mappings = {
+		around_next = 'aa',
+		inside_next = 'ii',
+		},
+		n_lines = 500,
+	}
+	
+	require('mini.surround').setup()
+	
+	local statusline = require 'mini.statusline'
+	--statusline.setup { use_icons = vim.g.have_nerd_font }
+	statusline.setup { use_icons = false }
+	statusline.section_location = function() return '%2l:%-2v' end
+end
+
+-- SECTION 4:
+do
+	
+end
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -348,118 +437,8 @@ require('lazy').setup({
   --	  ft = { "c", "cpp" }, -- lazy load plugin only on C and C++ filetypes
   --  },
 
-  -- NOTE: Plugins can also be added by using a table,
-  -- with the first argument being the link and the following
-  -- keys can be used to configure plugin behavior/loading/etc.
-  --
-  -- Use `opts = {}` to automatically pass options to a plugin's `setup()` function, forcing the plugin to be loaded.
-  --
 
-  -- Alternatively, use `config = function() ... end` for full control over the configuration.
-  -- If you prefer to call `setup` explicitly, use:
-  --    {
-  --        'lewis6991/gitsigns.nvim',
-  --        config = function()
-  --            require('gitsigns').setup({
-  --                -- Your gitsigns configuration here
-  --            })
-  --        end,
-  --    }
-  --
-  -- Here is a more advanced example where we pass configuration
-  -- options to `gitsigns.nvim`.
-  --
-  -- See `:help gitsigns` to understand what the configuration keys do
-  { -- Adds git related signs to the gutter, as well as utilities for managing changes
-    'lewis6991/gitsigns.nvim',
-    opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-    },
-  },
 
-  -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
-  --
-  -- This is often very useful to both group configuration, as well as handle
-  -- lazy loading plugins that don't need to be loaded immediately at startup.
-  --
-  -- For example, in the following configuration, we use:
-  --  event = 'VimEnter'
-  --
-  -- which loads which-key before all the UI elements are loaded. Events can be
-  -- normal autocommands events (`:help autocmd-events`).
-  --
-  -- Then, because we use the `opts` key (recommended), the configuration runs
-  -- after the plugin has been loaded as `require(MODULE).setup(opts)`.
-
-  { -- Useful plugin to show you pending keybinds.
-    'folke/which-key.nvim',
-    event = 'VimEnter', -- Sets the loading event to 'VimEnter'
-    opts = {
-      -- delay between pressing a key and opening which-key (milliseconds)
-      -- this setting is independent of vim.opt.timeoutlen
-      delay = 600,
-      icons = {
-        -- set icon mappings to true if you have a Nerd Font
-        mappings = vim.g.have_nerd_font,
-        -- If you are using a Nerd Font: set icons.keys to an empty table which will use the
-        -- default which-key.nvim defined Nerd Font icons, otherwise define a string table
-        keys = vim.g.have_nerd_font and {} or {
-          Up = '<Up> ',
-          Down = '<Down> ',
-          Left = '<Left> ',
-          Right = '<Right> ',
-          C = '<C-…> ',
-          M = '<M-…> ',
-          D = '<D-…> ',
-          S = '<S-…> ',
-          CR = '<CR> ',
-          Esc = '<Esc> ',
-          ScrollWheelDown = '<ScrollWheelDown> ',
-          ScrollWheelUp = '<ScrollWheelUp> ',
-          NL = '<NL> ',
-          BS = '<BS> ',
-          Space = '<Space> ',
-          Tab = '<Tab> ',
-          F1 = '<F1>',
-          F2 = '<F2>',
-          F3 = '<F3>',
-          F4 = '<F4>',
-          F5 = '<F5>',
-          F6 = '<F6>',
-          F7 = '<F7>',
-          F8 = '<F8>',
-          F9 = '<F9>',
-          F10 = '<F10>',
-          F11 = '<F11>',
-          F12 = '<F12>',
-        },
-      },
-
-      -- Document existing key chains
-      spec = {
-        { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
-        { '<leader>d', group = '[D]ocument' },
-        --{ '<leader>r', group = '[R]ename' },
-        { '<leader>s', group = '[S]earch' },
-        { '<leader>w', group = '[W]orkspace' },
-        { '<leader>t', group = '[T]oggle/[T]est' },
-        { '<leader>r', group = '[R]est HTTP' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
-        --lolo: added these lines
-        { '<leader>g', group = '[G]it menu' },
-        { '<leader>p', group = '[P]roject' },
-        { '<leader>pw', group = '[P]roject [w]ord' },
-        { '<leader>pW', group = '[P]roject [W]ORD' },
-        { '<leader>tw', group = '[T]est [w]atch' },
-      },
-    },
-  },
 
   -- NOTE: Plugins can specify dependencies.
   --
@@ -1145,9 +1124,6 @@ require('lazy').setup({
 		})
     end,
   },
-
-  -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
