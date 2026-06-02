@@ -1,220 +1,239 @@
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
--- Set to true if you have a Nerd Font installed and selected in the terminal
---disabled because of Windows' terminal having priority
---vim.g.have_nerd_font = false
-
---Neovide
-if vim.g.neovide then
-	vim.api.nvim_create_autocmd("VimEnter", {
-		callback = function()
-			vim.o.columns = 140
-			vim.o.lines = 40
-		end,
-	})
-	vim.g.neovide_remember_window_size = true
+do
+	vim.loader.enable()
 	
-	-- animations off (source: FAQ)
-	vim.g.neovide_position_animation_length = 0
-	vim.g.neovide_cursor_animation_length = 0.00
-	vim.g.neovide_cursor_trail_size = 0
-	vim.g.neovide_cursor_animate_in_insert_mode = false
-	vim.g.neovide_cursor_animate_command_line = false
-	vim.g.neovide_scroll_animation_far_lines = 0
-	vim.g.neovide_scroll_animation_length = 0.00
+	-- Set <space> as the leader key
+	-- See `:help mapleader`
+	--  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
+	vim.g.mapleader = ' '
+	vim.g.maplocalleader = ' '
 	
-	-- change scale at Runtime (source: FAQ)
-	vim.g.neovide_scale_factor = 1.0
+	-- Set to true if you have a Nerd Font installed and selected in the terminal
+	--disabled because of Windows' terminal having priority
+	--vim.g.have_nerd_font = false
 	
-	local change_scale_factor = function(delta)
-		vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
+	--Neovide
+	if vim.g.neovide then
+		vim.api.nvim_create_autocmd("VimEnter", {
+			callback = function()
+				vim.o.columns = 140
+				vim.o.lines = 40
+			end,
+		})
+		vim.g.neovide_remember_window_size = true
+		
+		-- animations off (source: FAQ)
+		vim.g.neovide_position_animation_length = 0
+		vim.g.neovide_cursor_animation_length = 0.00
+		vim.g.neovide_cursor_trail_size = 0
+		vim.g.neovide_cursor_animate_in_insert_mode = false
+		vim.g.neovide_cursor_animate_command_line = false
+		vim.g.neovide_scroll_animation_far_lines = 0
+		vim.g.neovide_scroll_animation_length = 0.00
+		
+		-- change scale at Runtime (source: FAQ)
+		vim.g.neovide_scale_factor = 1.0
+		
+		local change_scale_factor = function(delta)
+			vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
+		end
+		
+		vim.keymap.set("n", "<C-=>", function()
+			change_scale_factor(1.25)
+		end)
+		
+		vim.keymap.set("n", "<C-->", function()
+			change_scale_factor(1/1.25)
+		end)
+		
+		vim.keymap.set("n", "<C-0>", function()
+			vim.g.neovide_scale_factor = 1.0
+		end)
+		
+		--font
+		vim.o.guifont = "Hack Nerd Font Mono:h14"
+		vim.g.neovide_padding_top = 0
+		vim.g.neovide_padding_bottom = 0
+		vim.g.neovide_padding_left = 0
+		vim.g.neovide_padding_right = 0
+		
+		vim.opt.linespace = -1
+		
 	end
 	
-	vim.keymap.set("n", "<C-=>", function()
-		change_scale_factor(1.25)
+	-- compatibility Win10 LTSC
+	if vim.fn.has('win32') == 1 then
+		local termfeatures = vim.g.termfeatures or {}
+		termfeatures.osc52 = false
+		vim.g.termfeatures = termfeatures
+	end
+	
+	-- remove start message
+	vim.cmd 'set shortmess+=I'
+	
+	-- configure folds
+	--vim.cmd("set foldcolumn=1")
+	vim.cmd 'set foldmethod=indent'
+	vim.opt.foldlevelstart = 99
+	
+	-- [[ Setting options ]]
+	-- See `:help vim.opt`
+	
+	vim.opt.tabstop = 4
+	vim.opt.shiftwidth = 4
+	vim.opt.softtabstop = 4
+	vim.opt.expandtab = true
+	
+	vim.opt.colorcolumn = '120'
+	vim.opt.textwidth = 120
+	vim.opt.linebreak = true
+	
+	vim.api.nvim_create_autocmd("FileType", {
+	pattern = "markdown",
+	callback = function()
+		vim.opt_local.textwidth = 0
+	end,
+	})
+	
+	vim.opt.number = true
+	vim.opt.relativenumber = true
+	
+	-- Enable mouse mode, can be useful for resizing splits for example!
+	vim.opt.mouse = 'a'
+	
+	vim.opt.showmode = false
+	
+	-- Sync clipboard between OS and Neovim.
+	--  Schedule the setting after `UiEnter` because it can increase startup-time.
+	--  Remove this option if you want your OS clipboard to remain independent.
+	--  See `:help 'clipboard'`
+	vim.schedule(function()
+	vim.opt.clipboard = 'unnamedplus'
 	end)
 	
-	vim.keymap.set("n", "<C-->", function()
-		change_scale_factor(1/1.25)
-	end)
-	  
-	vim.keymap.set("n", "<C-0>", function()
-		vim.g.neovide_scale_factor = 1.0
-	end)
+	vim.opt.breakindent = true
 	
-	--font
-	vim.o.guifont = "Hack Nerd Font Mono:h14"
-	vim.g.neovide_padding_top = 0
-	vim.g.neovide_padding_bottom = 0
-	vim.g.neovide_padding_left = 0
-	vim.g.neovide_padding_right = 0
+	vim.opt.undofile = true
 	
-	vim.opt.linespace = -1
+	-- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
+	vim.opt.ignorecase = true
+	vim.opt.smartcase = true
 	
+	-- Keep signcolumn on by default
+	vim.opt.signcolumn = 'yes'
+	
+	-- Decrease update time
+	vim.opt.updatetime = 250
+	
+	-- Decrease mapped sequence wait time
+	vim.opt.timeoutlen = 300
+	
+	-- Configure how new splits should be opened
+	vim.opt.splitright = true
+	vim.opt.splitbelow = true
+	
+	-- Sets how neovim will display certain whitespace characters in the editor.
+	--  See `:help 'list'`
+	--  and `:help 'listchars'`
+	vim.opt.list = true
+	vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+	
+	-- Preview substitutions live, as you type!
+	vim.opt.inccommand = 'split'
+	
+	-- Show which line your cursor is on
+	vim.opt.cursorline = true
+	
+	-- Minimal number of screen lines to keep above and below the cursor.
+	vim.opt.scrolloff = 10
+	
+	-- search highlight adapts to the current search
+	vim.opt.hlsearch = false
+	vim.opt.incsearch = true
+	
+	vim.opt.conceallevel = 0
+	
+	-- [[ Basic Keymaps ]]
+	--  See `:help vim.keymap.set()`
+	
+	-- Clear highlights on search when pressing <Esc> in normal mode
+	--  See `:help hlsearch`
+	vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+	--vim.keymap.set("i", "jj", "<esc>")
+	
+	--function example:
+	--vim.keymap.set("i", "jk", function() print("hello") end)
+	
+	-- Diagnostic keymaps
+	vim.keymap.set('n', '<c-e>', vim.diagnostic.open_float, { desc = 'Show Diagnostic [E]rror messages' })
+	vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+	
+	--easier escape terminal mode
+	vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+	
+	--highlight on yank
+	vim.api.nvim_create_autocmd('TextYankPost', {
+	desc = 'Highlight when yanking (copying) text',
+	group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+	callback = function() vim.hl.on_yank() end,
+	})
+	
+	-- Prevents the non-breaking space when writing right ALT + space (can be very bad when unnoticed)
+	vim.api.nvim_create_autocmd('InsertCharPre', {
+	callback = function()
+		if vim.v.char == '\u{00A0}' then
+		vim.v.char = ''
+		end
+	end,
+	})
+	
+	--For Laravel TODO: valider
+	vim.filetype.add({
+		pattern = {
+			[".*%.blade%.php"] = "blade",
+		},
+	})
+	vim.treesitter.language.register("html", "blade")
 end
 
--- compatibility Win10 LTSC
-if vim.fn.has('win32') == 1 then
-	local termfeatures = vim.g.termfeatures or {}
-	termfeatures.osc52 = false
-	vim.g.termfeatures = termfeatures
+--beginning vim.pack
+do
+	--autocommand
+	local function run_build(name, cmd, cwd)
+    local result = vim.system(cmd, { cwd = cwd }):wait()
+    if result.code ~= 0 then
+		local stderr = result.stderr or ''
+		local stdout = result.stdout or ''
+		local output = stderr ~= '' and stderr or stdout
+		if output == '' then output = 'No output from build command.' end
+		vim.notify(('Build failed for %s:\n%s'):format(name, output), vim.log.levels.ERROR)
+		end
+	end
+	
+	--see vim.pack-events
+	vim.api.nvim_create_autocmd('PackChanged', {
+    callback = function(ev)
+      local name = ev.data.spec.name
+      local kind = ev.data.kind
+      if kind ~= 'install' and kind ~= 'update' then return end
+
+      if name == 'telescope-fzf-native.nvim' and vim.fn.executable 'make' == 1 then
+        run_build(name, { 'make' }, ev.data.path)
+        return
+      end
+
+      if name == 'LuaSnip' then
+        if vim.fn.has 'win32' ~= 1 and vim.fn.executable 'make' == 1 then run_build(name, { 'make', 'install_jsregexp' }, ev.data.path) end
+        return
+      end
+
+      if name == 'nvim-treesitter' then
+        if not ev.data.active then vim.cmd.packadd 'nvim-treesitter' end
+        vim.cmd 'TSUpdate'
+        return
+      end
+    end,
+  })
 end
-
--- remove start message
-vim.cmd 'set shortmess+=I'
-
--- configure folds
---vim.cmd("set foldcolumn=1")
-vim.cmd 'set foldmethod=indent'
-vim.opt.foldlevelstart = 99
-
--- [[ Setting options ]]
--- See `:help vim.opt`
-
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.softtabstop = 4
-vim.opt.expandtab = true
-
-vim.opt.colorcolumn = '120'
-vim.opt.textwidth = 120
-vim.opt.linebreak = true
-
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "markdown",
-  callback = function()
-    vim.opt_local.textwidth = 0
-  end,
-})
-
-vim.opt.number = true
-vim.opt.relativenumber = true
-
--- Enable mouse mode, can be useful for resizing splits for example!
-vim.opt.mouse = 'a'
-
-vim.opt.showmode = false
-
--- Sync clipboard between OS and Neovim.
---  Schedule the setting after `UiEnter` because it can increase startup-time.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
-vim.schedule(function()
-  vim.opt.clipboard = 'unnamedplus'
-end)
-
-vim.opt.breakindent = true
-
-vim.opt.undofile = true
-
--- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-
--- Keep signcolumn on by default
-vim.opt.signcolumn = 'yes'
-
--- Decrease update time
-vim.opt.updatetime = 250
-
--- Decrease mapped sequence wait time
-vim.opt.timeoutlen = 300
-
--- Configure how new splits should be opened
-vim.opt.splitright = true
-vim.opt.splitbelow = true
-
--- Sets how neovim will display certain whitespace characters in the editor.
---  See `:help 'list'`
---  and `:help 'listchars'`
-vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-
--- Preview substitutions live, as you type!
-vim.opt.inccommand = 'split'
-
--- Show which line your cursor is on
-vim.opt.cursorline = true
-
--- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
-
--- search highlight adapts to the current search
-vim.opt.hlsearch = false
-vim.opt.incsearch = true
-
-vim.opt.conceallevel = 0
-
--- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
-
--- Clear highlights on search when pressing <Esc> in normal mode
---  See `:help hlsearch`
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
---vim.keymap.set("i", "jj", "<esc>")
-
---function example:
---vim.keymap.set("i", "jk", function() print("hello") end)
-
--- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
-vim.keymap.set('n', '<c-e>', vim.diagnostic.open_float, { desc = 'Show Diagnostic [E]rror messages' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
--- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
--- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
--- is not what someone will guess without a bit more experience.
---
--- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
--- or just use <C-\><C-n> to exit terminal mode
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-
--- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
-
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
---  See `:help wincmd` for a list of all window commands
-
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
-
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-})
-
--- Prevents the non-breaking space when writing right ALT + space (can be very bad when unnoticed)
-vim.api.nvim_create_autocmd('InsertCharPre', {
-  callback = function()
-    if vim.v.char == '\u{00A0}' then
-      vim.v.char = ''
-    end
-  end,
-})
-
---Pour Laravel
-vim.filetype.add({
-    pattern = {
-        [".*%.blade%.php"] = "blade",
-    },
-})
-vim.treesitter.language.register("html", "blade")
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
@@ -784,6 +803,15 @@ require('lazy').setup({
             return diagnostic_message[diagnostic.severity]
           end,
         },
+		jump = {
+			on_jump = function(_, bufnr)
+				vim.diagnostic.open_float {
+				bufnr = bufnr,
+				scope = 'cursor',
+				focus = false,
+				}
+			end,
+		},
       }
 
       -- LSP servers and clients are able to communicate to each other what features they support.
