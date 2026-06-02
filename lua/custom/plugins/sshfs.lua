@@ -1,9 +1,9 @@
 return{
-	{
-		"uhs-robert/sshfs.nvim",
-		opts = {
-		},
-	},
+	--{
+	--	"uhs-robert/sshfs.nvim",
+	--	opts = {
+	--	},
+	--},
 }
 
 --return

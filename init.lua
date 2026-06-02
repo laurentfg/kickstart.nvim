@@ -57,6 +57,13 @@ if vim.g.neovide then
 	
 end
 
+-- compatibility Win10 LTSC
+if vim.fn.has('win32') == 1 then
+	local termfeatures = vim.g.termfeatures or {}
+	termfeatures.osc52 = false
+	vim.g.termfeatures = termfeatures
+end
+
 -- remove start message
 vim.cmd 'set shortmess+=I'
 
@@ -239,6 +246,14 @@ require('lazy').setup({
   --priority 500 so that it loads after the first colorscheme loading, but before everything else
   --couldn't make it work by replacing what existed already
 
+--	{
+--		"vhyrro/luarocks.nvim",
+--		priority = 1000, -- Very high priority is required, luarocks.nvim should run as the first plugin in your config.
+--		config = true,
+--	},
+
+
+	
   {
     'Aasim-A/scrollEOF.nvim',
     event = { 'CursorMoved', 'WinScrolled' },
@@ -844,6 +859,7 @@ require('lazy').setup({
 		
 		--Godot
 		gdtoolkit = {},
+		--gdscript = {},
 		
 		--Laravel
 		intelephense = {
@@ -876,30 +892,8 @@ require('lazy').setup({
 				},
 			},
 		},
-		
       }
 
-      --cpp and h files formatted correctly
-      --  vim.api.nvim_create_autocmd("BufWritePre", {
-      --   pattern = { "*.cpp", "*.h" },
-      --  callback = function()
-      --	  vim.cmd("silent! undojoin | silent! !clang-format -i %")
-      --  end,
-      --})
-
-      -- Ensure the servers and tools above are installed
-      --
-      -- To check the current status of installed tools and/or manually install
-      -- other tools, you can run
-      --    :Mason
-      --
-      -- You can press `g?` for help in this menu.
-      --
-      -- `mason` had to be setup earlier: to configure its options see the
-      -- `dependencies` table for `nvim-lspconfig` above.
-      --
-      -- You can add other tools here that you want Mason to install
-      -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua',
@@ -909,23 +903,6 @@ require('lazy').setup({
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
-	  --for Godot, voluntarily uses the old Mason way to connect
-	  local lspconfig = require('lspconfig')
-	  lspconfig.gdscript.setup{
-	    cmd = vim.lsp.rpc.connect('127.0.0.1', 6005),
-	    filetypes = { 'gd', 'gdscript', 'gdscript3' },
-	    root_dir = lspconfig.util.root_pattern('project.godot', '.git'),
-	    capabilities = capabilities,
-	  }
-  
-	  --lspconfig.glsl_analyzer.setup{
-	  --  cmd = vim.lsp.rpc.connect('127.0.0.1', 6005),
-	  --  filetypes = { 'gdshader' },
-	  --  root_dir = lspconfig.util.root_pattern('project.godot', '.git'),
-	  --  capabilities = capabilities,
-	  --}
-	
-	  --Mason récent?
 	  for server_name, server_config in pairs(servers) do
         server_config.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server_config.capabilities or {})
 
@@ -933,14 +910,9 @@ require('lazy').setup({
         vim.lsp.enable(server_name)
       end
 	  
-      --require("lspconfig").volar.setup({
-      --  on_attach = function(client, bufnr)
-      --    if client.name == "volar" then
-      --	  client.server_capabilities.documentFormattingProvider = false
-      --	  client.server_capabilities.documentRangeFormattingProvider = false
-      --	end
-      --  end
-      --})
+	  --Godot LSP
+	  vim.lsp.enable('gdscript')
+
     end,
   },
 

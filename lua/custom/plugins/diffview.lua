@@ -5,6 +5,13 @@ return {
     config = function()
       local actions = require 'diffview.actions'
       require('diffview').setup {
+        -- Deactivate Mercurial
+        vcs = {
+          hg = {
+            cmd = '',
+          },
+        },
+
         vim.keymap.set('n', '<leader>gv', function()
           if next(require('diffview.lib').views) == nil then
             vim.cmd 'DiffviewOpen'
@@ -28,4 +35,3 @@ return {
     end,
   },
 }
-
