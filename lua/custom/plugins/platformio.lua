@@ -1,11 +1,10 @@
-return {
-	'anurag3301/nvim-platformio.lua',
-	--cmd = { 'Pioinit', 'Piorun', 'Piocmdh', 'Piocmdf', 'Piolib', 'Piomon', 'Piodebug', 'Piodb' },
-	
-	-- optional: cond used to enable/disable platformio
-	-- based on existance of platformio.ini file and .pio folder in cwd.
-	-- You can enable platformio plugin, using :Pioinit command
-	cond = function()
+vim.pack.add{'https://github.com/anurag3301/nvim-platformio.lua'}
+--cmd = { 'Pioinit', 'Piorun', 'Piocmdh', 'Piocmdf', 'Piolib', 'Piomon', 'Piodebug', 'Piodb' },
+
+-- optional: cond used to enable/disable platformio
+-- based on existance of platformio.ini file and .pio folder in cwd.
+-- You can enable platformio plugin, using :Pioinit command
+cond = function()
 	-- local platformioRootDir = vim.fs.root(vim.fn.getcwd(), { 'platformio.ini' }) -- cwd and parents
 	local platformioRootDir = (vim.fn.filereadable('platformio.ini') == 1) and vim.fn.getcwd() or nil
 	if platformioRootDir and vim.fs.find('.pio', { path = platformioRootDir, type = 'directory' })[1] then
@@ -36,22 +35,20 @@ return {
 		
 	--configuration
 	local pok, platformio = pcall(require, 'platformio')
-    if pok then
-      platformio.setup({
-        lsp = 'clangd',
-        menu_key = '<leader>i', -- replace this menu key  to your convenience
-      })
-    end
-	
-	return vim.g.platformioRootDir ~= nil
-	end,
-	
-	-- Dependencies are lazy-loaded by default unless specified otherwise.
-	dependencies = {
-	{ 'akinsho/toggleterm.nvim' },
-	{ 'nvim-telescope/telescope.nvim' },
-	{ 'nvim-telescope/telescope-ui-select.nvim' },
-	{ 'nvim-lua/plenary.nvim' },
-	{ 'folke/which-key.nvim' },
-	},
-}
+	if pok then
+		require('platformio').setup({
+			lsp = 'clangd',
+			menu_key = '<leader>i', -- replace this menu key  to your convenience
+		})
+	end
+end
+
+-- Dependencies are lazy-loaded by default unless specified otherwise.
+--dependencies = {
+--{ 'akinsho/toggleterm.nvim' },
+--{ 'nvim-telescope/telescope.nvim' },
+--{ 'nvim-telescope/telescope-ui-select.nvim' },
+--{ 'nvim-lua/plenary.nvim' },
+--{ 'folke/which-key.nvim' },
+--},
+
