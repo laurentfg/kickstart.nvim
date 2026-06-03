@@ -1,4 +1,4 @@
-vim.pack.add{'https://github.com/pmizio/typescript-tools.nvim'}
+vim.pack.add { 'https://github.com/pmizio/typescript-tools.nvim' }
 --dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
 --ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
 require('typescript-tools').setup {
@@ -25,5 +25,3 @@ require('typescript-tools').setup {
     },
   },
 }
-
-

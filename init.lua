@@ -841,7 +841,6 @@ end
 
 --SECTION 9: Optional
 do
-  
   require 'kickstart.plugins.debug'
   require 'kickstart.plugins.autopairs'
   require 'kickstart.plugins.neo-tree'
@@ -861,7 +860,7 @@ do
 
   --maybe: lazy = true
   vim.pack.add { gh 'nvzone/volt' }
-  
+
   vim.pack.add { gh 'junegunn/vim-easy-align' }
   vim.keymap.set('x', 'ga', '<Plug>(EasyAlign)', { desc = 'EasyAlign text' })
   vim.keymap.set('n', 'ga', '<Plug>(EasyAlign)', { desc = 'EasyAlign text' })
@@ -886,9 +885,8 @@ do
     config = true,
     opts = {},
   }
-  
+
   require 'custom.plugins'
-  
 end
 
 -- The line beneath this is called `modeline`. See `:help modeline`

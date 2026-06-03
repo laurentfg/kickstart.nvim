@@ -1,7 +1,8 @@
-vim.pack.add{"https://github.com/folke/styler.nvim"}
+vim.pack.add { 'https://github.com/folke/styler.nvim' }
 
-require("styler").setup({
+require('styler').setup {
   themes = {
-    markdown = { colorscheme = "moonfly" },
+    markdown = { colorscheme = 'moonfly' },
   },
-})
+}
+

@@ -207,3 +207,4 @@ do
     vim.lsp.buf.execute_command { command = 'omnisharp/reloadProject' }
   end, {})
 end
+
