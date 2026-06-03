@@ -1,19 +1,8 @@
-return{
+vim.pack.add{"https://github.com/adibhanna/laravel.nvim"}
 
-	{
-		"adibhanna/laravel.nvim",
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-			"nvim-lua/plenary.nvim",
-		},
-		keys = {
-			{ "<leader>la", ":Artisan<cr>", desc = "Laravel Artisan" },
-			{ "<leader>lc", ":Composer<cr>", desc = "Composer" },
-			{ "<leader>lr", ":LaravelRoute<cr>", desc = "Laravel Routes" },
-			{ "<leader>lm", ":LaravelMake<cr>", desc = "Laravel Make" },
-		},
-		config = function()
-			require("laravel").setup()
-		end,
-	}
-}
+vim.keymap.set('n', "<leader>la", "<cmd>Artisan<CR>", {desc = "Laravel Artisan"} )
+vim.keymap.set('n', "<leader>lc", "<cmd>Composer<CR>", {desc = "Composer"} )
+vim.keymap.set('n', "<leader>lr", "<cmd>LaravelRoute<CR>", {desc = "Laravel Routes"} )
+vim.keymap.set('n', "<leader>lm", "<cmd>LaravelMake<CR>", {desc = "Laravel Make"} )
+
+require("laravel").setup{}

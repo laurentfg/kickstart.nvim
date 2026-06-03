@@ -1,21 +1,20 @@
-return {
-    {
-        "windwp/nvim-ts-autotag",
-        ft = { "html", "blade", "xml", "php" },
-        dependencies = { "nvim-treesitter/nvim-treesitter" },
-        config = function()
-            require("nvim-ts-autotag").setup({
-                opts = {
-                    enable_close = true,          
-                    enable_rename = true,         
-                    enable_close_on_slash = false, 
-                },
-                per_filetype = {
-                    ["html"] = {
-                        enable_close = false,     
-                    },
-                },
-            })
-        end,
-    },
+vim.pack.add{"https://github.com/windwp/nvim-ts-autotag"}
+
+require('nvim-ts-autotag').setup{
+	ft = { "html", "blade", "xml", "php" },
+	dependencies = { "nvim-treesitter/nvim-treesitter" },
+	config = function()
+		require("nvim-ts-autotag").setup({
+			opts = {
+				enable_close = true,          
+				enable_rename = true,         
+				enable_close_on_slash = false, 
+			},
+			per_filetype = {
+				["html"] = {
+					enable_close = false,     
+				},
+			},
+		})
+	end
 }
