@@ -9,7 +9,7 @@ do
 
   -- Set to true if you have a Nerd Font installed and selected in the terminal
   --disabled because of Windows' terminal having priority
-  --vim.g.have_nerd_font = false
+  vim.g.have_nerd_font = true
 
   --Neovide
   if vim.g.neovide then
