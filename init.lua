@@ -50,7 +50,7 @@ do
     end)
 
     --font
-    vim.o.guifont = 'Hack Nerd Font Mono:h14'
+    vim.o.guifont = 'Hack Nerd Font:h14'
     vim.g.neovide_padding_top = 0
     vim.g.neovide_padding_bottom = 0
     vim.g.neovide_padding_left = 0
