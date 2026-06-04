@@ -9,10 +9,11 @@ do
 
   -- Set to true if you have a Nerd Font installed and selected in the terminal
   --disabled because of Windows' terminal having priority
-  vim.g.have_nerd_font = true
+    vim.g.have_nerd_font = false
 
   --Neovide
   if vim.g.neovide then
+    vim.g.have_nerd_font = true
     vim.api.nvim_create_autocmd('VimEnter', {
       callback = function()
         vim.o.columns = 140
