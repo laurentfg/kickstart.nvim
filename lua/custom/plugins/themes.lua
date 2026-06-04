@@ -27,6 +27,9 @@ end
 
 vim.pack.add { gh 'catppuccin/nvim' }
 require('catppuccin').setup {
+  styles = {
+    comments = {},
+  },
   color_overrides = {
     all = {},
     latte = {},
