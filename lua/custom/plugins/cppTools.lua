@@ -22,8 +22,9 @@ require('nt-cpp-tools').setup {
   },
 }
 -- End configuration
-config = true, vim.keymap.set({ 'n' }, '<leader>cd', '<cmd>TSCppDefineClassFunc<CR>', { desc = 'C++ [d]efine functions' })
-vim.keymap.set({ 'v' }, '<leader>cd', ":<C-U>'<,'>TSCppDefineClassFunc<CR>", { desc = 'C++ [d]efine highlighted functions' })
+Config = true, vim.keymap.set({ 'n' }, '<leader>dd', '<cmd>TSCppDefineClassFunc<CR>', { desc = 'C++ [d]efine functions' })
+vim.keymap.set({ 'v' }, '<leader>dd', ":<C-U>'<,'>TSCppDefineClassFunc<CR>", { desc = 'C++ [d]efine highlighted functions' })
 --disabled because they doesn't work on Windows?
---vim.keymap.set("n", "<leader>cm", "<cmd>TSCppMakeConcreteClass<CR>", {desc = "C++ [m]ake concrete class"}),
---vim.keymap.set("n", "<leader>ct", "<cmd>TSCppRuleOf3<CR>", {desc = "C++ rule of [t]hree"}),		--vim.keymap.set("n", "<leader>cf", "<cmd>TSCppRuleOf5<CR>", {desc = "C++ rule of [f]ive"}),
+--vim.keymap.set("n", "<leader>cm", "<cmd>TSCppMakeConcreteClass<CR>", {desc = "C++ [m]ake concrete class"})
+--vim.keymap.set("n", "<leader>dt", "<cmd>TSCppRuleOf3<CR>", {desc = "C++ rule of [t]hree"})
+--vim.keymap.set("n", "<leader>cf", "<cmd>TSCppRuleOf5<CR>", {desc = "C++ rule of [f]ive"})

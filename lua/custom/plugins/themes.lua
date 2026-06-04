@@ -109,6 +109,12 @@ require('catppuccin').setup {
         ['@keyword.import.cpp'] = { fg = macchiato.pink },
         Include = { fg = macchiato.pink },
         ['@keyword.export'] = { fg = macchiato.pink }, --for React Native
+		
+		TodoBgNOTE = { bg = macchiato.red, fg = macchiato.base },
+        TodoFgNOTE = { fg = macchiato.red },
+		
+		TodoBgWARN = { bg = macchiato.peach, fg = macchiato.base },
+        TodoFgWARN = { fg = macchiato.peach },
 
         Type = { fg = macchiato.blue },
         Keyword = { fg = macchiato.blue },
@@ -125,6 +131,7 @@ require('catppuccin').setup {
         ['@module'] = { fg = macchiato.teal },
         ['@type'] = { fg = macchiato.teal },
         ['@attribute'] = { fg = macchiato.teal },
+        ['@variable.member.lua'] = { fg = macchiato.teal },
 
         Repeat = { fg = macchiato.pink },
         Conditional = { fg = macchiato.pink },
@@ -132,6 +139,7 @@ require('catppuccin').setup {
         PreProc = { fg = macchiato.pink },
         ['@keyword.operator'] = { fg = macchiato.pink },
 
+        ['@property'] = { fg = macchiato.sky },
         ['@property.yaml'] = { fg = macchiato.sky },
 
         ['@lsp.typemod.variable.readonly'] = { fg = macchiato.mauve },

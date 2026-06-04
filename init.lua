@@ -166,6 +166,28 @@ do
   vim.keymap.set('n', '<c-e>', vim.diagnostic.open_float, { desc = 'Show Diagnostic [E]rror messages' })
   vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
+  vim.diagnostic.config {
+    update_in_insert = false,
+    severity_sort = true,
+    float = { border = 'rounded', source = 'if_many' },
+    underline = { severity = { min = vim.diagnostic.severity.WARN } },
+
+    -- Can switch between these as you prefer
+    virtual_text = true, -- Text shows up at the end of the line
+    virtual_lines = false, -- Text shows up underneath the line, with virtual lines
+
+    -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
+    jump = {
+      on_jump = function(_, bufnr)
+        vim.diagnostic.open_float {
+          bufnr = bufnr,
+          scope = 'cursor',
+          focus = false,
+        }
+      end,
+    },
+  }
+
   --easier escape terminal mode
   vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
@@ -275,31 +297,31 @@ do
   }
 
   vim.pack.add { gh 'folke/which-key.nvim' }
+  --@diagnostic disable-next-line: missing-fields
   require('which-key').setup {
-    event = 'VimEnter', -- Sets the loading event to 'VimEnter'
-    opts = {
-      -- delay between pressing a key and opening which-key (milliseconds)
-      -- this setting is independent of vim.opt.timeoutlen
-      delay = 600,
-      icons = { mappings = vim.g.have_nerd_font },
+    --event = 'VimEnter', -- Sets the loading event to 'VimEnter'
 
-      -- Document existing key chains
-      spec = {
-        { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
-        { '<leader>d', group = '[D]ocument' },
-        { '<leader>s', group = '[S]earch' },
-        { '<leader>w', group = '[W]orkspace' },
-        { '<leader>t', group = '[T]oggle/[T]est' },
-        { '<leader>r', group = '[R]est HTTP' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
-        --lolo: added these lines
-        { '<leader>g', group = '[G]it menu' },
-        { '<leader>p', group = '[P]roject' },
-        --{ '<leader>pw', group = '[P]roject [w]ord' },
-        --{ '<leader>pW', group = '[P]roject [W]ORD' },
-        { '<leader>tw', group = '[T]est [w]atch' },
-        { 'gr', group = 'LSP Actions [r]', mode = { 'n' } },
-      },
+    -- delay between pressing a key and opening which-key (milliseconds)
+    -- this setting is independent of vim.opt.timeoutlen
+    delay = 600,
+    icons = { mappings = vim.g.have_nerd_font },
+
+    -- Document existing key chains
+    spec = {
+      { '<leader>c', group = '[C]ommands', mode = { 'n', 'x' } },
+      { '<leader>d', group = '[D]o' },
+      { '<leader>s', group = '[S]earch' },
+      --{ '<leader>w', group = '[W]orkspace' },
+      { '<leader>t', group = '[T]oggle/[T]est' },
+      -- { '<leader>r', group = '[R]est HTTP' },
+      { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+      { '<leader>g', group = '[G]it menu' },
+      { '<leader>l', group = '[L]aravel' },
+      { '<leader>p', group = '[P]roject' },
+      --{ '<leader>pw', group = '[P]roject [w]ord' },
+      --{ '<leader>pW', group = '[P]roject [W]ORD' },
+      { '<leader>tw', group = '[T]est [w]atch' },
+      { 'gr', group = 'LSP Actions [r]', mode = { 'n' } },
     },
   }
 
@@ -326,6 +348,7 @@ do
   local statusline = require 'mini.statusline'
   --statusline.setup { use_icons = vim.g.have_nerd_font }
   statusline.setup { use_icons = false }
+  ---@diagnostic disable-next-line: duplicate-set-field
   statusline.section_location = function()
     return '%2l:%-2v'
   end
@@ -695,12 +718,9 @@ do
       php = { 'pint' },
       --php = { 'pint', 'php_cs_fixer', stop_after_first = true },
 
-      -- Conform can also run multiple formatters sequentially
       python = { 'isort', 'black' },
       markdown = { 'prettier' },
       blade = { 'blade-formatter' },
-      --
-      -- You can use 'stop_after_first' to run the first available formatter from the list
     },
     formatters = {
       prettier = {
@@ -737,23 +757,22 @@ do
   vim.pack.add { { src = gh 'L3MON4D3/LuaSnip', version = vim.version.range '2.*' } }
   require('luasnip').setup {}
 
+  vim.pack.add { gh 'rafamadriz/friendly-snippets' }
+  require('luasnip.loaders.from_vscode').lazy_load()
+
   vim.pack.add { { src = gh 'saghen/blink.cmp', version = vim.version.range '1.*' } }
   require('blink.cmp').setup {
     keymap = {
       preset = 'default',
       ['<C-o>'] = {
         function(cmp)
-          cmp.mapping.confirm { select = true }
+          cmp.accept {}
         end,
       },
-      ['<C-space>'] = {
+      --duplicate of C-space for basic Windows neovim
+      ['<M-space>'] = {
         function(cmp)
-          cmp.mapping.complete {}
-        end,
-      },
-      ['<M-Space>'] = {
-        function(cmp)
-          cmp.mapping.complete {}
+          cmp.show { providers = { 'lsp', 'snippets', 'path' } }
         end,
       },
     },
