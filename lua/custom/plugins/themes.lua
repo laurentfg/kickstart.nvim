@@ -3,7 +3,7 @@ local function gh(repo)
 end
 
 vim.pack.add {
-  gh 'sxwpb/halfspace.nvim',
+  'https://gitlab.com/sxwpb/halfspace.nvim',
   gh 'rmehri01/onenord.nvim',
   gh 'L-Colombo/oldschool.nvim',
   gh 'AlexvZyl/nordic.nvim',
