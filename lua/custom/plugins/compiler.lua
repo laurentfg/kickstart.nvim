@@ -2,7 +2,7 @@ do
   vim.pack.add { { src = 'https://github.com/PowerUser64/compiler.nvim', version = 'msbuild', name = 'compiler-msbuild' } }
 
   vim.pack.add { { src = 'https://github.com/stevearc/overseer.nvim', version = '6271cab7ccc4ca840faa93f54440ffae3a3918bd' } }
-
+  
   require('overseer').setup {
     task_list = {
       direction = 'bottom',
@@ -11,6 +11,8 @@ do
       default_detail = 1,
     },
   }
+
+  require("compiler").setup()
 
   -- Run the program
   vim.keymap.set('n', '<F9>', function()
