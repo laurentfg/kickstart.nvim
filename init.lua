@@ -318,6 +318,7 @@ do
       { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       { '<leader>g', group = '[G]it menu' },
       { '<leader>l', group = '[L]aravel' },
+      { '<leader>o', group = '[O]bsidian' },
       { '<leader>p', group = '[P]roject' },
       --{ '<leader>pw', group = '[P]roject [w]ord' },
       --{ '<leader>pW', group = '[P]roject [W]ORD' },

@@ -73,8 +73,8 @@ do
   vim.keymap.set('n', 'Q', '<C-^>')
   vim.keymap.set('n', '<M-q>', '<cmd>LspClangdSwitchSourceHeader<CR>', { noremap = true, silent = true })
 
-  --for Oil.nvim
-  vim.keymap.set('n', '<leader>o', '<CMD>Oil<CR>', { desc = '[O]pen parent directory' })
+  -- Oil.nvim (was <leader>o; that prefix is now Obsidian)
+  vim.keymap.set('n', '<C-\\>', '<CMD>Oil<CR>', { desc = 'Open Oil parent directory' })
 
   --enter a manual command to apply on visual blocks/v-lines
   vim.keymap.set('x', '<leader>n', ':norm ', { desc = '[n]ormal cmd on highlight' })
