@@ -41,3 +41,11 @@ vim.keymap.set('n', '<leader>or', '<CMD>Obsidian rename<CR>', { desc = '[r]ename
 vim.keymap.set('n', '<leader>op', '<CMD>Obsidian paste_img<CR>', { desc = '[p]aste image' })
 vim.keymap.set('n', '<leader>oT', '<CMD>Obsidian template<CR>', { desc = '[T]emplate' })
 vim.keymap.set('n', '<leader>oo', '<CMD>Obsidian open<CR>', { desc = '[o]pen app' })
+
+-- Header shortcuts
+vim.keymap.set('n', '<leader>o1', 'I# <Esc>', { desc = 'h[1]' })
+vim.keymap.set('n', '<leader>o2', 'I## <Esc>', { desc = 'h[2]' })
+vim.keymap.set('n', '<leader>o3', 'I### <Esc>', { desc = 'h[3]' })
+vim.keymap.set('n', '<leader>o4', 'I#### <Esc>', { desc = 'h[4]' })
+vim.keymap.set('n', '<leader>o5', 'I##### <Esc>', { desc = 'h[5]' })
+vim.keymap.set('n', '<leader>o6', 'I###### <Esc>', { desc = 'h[6]' })
