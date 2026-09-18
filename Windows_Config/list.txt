@@ -76,10 +76,12 @@ https://releases.llvm.org/
 -add in PATH:
 	[utilisateur Windows]
 	clangd version in Mason (adjust version and user)
-C:\Users\[USER]\AppData\Local\nvim-data\mason\packages\clangd\clangd_19.1.2\bin\
+C:\Users\[USER]\AppData\Local\nvim-data\mason\packages\clangd\clangd_22.1.6\bin\
 	dossier de base de SFML
-C:\prog\SFML-2.6.2\64\bin
-//using the same build as Visual Studio 2022, making the project easily compatible
+C:\prog\SFML-3.1.0\64\bin
+//using the same build as Visual Studio (2022 or 2026), making the project easily compatible
+//regen compile_commands.json after VS/toolset upgrade:
+//  powershell -File PixelsAndItemsLab/Tools/generate_compile_commands.ps1
 C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin
 C:\prog\codelldb-win32-x64\extension\adapter
 copy .clang-format to the root of all C++ projects to format text correctly
@@ -188,3 +190,7 @@ inside CLI "MSYS2 MinGW64"
 	luarocks install jsregexp
 	pacman -S mingw-w64-x86_64-tree-sitter
 	pacman -S mingw-w64-x86_64-gcc
+	
+Add executable of libreoffice to PATH to make "soffice" work for scripts, like ODS conversion to CSV
+	"C:\Program Files\LibreOffice\program"
+	

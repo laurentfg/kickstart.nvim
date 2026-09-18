@@ -9,13 +9,19 @@ require('obsidian').setup {
   workspaces = {
     {
       name = 'personal',
-      path = '~/vaults/personal',
+      path = '~/vaults/personal/gameproject',
     },
     {
       name = 'work',
       path = '~/vaults/work',
     },
   },
+  
+  -- Readable filenames like Obsidian, not timestamps
+  note_id_func = require('obsidian.builtin').title_id,
+  -- New notes next to the current file (good for a folder tree)
+  new_notes_location = 'current_dir',
+  
   ui = {
     enable = false,
   },

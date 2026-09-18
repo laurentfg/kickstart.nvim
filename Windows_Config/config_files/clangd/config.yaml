@@ -1,8 +1,7 @@
+# Machine-wide clangd 22 defaults. Per-repo compile_commands.json owns SFML + MSVC STL.
+If:
+  PathMatch: .*\.(c|cc|cpp|cxx|h|hh|hpp|hxx)
 CompileFlags:
-  Add: [
-    -std=c++14,
-    -IF:/LibrairiesProgrammation/SFML-2.6.2/32/include,
-    -IF:/LibrairiesProgrammation/SFML-2.6.2/64/include,
-    -IC:/Program Files (x86)/Visual Leak Detector/include,
-    -DSFML_STATIC
-  ]
+  Add:
+    - --target=x86_64-pc-windows-msvc
+    - -std=c++17
