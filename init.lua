@@ -91,6 +91,12 @@ do
     pattern = 'markdown',
     callback = function()
       vim.opt_local.textwidth = 0
+      -- Match prettier markdown default (tab-width 2); lock so sleuth/guess-indent cannot flip
+      vim.opt_local.tabstop = 2
+      vim.opt_local.shiftwidth = 2
+      vim.opt_local.softtabstop = 2
+      vim.opt_local.expandtab = true
+      vim.b.sleuth_automatic = 0
     end,
   })
 
@@ -280,7 +286,9 @@ end
 do
   --example:
   vim.pack.add { gh 'NMAC427/guess-indent.nvim' }
-  require('guess-indent').setup {}
+  require('guess-indent').setup {
+    filetype_exclude = { 'markdown' },
+  }
 
   if vim.g.have_nerd_font then
     vim.pack.add { gh 'nvim-tree/nvim-web-devicons' }
@@ -726,13 +734,10 @@ do
     },
     formatters = {
       prettier = {
-        prepend_args = {
-          --"--config", vim.fn.expand("~/.prettierrc")
-          '--tab-width',
-          '4',
-          '--use-tabs',
-          'false',
-        },
+        prepend_args = function(_, ctx)
+          local tw = vim.bo[ctx.buf].filetype == 'markdown' and '2' or '4'
+          return { '--tab-width', tw, '--use-tabs', 'false' }
+        end,
       },
       csharpier = {
         command = 'csharpier',
