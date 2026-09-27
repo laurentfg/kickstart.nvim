@@ -99,6 +99,7 @@ require('catppuccin').setup {
         Function = { fg = macchiato.yellow },
 
         ['@string.special.url.html'] = { fg = macchiato.peach },
+        --['@keyword.Macro'] = { fg = macchiato.peach },
 
         ['@variable.parameter'] = { fg = macchiato.overlay2 },
 
@@ -144,6 +145,8 @@ require('catppuccin').setup {
 
         ['@property'] = { fg = macchiato.sky },
         ['@property.yaml'] = { fg = macchiato.sky },
+		
+        Macro = { fg = macchiato.lavender },
 
         ['@lsp.typemod.variable.readonly'] = { fg = macchiato.mauve },
         ['@lsp.typemod.property.readonly'] = { fg = macchiato.mauve },
