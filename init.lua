@@ -626,8 +626,8 @@ do
       --pylsp = {},
 
       --Godot
-      gdtoolkit = {},
-      --gdscript = {},
+      --gdtoolkit = {},
+      gdscript = {},
 
       --Laravel
       intelephense = {
@@ -677,9 +677,11 @@ do
   --    :Mason
   --
   -- You can press `g?` for help in this menu.
-  local ensure_installed = vim.tbl_keys(servers or {})
+  local ensure_installed = vim.tbl_filter(function(name)
+    return name ~= 'gdscript'
+  end, vim.tbl_keys(servers or {}))
   vim.list_extend(ensure_installed, {
-    -- You can add other tools here that you want Mason to install
+    'gdtoolkit', -- gdformat / gdlint. Formatter, not an LSP.
   })
 
   require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -822,7 +824,23 @@ end
 -- SECTION 8: TREESITTER
 do
   vim.pack.add { { src = gh 'nvim-treesitter/nvim-treesitter', version = 'main' } }
-  local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'glsl' }
+  local parsers = {
+    'bash',
+    'c',
+    'diff',
+    'gdshader',
+    'gdscript',
+    'glsl',
+    'godot_resource',
+    'html',
+    'lua',
+    'luadoc',
+    'markdown',
+    'markdown_inline',
+    'query',
+    'vim',
+    'vimdoc',
+  }
   require('nvim-treesitter').install(parsers)
   ---@param buf integer
   ---@param language string
